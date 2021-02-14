@@ -1,0 +1,530 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-weight: 600;
+  font-size: 1em;
+  font-family: sans-serif, Impact, Haettenschweiler, "Arial Narrow Bold";
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+body {
+  direction: rtl;
+  background-color: #f4f4f4;
+  background-image: url("../imgs/station-01.jpg");
+  background-repeat: repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+/* ========== login Page ===========    */
+.LoginForm {
+  margin: 10px auto;
+  padding: 5%;
+  display: flex;
+  flex-direction: row;
+}
+
+.LoginForm form {
+  max-width: 600px;
+  padding: 30px 30px 5px;
+  border: 1px solid black;
+  background-color: brown;
+  border-radius: 25px;
+  box-shadow: 15px 15px 15px #444;
+  position: relative;
+  flex-grow: 1;
+}
+
+.LoginForm form img[alt="lock"] {
+  width: 17%;
+  position: absolute;
+  top: -10%;
+  left: 7%;
+}
+
+.LoginForm form h3 {
+  text-align: center;
+  color: #f0f0f0;
+  font-size: 3em;
+  text-shadow: 5px 5px 15px #00eeff;
+}
+
+.LoginForm form .inpt {
+  display: block;
+  margin: 30px auto;
+  padding: 7px;
+  width: 95%;
+  border-radius: 7px;
+  outline: none;
+  background-color: #e5e5e5;
+  text-align: right;
+}
+
+.LoginForm form .btn {
+  background-color: #3d0101;
+  color: white;
+  text-align: center;
+  width: 50%;
+}
+
+.LoginForm img[alt="pump"] {
+  width: 25%;
+  max-height: 400px;
+}
+
+/*
+@media only screen and (max-width: 600px) {
+   .LoginForm {
+      margin: 100px auto;
+      float: none;
+   }
+   .LoginForm ~ img {
+      display: none;
+   }
+}
+*/
+/* ========== Navbar Page ===========    */
+.navbar {
+  color: #fff;
+  background-color: #0d86f0;
+  padding: 1px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  line-height: 10px;
+}
+
+.navbar ul {
+  overflow: hidden;
+}
+
+.navbar ul li {
+  float: right;
+}
+
+.navbar ul li:last-child {
+  float: left;
+}
+
+.navbar ul li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 10px 16px;
+  margin: 3px 1px;
+}
+
+.navbar ul li a:focus {
+  background-color: #111;
+  color: yellow;
+  border-radius: 10px;
+}
+
+section {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  /* ========== Menu Page ===========    */
+  /* ========== Container Page ===========    */
+}
+
+section .wrapper {
+  float: right;
+  max-height: 595px;
+  width: 23%;
+  overflow-y: auto;
+  line-height: 10px;
+  margin-top: 41px;
+}
+
+section .wrapper .mainMenu {
+  /* width: 250px; */
+  padding: 0 2px;
+  display: block;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+section .wrapper .mainMenu .item {
+  border-top: 1px solid  #0970a3;
+  overflow: hidden;
+}
+
+section .wrapper .mainMenu .item .btn {
+  display: block;
+  padding: 15px 20px;
+  background-color: #0d86f0;
+  color: #fff;
+  position: relative;
+}
+
+section .wrapper .mainMenu .item .btn:hover {
+  color: yellow;
+  background-color: black;
+}
+
+section .wrapper .mainMenu .item .btn:before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 10px solid #0d86f0;
+  right: 15px;
+  bottom: -10px;
+  z-index: 9;
+}
+
+section .wrapper .mainMenu .item .btn i {
+  margin-right: 10px;
+}
+
+section .wrapper .mainMenu .item .subMenu {
+  background: #063146;
+  overflow: hidden;
+  transition: max-height 0.7s;
+  max-height: 0;
+}
+
+section .wrapper .mainMenu .item .subMenu a {
+  display: block;
+  padding: 15px 60px 15px 15px;
+  color: #fff;
+  font-size: 1em;
+  border-bottom: 1px solid #042331;
+  position: relative;
+}
+
+section .wrapper .mainMenu .item .subMenu a:before {
+  content: '';
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+section .wrapper .mainMenu .item .subMenu a:hover:before {
+  content: '';
+  position: absolute;
+  height: 0;
+  width: 6px;
+  right: 0;
+  top: 0;
+  opacity: 1;
+  /* background-color: #d8d824; */
+  border-top: 24px solid transparent;
+  border-right: 11px solid #0d86f0;
+  border-bottom: 24px solid transparent;
+}
+
+section .wrapper .mainMenu .item .subMenu a:after {
+  content: '';
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+section .wrapper .mainMenu .item .subMenu a:hover:after {
+  content: '';
+  position: absolute;
+  height: 0;
+  width: 6px;
+  left: 0px;
+  top: 0;
+  opacity: 1;
+  /* background-color: #d8d824; */
+  border-top: 24px solid transparent;
+  border-left: 11px solid #0d86f0;
+  border-bottom: 24px solid transparent;
+}
+
+section .wrapper .mainMenu .item .subMenu a:hover {
+  color: #f00;
+  background: #273057;
+  background: linear-gradient(to bottom, #273057 0%, #273057 50%, #394c7f 51%, #394c7f 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#273057', endColorstr='#394c7f',GradientType=0 );
+  transition: all 0.5s;
+  border-bottom: 1px solid #394c7f;
+}
+
+section .wrapper .mainMenu .item .subMenu a:last-child {
+  border: none;
+}
+
+section .wrapper .mainMenu .item:target .subMenu {
+  max-height: 70em;
+}
+
+section .container {
+  margin-top: 41px;
+  width: 77%;
+  line-height: 2em;
+  border-radius: 20px;
+  /* ========== Input Form ===========    */
+}
+
+section .container #dvTbl {
+  max-height: 595px;
+  overflow: auto;
+  /* ========== Search Form ===========    */
+  /* ========== Table show ===========    */
+}
+
+section .container #dvTbl form .srch {
+  width: 60%;
+  padding: 1px 25px;
+  border: 5px solid #0d86f0;
+  border-radius: 25px;
+  outline: none;
+  display: block;
+  margin: 0 auto;
+  line-height: 2em;
+}
+
+section .container #dvTbl .mTbl {
+  margin: 2px auto;
+  width: 100%;
+  color: white;
+  border: 5px solid #0d86f0;
+  background-color: #042331;
+}
+
+section .container #dvTbl .mTbl caption {
+  background-color: black;
+  color: #fff;
+  font-size: 1.5em;
+  line-height: 2em;
+  border-radius: 10px;
+  /* width: 60%; */
+  margin: 0 auto;
+}
+
+section .container #dvTbl .mTbl caption:hover {
+  color: yellow;
+  text-shadow: 5px 5px 10px red;
+}
+
+section .container #dvTbl .mTbl thead tr th {
+  position: sticky;
+  top: -10px;
+  background-color: #0d86f0;
+}
+
+section .container #dvTbl .mTbl thead tr th a {
+  display: block;
+  margin: 0 auto;
+  padding: 8px;
+  color: white;
+  text-shadow: 3px 3px 5px black;
+}
+
+section .container #dvTbl .mTbl thead tr th a:hover {
+  color: yellow;
+  text-shadow: none;
+}
+
+section .container #dvTbl .mTbl tbody tr td {
+  direction: ltr;
+  text-align: right;
+  padding: 5px;
+}
+
+section .container #dvTbl .mTbl tbody tr td div.btns {
+  visibility: hidden;
+}
+
+section .container #dvTbl .mTbl tbody tr td div.btns button {
+  padding: 5px;
+  border-radius: 10px;
+  background-color: yellow;
+  color: red;
+  margin: 0 2px;
+}
+
+section .container #dvTbl .mTbl tbody tr:nth-child(even) {
+  background-color: #042331;
+}
+
+section .container #dvTbl .mTbl tbody tr:nth-child(odd) {
+  background-color: #063146;
+}
+
+section .container #dvTbl .mTbl tbody tr:hover {
+  background-color: black;
+  color: yellow;
+}
+
+section .container #dvTbl .mTbl tbody tr:hover div.btns {
+  visibility: visible;
+}
+
+section .container #dvTbl .mTbl thead th, section .container #dvTbl .mTbl tbody td {
+  border-bottom: 1px solid black;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 1px solid black;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+section .container #dvTbl .mTbl tfoot {
+  font-weight: bold;
+  font-size: 1em;
+  background-color: #0d86f0;
+  color: #fff;
+}
+
+section .container .inptScrn {
+  background-color: #0d86f0;
+  width: 30%;
+  min-width: 300px;
+  border-radius: 25px;
+  border: 10px double #042331;
+  box-shadow: 5px 5px 15px #8cc9fb;
+  display: none;
+  position: absolute;
+  top: 5%;
+  left: 25%;
+}
+
+section .container .inptScrn .btnClose {
+  color: #063146;
+  background-color: #0d86f0;
+  width: 10%;
+  border: 10px double #042331;
+  box-shadow: 5px 5px 15px #063146;
+  position: absolute;
+  text-align: center;
+  left: -15px;
+  top: -20px;
+}
+
+section .container .inptScrn .btnClose:hover {
+  color: #0d86f0;
+  background-color: #063146;
+  border: 10px double #0d86f0;
+  box-shadow: none;
+}
+
+section .container .inptScrn form .btn[name="btnSave"]::after {
+  content: "\270D";
+  /* position: absolute; */
+  top: -3px;
+}
+
+section .container .inptScrn form .btn[name="btnDlt"]::before {
+  content: "\2704";
+  /* position: absolute; */
+  top: 0px;
+}
+
+section .container .inptScrn form button.btn {
+  width: 40%;
+  display: inline-block;
+  font-weight: bolder;
+  padding: 5px;
+  margin: 15px 4%;
+  border-radius: 25px;
+  outline: none;
+  color: white;
+  background-color: #063146;
+}
+
+section .container .inptScrn form .lbl {
+  display: block;
+  padding: 5px 25px 1px 10px;
+}
+
+section .container .inptScrn form .inpt {
+  color: white;
+  display: block;
+  padding: 5px;
+  outline: none;
+  background-color: #063146;
+  border-radius: 10px;
+  border: 1px solid #0d86f0;
+  margin: 0 auto;
+  width: 86%;
+  direction: rtl;
+  transition: all 1s ease-in-out;
+}
+
+section .container .inptScrn form button.btn:hover, section .container .inptScrn form .inpt:focus {
+  color: red;
+  border-radius: 0px;
+}
+
+section .container .inptScrn form optgroup {
+  color: yellow;
+}
+
+section .container .inptScrn form option {
+  color: red;
+}
+
+section::after {
+  content: "";
+  /* clear: both; */
+}
+
+/* ========== Footer Page ===========    */
+footer.myfooter {
+  position: fixed;
+  color: #f00;
+  background-color: #0d86f0;
+  bottom: 0;
+  left: 1px;
+  width: 99.7%;
+  padding: 3px;
+  border: 2px solid #111;
+}
+
+footer.myfooter:hover {
+  color: yellow;
+  background-color: black;
+}
+
+.hiddenCol {
+  display: none;
+}
+
+.dbl {
+  font-size: 1.5em;
+  line-height: 1.5em;
+  text-align: center;
+}
+
+/*
+
+   @media (max-width:767px) {
+
+   }
+   @media (min-width:768px) {
+      
+   }
+   @media (min-width:992px) {
+      
+   }
+   @media (min-width:1200px) {
+      
+   }
+
+
+   .container .mTbl tr > *:nth-child(2) {
+   display: none;
+}
+*/
+@media only print {
+  .navbar, .wrapper, .myfooter {
+    display: none;
+  }
+  section .container {
+    width: 100%;
+    margin: 0;
+  }
+  section .container form {
+    display: none;
+  }
+  section .container #dvTbl {
+    overflow: visible;
+  }
+}
+/*# sourceMappingURL=backend.css.map */

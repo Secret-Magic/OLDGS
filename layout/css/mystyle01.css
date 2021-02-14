@@ -1,0 +1,192 @@
+/*
+	@import 'subfile.css';
+*/
+:root {
+	--w:350px;
+	--mc:#042331;
+	--sc:#063146;
+	--bc: #0d86f0;
+}
+
+html body * {
+	font-family: "Traditional Arabic", sans-serif, "Times New Roman", Tahoma, fantasy; 
+	font-size: 25px;
+	direction: rtl;
+	margin: 0;
+	padding: 0;
+	font-weight: bolder;
+	text-decoration: none;
+}
+/*------------------------------------------------------------*/
+div.dvTbl {
+	width: 100%;
+	margin: 5px auto;	
+	background-color: var(--mc);
+}
+div.dvTbl form {
+	width: 100%;
+	margin: 3px auto;
+	padding: 0px;
+}
+
+div.dvTbl table.mTbl{
+	margin: 1px auto;
+	width: 100%;
+	color: white;
+	
+	/*border-collapse: collapse;*/
+	border: 5px solid var(--bc);
+	max-height: 550px;
+	overflow: auto;
+}
+div.dvTbl table.mTbl caption {
+	background-color: darkred;
+	color: #fff;
+	font-size: 1.5em;
+	
+}
+div.dvTbl table.mTbl caption:hover {
+	background-color: var(--sc);
+	color: black;
+}
+div.dvTbl table.mTbl thead th, div.dvTbl table.mTbl thead th a {
+	padding: 8px;
+	background-color: var(--bc);
+	color: rgb(255, 255, 255);
+	
+}
+div.dvTbl table.mTbl tbody {
+	max-height: 550px;
+	overflow: auto;
+}
+div.dvTbl table.mTbl thead th,
+div.dvTbl table.mTbl tbody td {
+
+	border-bottom: 1px solid black;
+	border-top: 1px solid rgba(255,255,255,.1);
+	border-left: 1px solid black;
+	border-right: 1px solid rgba(255,255,255,.1);
+}
+/*
+div.dvTbl table.mTbl thead th#tNm, table.mTbl thead th#tCardId, table.mTbl thead th#tAddress, table.mTbl thead th#tTel {
+	width: 20%;
+}*/
+div.dvTbl table.mTbl td {
+	direction: ltr;
+	text-align: right;
+	padding: 5px;
+	
+}
+div.dvTbl table.mTbl tbody tr:nth-child(even) {
+	background-color: var(--mc);
+}
+div.dvTbl table.mTbl tbody tr:nth-child(odd) {
+	background-color: var(--sc);
+}
+
+div.dvTbl table.mTbl tbody tr:hover {
+	background-color: rgba(38, 255, 0, 0.609);
+	color: rgb(0, 0, 0);
+}
+div.dvTbl table.mTbl tfoot {
+	font-weight: bold;
+	font-size: 1em;
+	background-color: var(--bc);
+	color: #fff;
+}
+
+/*------------------------------------------------------------*/
+div.inptScrn {
+	background-color : var(--mc);
+	width: var(--w);
+	padding: 5px 10px;
+	border-radius: 25px;
+	border: 15px double var(--bc);
+	box-shadow: -7px -7px rgba(153, 155, 152,0.5);
+	/*outline: goldenrod double 10px;*/
+	display: none;
+	position: absolute;
+	top: 10px;
+	left: calc((100% - 50px - var(--w))/2);   /*400=350+15*2+10*2 width+padding + border*/
+}
+div.inptScrn div.btnClose {
+	color: var(--bc);
+	background-color: var(--sc);
+	width: 30px;
+	height: 30px;
+	border-radius: 45%;
+	border: 5px double var(--bc);
+	position: absolute;
+	text-align: center;
+	line-height: 34px;
+	left: -21px;
+	top:-21px;
+}
+div.inptScrn div.btnClose:hover {
+	color: var(--sc);
+	background-color: var(--bc);
+	border: 4px double var(--mc);
+}
+/*------------------------------------------------------------*/
+div.inptScrn form label.lbl {
+	color: gold;
+	display: block;
+	font-size: 1em;
+	font-weight: bold;
+	padding:10px;
+	width: 70%;
+}
+div.inptScrn form input.inpt {
+	color: white;
+	display: block;
+	font-size: 1em;
+	font-weight: bold;
+	padding:5px;
+	outline: none;
+	background-color: var(--sc);
+	border-radius: 10px;
+	border: 1px solid var(--bc);
+	margin: auto;
+	width: 90%;
+	direction: ltr;
+	text-align: right;
+}
+div.inptScrn form select.inpt {
+	color: white;
+	display: block;
+	font-size: 1em;
+	font-weight: bold;
+	padding:5px;
+	background-color: var(--sc);
+	border-radius: 10px;
+	border: 1px solid var(--bc);
+	margin: auto;
+	width: 90%;
+	direction:rtl;
+}
+div.inptScrn form button.btn {
+	width: 40%;
+	display: inline-block;
+	font-weight: bolder;
+	padding: 5px;
+	margin: 30px 15px 10px 15px; 
+	border-radius: 25px;
+	color: white;
+	background-color: var(--sc);
+}
+div.inptScrn form button.btn:focus , div.inptScrn form input.inpt:focus {
+	color:red;
+}
+
+/*------------------------------------------------------------*/
+
+
+
+
+/*----------------------------------------------*/
+@media screen and (max-width:480px){
+	div.inptScrn {
+		width: 84%;
+		left: 1%;
+	}
+}
