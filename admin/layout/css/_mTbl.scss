@@ -1,0 +1,82 @@
+.mTbl {
+   margin: 2px auto;
+   width: 100%;
+   color: white;
+   border: 5px solid $bc;
+   background-color: #042331;
+   caption {
+      background-color: black;
+      color: #fff;
+      font-size: 1.5em;
+      line-height: 2em;
+      border-radius: 10px;
+      /* width: 60%; */
+      margin: 0 auto;
+      &:hover {
+         color: yellow;
+         text-shadow: 5px 5px 10px red;
+      }
+   }
+   thead {
+      tr th {
+         position: sticky;
+         top: -10px;
+         background-color: $bc;
+         a {
+            display: block;
+            margin: 0 auto;
+            padding: 8px;
+            color: rgb(255, 255, 255);
+            text-shadow: 3px 3px 5px black;
+            &:hover {
+               color : yellow ;
+               text-shadow: none;
+            }
+         }
+      }
+   }
+   tbody {
+      tr {
+         td {
+            direction: ltr;
+            text-align: right;
+            padding: 5px;
+            div.btns {
+               visibility: hidden;
+               button {
+                  padding: 5px;
+                  border-radius: 10px;
+                  background-color: yellow;
+                  color: red;
+                  margin: 0 2px;
+               }
+            }
+         }
+         &:nth-child(even) {
+            background-color: $mc;
+         }
+         &:nth-child(odd) {
+            background-color: $sc;
+         }
+         &:hover {
+            background-color: black;
+            color: yellow;
+            div.btns {
+               visibility: visible;
+            }
+         }
+      }
+   }
+   thead th, tbody td {
+      border-bottom: 1px solid black;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-left: 1px solid black;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+   }
+   tfoot {
+      font-weight: bold;
+      font-size: 1em;
+      background-color: $bc;
+      color: #fff;
+   }
+}

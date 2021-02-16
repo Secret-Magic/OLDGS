@@ -23,6 +23,9 @@
 							elseif (isSaved("gNm", "Goods", vldtVrbl($_POST['iNm']), " AND gId <> ".vldtVrbl($_POST['iId']))) {
 								$errs[]=" الاسم مكرر ";
 							}
+							elseif (!(intval($_POST['iByLmt'])>=0)) {
+								$errs[]="حد الشراء غير صحيح";
+							}
 							elseif (!(intval($_POST['iByPrc'])>=0)) {
 								$errs[]="سعر الشراء غير صحيح";
 							}
@@ -30,8 +33,8 @@
 								$errs[]="سعر البيع غير صحيح";
                      }
                      else {
-                        $sql="UPDATE Goods SET gNm=?, gByPrc=?, gSllPrc=?, gNts=?, gGrp=? WHERE `gId`=? ;";
-                        $vl=array(vldtVrbl($_POST['iNm']), vldtVrbl($_POST['iByPrc']), vldtVrbl($_POST['iSllPrc']), vldtVrbl($_POST['iNts']), vldtVrbl($_POST['iGrp']), vldtVrbl($_POST['iId']));
+                        $sql="UPDATE Goods SET gNm=?, gByLmt=?, gByPrc=?, gSllPrc=?, gNts=?, gGrp=? WHERE `gId`=? ;";
+                        $vl=array(vldtVrbl($_POST['iNm']), vldtVrbl($_POST['iByLmt']), vldtVrbl($_POST['iByPrc']), vldtVrbl($_POST['iSllPrc']), vldtVrbl($_POST['iNts']), vldtVrbl($_POST['iGrp']), vldtVrbl($_POST['iId']));
                         $report="تم حفظ التعديلات";
                         $goOn= TRUE ;
                      }
@@ -47,6 +50,9 @@
 						elseif (isSaved("usNm", "Users", vldtVrbl($_POST['iNm']))) {
 							$errs[]=" الاسم مكرر ";
                   }
+						elseif (!(intval($_POST['iByLmt'])>=0)) {
+                     $errs[]="حد الشراء غير صحيح";
+						}
                   elseif (!(intval($_POST['iByPrc'])>=0)) {
                      $errs[]="سعر الشراء غير صحيح";
                   }
@@ -54,8 +60,8 @@
                      $errs[]="سعر البيع غير صحيح";
                   }
 						else {
-							$sql="INSERT INTO Goods (gNm, gByPrc, gSllPrc, gNts, gGrp) VALUES (?,?,?,?,?) ;";
-							$vl=array(vldtVrbl($_POST['iNm']), vldtVrbl($_POST['iByPrc']), vldtVrbl($_POST['iSllPrc']), vldtVrbl($_POST['iNts']),vldtVrbl($_POST['iGrp']));
+							$sql="INSERT INTO Goods (gNm, gByLmt, gByPrc, gSllPrc, gNts, gGrp) VALUES (?,?,?,?,?,?) ;";
+							$vl=array(vldtVrbl($_POST['iNm']), vldtVrbl($_POST['iByLmt']),vldtVrbl($_POST['iByPrc']), vldtVrbl($_POST['iSllPrc']), vldtVrbl($_POST['iNts']),vldtVrbl($_POST['iGrp']));
                      $report="تم إضافة بيان جديد";
                      $goOn = TRUE ;
 						}
@@ -139,21 +145,24 @@
 					$_SESSION['strSrt'] = "ORDER BY gNm";
 					break;
 				case 2:
-					$_SESSION['strSrt'] = "ORDER BY gByPrc";
+					$_SESSION['strSrt'] = "ORDER BY gByLmt";
 					break;
 				case 3:
-					$_SESSION['strSrt'] = "ORDER BY gSllPrc";
+					$_SESSION['strSrt'] = "ORDER BY gByPrc";
 					break;
 				case 4:
-					$_SESSION['strSrt'] = "ORDER BY gNts";
+					$_SESSION['strSrt'] = "ORDER BY gSllPrc";
 					break;
 				case 5:
-					$_SESSION['strSrt'] = "ORDER BY gWrk";
+					$_SESSION['strSrt'] = "ORDER BY gNts";
 					break;
 				case 6:
-					$_SESSION['strSrt'] = "ORDER BY gGrp";
+					$_SESSION['strSrt'] = "ORDER BY gWrk";
 					break;
 				case 7:
+					$_SESSION['strSrt'] = "ORDER BY gGrp";
+					break;
+				case 8:
 					$_SESSION['strSrt'] = "ORDER BY gAdDt";
 					break;
 				default:
@@ -179,12 +188,13 @@
 							<th> م </th>
 							<th class='hiddenCol'> <a href="?srt=0" > <?php echo($srtSymbl[0]); ?> الكود 	   </a> </th>
 							<th> <a href="?srt=1" > <?php echo($srtSymbl[1]); ?> الاسم 	    </a> </th>
-							<th> <a href="?srt=2" > <?php echo($srtSymbl[2]); ?> سعر الشراء </a> </th>
-							<th> <a href="?srt=3" > <?php echo($srtSymbl[3]); ?> سعر البيع  </a> </th>
-							<th> <a href="?srt=4" > <?php echo($srtSymbl[4]); ?> ملاحظات 	</a> </th>
-							<th> <a href="?srt=5" > <?php echo($srtSymbl[5]); ?> نشط        </a> </th>
-							<th> <a href="?srt=6" > <?php echo($srtSymbl[6]); ?> مجموعة     </a> </th>
-							<th> <a href="?srt=7" > <?php echo($srtSymbl[7]);?>تاريخ الانشاء</a> </th>
+							<th> <a href="?srt=2" > <?php echo($srtSymbl[2]); ?> حد الشراء </a> </th>
+							<th> <a href="?srt=2" > <?php echo($srtSymbl[3]); ?> سعر الشراء </a> </th>
+							<th> <a href="?srt=3" > <?php echo($srtSymbl[4]); ?> سعر البيع  </a> </th>
+							<th> <a href="?srt=4" > <?php echo($srtSymbl[5]); ?> ملاحظات 	</a> </th>
+							<th> <a href="?srt=5" > <?php echo($srtSymbl[6]); ?> نشط        </a> </th>
+							<th> <a href="?srt=6" > <?php echo($srtSymbl[7]); ?> مجموعة     </a> </th>
+							<th> <a href="?srt=7" > <?php echo($srtSymbl[8]);?>تاريخ الانشاء</a> </th>
 						</tr>
 					</thead>
 					<tbody>
@@ -193,51 +203,58 @@
 							$sql="SELECT * FROM Goods WHERE gGrp IN (SELECT gId FROM Groups WHERE gGrpTyp=". vldtVrbl($_SESSION['iGdTyp']). ") AND gNm like '%".vldtVrbl($_SESSION['strSrch'])."%' ".$_SESSION['strSrt']  ;
 							$result=getRows($sql);
 							foreach($result as $row) {
-								echo ("<tr> <td>". ++$rc. "</td> <td class='hiddenCol'>". $row['gId']. "</td>	<td>". $row['gNm']. "</td> <td>". $row['gByPrc']."</td>
-											<td>". $row['gSllPrc'] ."</td> <td>". $row['gNts'] ."</td>
+								echo ("<tr> <td>". ++$rc. "</td> <td class='hiddenCol'>". $row['gId']. "</td>	<td>". $row['gNm']. "</td> <td>". $row['gByLmt']."</td>
+											<td>". $row['gByPrc']."</td><td>". $row['gSllPrc'] ."</td> <td>". $row['gNts'] ."</td>
 											<td>". $row['gWrk']."</td> <td>". $row['gGrp']. "</td> <td>". $row['gAdDt']. "</td> </tr>");
 							}
-							echo ("<tr> <td>". ++$rc. "</td> <td class='hiddenCol'>0</td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>	</tr>");
+							echo ("<tr> <td>". ++$rc. "</td> <td class='hiddenCol'>0</td> <td></td> <td></td><td></td> <td></td> <td></td> <td></td> <td></td> <td></td>	</tr>");
 						?>
 					</tbody>
 					<tfoot>
 						<tr>
 							<th> * </th> <td class='hiddenCol'>   </td> <td> ملاحظات </td>
-							<td> 	 </td> 	<td> 	 </td> 	<td> 	 </td>
-							<td> 	 </td> <td> 	 </td> 
-							<td> 	 </td>
+							<td colspan="7"> 	 </td> 
 						</tr>
 					</tfoot>
 				</table>
 			</div>
 			<!-------------------------------- Input Screen ---------------------------->
-			<div class="inptScrn" id="inptScrn">
+			<div class="row" id="row">
 				<div class="btnClose" id="btnClose" > &#10006; </div>
 				<form action="<?php echo ($_SERVER['PHP_SELF']); ?>" method="post" name="iFrm" onsubmit="return isValidForm()">
-					<input class="inpt" type="hidden" name="iId" id="iId" />
-					<label class="lbl" for="iNm">اسم الصنف : </label>
-					<input class="inpt" type="text" name="iNm" id="iNm" maxlength="99" required />
-					<label class="lbl" for="iByPrc"> سعر الشراء : </label>
-					<input class="inpt" type="text" name="iByPrc" id="iByPrc" maxlength="8" pattern="[0-9]+(\.[0-9][0-9]?)?" />
-					<label class="lbl" for="iSllPrc">  سعر البيع: </label>
-					<input class="inpt" type="text" name="iSllPrc" id="iSllPrc" maxlength="8" pattern="[0-9]+(\.[0-9][0-9]?)?" />
-					<label class="lbl" for="iNts">  ملاحظات: </label>
-					<input class="inpt" type="text" name="iNts" id="iNts" maxlength="99" />
-					<label class="lbl" for="iGrp">  المجموعة: </label>
-					<select class="inpt" name="iGrp" id="iGrp">
-						<?php
-							$sql="SELECT * FROM Groups WHERE gWrk=1 AND gGrpTyp = ". vldtVrbl($_SESSION['iGdTyp']) . " ;" ;
-							$result=getRows($sql);
-							foreach($result as $row) {
-								echo ("<option value=". $row['gId']. ">". $row['gNm']. "</option> ");
-							}
-						?>
-					</select>
-
+					<input class="" id="iId" name="iId" type="hidden"  />
+					<span>
+						<input class="swing" id="iNm" name="iNm" type="text" maxlength = "99" autocomplete="off" placeholder="اسم الصنف" required/><label for="iNm">الاسم</label>
+					</span>
+					<span>
+						<input class="swing" id="iByLmt" name="iByLmt" type="number" maxlength = "10" placeholder="حد الطلب أو حد الشراء" /><label for="iByLmt">حد الشراء</label>
+					</span>
+					<span>
+						<input class="swing" id="iByPrc" name="iByPrc" type="text" maxlength = "10" placeholder="سعر الشراء" required/><label for="iByPrc">شراء</label>
+					</span>
+					<span>
+						<input class="swing" id="iSllPrc" name="iSllPrc" type="text" maxlength = "10" placeholder="سعر البيع" required/><label for="iSllPrc">بيع</label>
+					</span>
+					
+					<span>
+						<select class="swing" name="iGrp" id="iGrp" placeholder="نوع المجموعة">
+							<?php
+								$sql="SELECT * FROM Groups WHERE gWrk=1 AND gGrpTyp = ". vldtVrbl($_SESSION['iGdTyp']) . " ;" ;
+								$result=getRows($sql);
+								foreach($result as $row) {
+									echo ("<option value=". $row['gId']. ">". $row['gNm']. "</option> ");
+								}
+							?>
+						</select><label for="iGrp"> المجموعة </label>
+					</span>
+					<span>
+						<input class="swing" id="iNts" name="iNts" type="text" maxlength = "99" autocomplete="off" placeholder="وصف للصنف" /><label for="iNts">ملاحظات</label>
+					</span>
+					
 					<button class ="btn" type="submit" name="btnSave" > حفظ  </button>
-					<button class ="btn" type="submit" name="btnDlt"  id="btnDlt" > حذف </button> 
+					<button class ="btn" type="submit" name="btnDlt"  id="btnDlt" > حذف </button>
 				</form>
-			</div>  
+			</div>
 		<!-------------------------------- Script ---------------------------------->
 		<script src="layout/js/main.js" ></script>
 		<script> 
@@ -247,14 +264,15 @@
 				tbl01.rows[x].ondblclick = function () {
 					document.getElementById('iId').value 		= this.cells[1].innerHTML;
 					document.getElementById('iNm').value 		= this.cells[2].innerHTML;
-					document.getElementById('iByPrc').value 	= this.cells[3].innerHTML;
-					document.getElementById('iSllPrc').value 	= this.cells[4].innerHTML;
-					document.getElementById('iNts').value 		= this.cells[5].innerHTML;
+					document.getElementById('iByLmt').value 	= this.cells[3].innerHTML;
+					document.getElementById('iByPrc').value 	= this.cells[4].innerHTML;
+					document.getElementById('iSllPrc').value 	= this.cells[5].innerHTML;
+					document.getElementById('iNts').value 		= this.cells[6].innerHTML;
                if (this.cells[1].innerHTML == 0) {
 						document.getElementById ("iGrp").selectedIndex ="0" ;
 					}
 					else {
-						document.getElementById('iGrp').value = this.cells[7].innerHTML;
+						document.getElementById('iGrp').value = this.cells[8].innerHTML;
 					}
 					showInptScrn();
 				}

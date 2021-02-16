@@ -199,58 +199,53 @@
 					</tbody>
 					<tfoot>
 						<tr>
-							<th> * </th><td class='hiddenCol'> </td><td class='hiddenCol'>  </td><td>ملاحظات</td><td> </td>	<td></td><td> </td><td> </td><td> </td>
+							<th> * </th><td class='hiddenCol'> </td><td class='hiddenCol'>  </td><td>ملاحظات</td><td colspan="5"> </td>
 						</tr>
 					</tfoot>
 				</table>
 			</div>
 			<!-------------------------------- Input Screen ---------------------------->
-			<div class="inptScrn" id="inptScrn">
+			<div class="row" id="row">
 				<div class="btnClose" id="btnClose" > &#10006; </div>
 				<form action="<?php echo ($_SERVER['PHP_SELF']); ?>" method="post" name="iFrm" onsubmit="return isValidForm()">
-					<input class="inpt" type="hidden" name="iId" id="iId" />
-					<label class="lbl" for="iGds"> اسم الصنف : </label>
-					<select class="inpt" name="iGds" id="iGds">
-						<?php
-                     if ($_SESSION['iPlTyp']==1) {
-                        $sql="SELECT * FROM Goods WHERE gWrk=1 AND gGrp IN (SELECT gId FROM Groups WHERE gGrpTyp =12) ;" ;
-                     }
-                     else {
-                        $sql="SELECT * FROM Goods WHERE gWrk=1 AND gGrp IN (SELECT gId FROM Groups WHERE gGrpTyp !=12) ;" ;
-                     }
-							$result=getRows($sql);
-							foreach($result as $row) {
-								echo ("<option value=". $row['gId']. ">". $row['gNm']. "</option> ");
-							}
-						?>
-					</select>
-					<label class="lbl" for="iDt"> التاريخ : </label>
-					<input class="inpt dbl" type="date" name="iDt" id="iDt" />
-					<label class="lbl" for="iByPrc">  سعر الشراء: </label>
-               <?php
+					<input class="" id="iId" name="iId" type="hidden" />
+					<span>
+						<select class="swing" name="iGds" id="iGds" placeholder="اسم الصنف">
+							<?php
+								if ($_SESSION['iPlTyp']==1) {
+									$sql="SELECT * FROM Goods WHERE gWrk=1 AND gGrp IN (SELECT gId FROM Groups WHERE gGrpTyp =12) ;" ;
+								}
+								else {
+									$sql="SELECT * FROM Goods WHERE gWrk=1 AND gGrp IN (SELECT gId FROM Groups WHERE gGrpTyp !=12) ;" ;
+								}
+								$result=getRows($sql);
+								foreach($result as $row) {
+									echo ("<option value=". $row['gId']. ">". $row['gNm']. "</option> ");
+								}
+							?>
+						</select><label for="iGds"> الاسم </label>
+					</span>
+					<span>
+						<input class="swing" style="padding-right: 100px;" id="iDt" name="iDt" type="date" required/><label for="iDt">التاريخ</label>
+					</span>
+					<?php
                   if ($_SESSION['iPlTyp']==1) {
-							echo ( '<input class="inpt" type="text" name="iByPrc" id="iByPrc" readonly />' );
-							echo ( '<label class="lbl" for="iSllPrc">  سعر البيع: </label>' );
-							echo ( '<input class="inpt" type="text" name="iSllPrc" id="iSllPrc" onchange="getByPrc();" />' );
-							echo ( '<label class="lbl" for="iCmsnPrc">  العمولة : </label>' ) ;
-							echo ( '<input class="inpt" type="text" name="iCmsn" id="iCmsn" onchange="getByPrc();" />' ) ;
-							echo ( '<label class="lbl" for="iPkhr">  البخر: </label>' ) ;
-							echo ( '<input class="inpt" type="text" name="iPkhr" id="iPkhr"  />' ) ;
-                  }
-                  else {
-							echo ( '<input class="inpt" type="text" name="iByPrc" id="iByPrc" />' );
-							echo ( '<label class="lbl" for="iSllPrc">  سعر البيع: </label>' );
-							echo ( '<input class="inpt" type="text" name="iSllPrc" id="iSllPrc" />' );
-							echo ( '<label class="lbl" for="iCmsnPrc" style="display:none ;" >  العمولة : </label>' ) ;
-							echo ( '<input class="inpt" type="hidden" name="iCmsn" id="iCmsn" value="0" />' ) ;
-							echo ( '<label class="lbl" for="iPkhr" style="display:none ;" >  البخر: </label> ') ;
-							echo ( '<input class="inpt" type="hidden" name="iPkhr" id="iPkhr" value="0" />' ) ;
-                  }
-               ?>
+							echo ('<span> <input class="swing" id="iByPrc" name="iByPrc" type="text"  placeholder="سعر الشراء" /><label for="iByPrc">الشراء</label> </span>');
+							echo ('<span> <input class="swing" id="iSllPrc" name="iSllPrc" type="text" placeholder="سعر البيع" onchange="getByPrc();" /><label for="iSllPrc">البيع</label> </span>');
+							echo ('<span> <input class="swing" id="iCmsn" name="iCmsn" type="text" placeholder="قيمة العمولة أو الخصم" onchange="getByPrc();" /><label for="iCmsn">العمولة</label> </span>');
+							echo ('<span> <input class="swing" id="iPkhr" name="iPkhr" type="text" placeholder="نسبة البخر" /><label for="iPkhr">البخر</label> </span>');
+						} else {
+							echo ('<span> <input class="swing" id="iByPrc" name="iByPrc" type="text" placeholder="سعر الشراء" /><label for="iByPrc">الشراء</label> </span>');
+							echo ('<span> <input class="swing" id="iSllPrc" name="iSllPrc" type="text" placeholder="سعر البيع" /><label for="iSllPrc">البيع</label> </span>');
+							echo ('<span> <input class="swing" id="iCmsn" name="iCmsn" type="text" placeholder="قيمة العمولة أو الخصم" /><label for="iCmsn">العمولة</label> </span>');
+							echo ('<input class="swing" id="iPkhr" name="iPkhr" type="text" style="display:none ;" />');
+						}
+					?>
+					
 					<button class ="btn" type="submit" name="btnSave" > حفظ  </button>
-					<button class ="btn" type="submit" name="btnDlt"  id="btnDlt" > حذف </button> 
+					<button class ="btn" type="submit" name="btnDlt" id="btnDlt" > حذف </button>
 				</form>
-			</div>  
+			</div>
 		<!-------------------------------- Script ---------------------------------->
 		<script src="layout/js/main.js" ></script>
 		<script> 
@@ -273,9 +268,9 @@
 			}
 		</script>
 <?php
-        include_once TPL. 'footer.php' ;
-    }else {
-        header("location: index.php");
-        exit ();
-    }
+		include_once TPL. 'footer.php' ;
+	}else {
+		header("location: index.php");
+		exit ();
+	}
 ?>

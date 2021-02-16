@@ -132,9 +132,9 @@
          <table class="mTbl">
 				<thead>
 					<tr>
-						<th class='hiddenCol'> الكود 	</th>
+						<th class='hiddenCol' > الكود 	</th>
 						<th> رقم اليومية </th>
-						<th> كود الاسم 	 </th>
+						<th class='hiddenCol' > كود الاسم 	 </th>
 						<th> الاسم 	 </th>
 						<th> التاريخ </th>
 						<th> ملاحظات  </th>
@@ -146,7 +146,7 @@
                   $vl=array($_SESSION['iDly']);
 						$row=getRow($sql, $vl);
 						echo ("<tr> <td class='hiddenCol'>". $row['bhId']. "</td> <td>". $row['bhNmbr']. "</td>
-										<td>". $row['bhNm']. "</td><td>". $row['aNm']. "</td> <td>". $row['bhDt']."</td>
+										<td class='hiddenCol'>". $row['bhNm']. "</td><td>". $row['aNm']. "</td> <td>". $row['bhDt']."</td>
 										<td>". $row['bhNts']. "</td> </tr>");
 						
 					?>
@@ -186,55 +186,47 @@
 				<tfoot>
 					<tr>
 						<th> * </th> <td class='hiddenCol'>   </td> <td class='hiddenCol'>  </td>
-						<td class='hiddenCol'> 	 </td> <td> ملاحظات	 </td> <td> 	 </td>
-						<td> 	 </td> <td class='hiddenCol'> 	 </td> <td> 	 </td>
-						<td> 	 </td>
+						<td class='hiddenCol'> 	 </td> <td> ملاحظات	 </td> <td colspan="5"> 	 </td>
 					</tr>
 				</tfoot>
 			</table>
 		</div>
 		<!-------------------------------- Input Screen ---------------------------->
-		<div class="inptScrn" id="inptScrn">
+		<div class="row" id="row">
 			<div class="btnClose" id="btnClose" > &#10006; </div>
 			<form action="<?php echo ($_SERVER['PHP_SELF']); ?>" method="post" name="iFrm" onsubmit="return isValidForm()">
-				<input class="inpt" type="hidden" name="iId" id="iId" />
-				<input class="inpt" type="hidden" name="iDly" id="iDly" />
-				<input class="inpt" type="hidden" name="iPmp" id="iPmp" />
-				<label class="lbl" for="iPmpNm">اسم الطلمبة : </label>
-				<input class="inpt" type="text" name="iPmpNm" id="iPmpNm" readonly />
-				<!--
-					<select class="inpt" name="iPmp" id="iPmp">
-						<?php /*
-							$sql="SELECT * FROM Pumps WHERE pSub=". $_SESSION['Sub'] ;
+				<input class="" id="iId" name="iId" type="hidden"  />
+				<input class="" id="iDly" name="iDly" type="hidden"  />
+				<input class="" id="iPmp" name="iPmp" type="hidden"  />
+
+				<span>
+					<input class="swing" id="iPmpNm" name="iPmpNm" type="text" maxlength = "99" autocomplete="off" placeholder="اسم الطلمبة" readonly/><label for="iPmpNm">الطلمبة</label>
+				</span>
+				<span>
+					<input class="swing" id="iNmbr" name="iNmbr" type="number" maxlength = "10" placeholder="العداد السرى" required/><label for="iNmbr">العداد</label>
+				</span>
+				<span>
+					<input class="swing" id="iQnttyBck" name="iQnttyBck" type="number" placeholder="كمية المرتجع" required/><label for="iQnttyBck">المرتجع</label>
+				</span>
+				<span>
+					<select class="swing" name="iTnk" id="iTnk" placeholder="اسم التانك">
+						<?php
+							$sql="SELECT * FROM Accounts WHERE aSub=". $_SESSION['Sub']. " AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp=9) ;" ;
 							$result=getRows($sql);
 							foreach($result as $row) {
-								echo ("<option value=". $row['pId']. ">". $row['pNm']. "  </option> ");
-							}*/
+								echo ("<option value=". $row['aId']. ">". $row['aNm']. "</option> ");
+							}
 						?>
-					</select>
-				/!-->
-				<label class="lbl" for="iNmbr"> العداد السرى : </label>
-				<input class="inpt dbl" type="number" name="iNmbr" id="iNmbr" maxlength="10" />
-				<label class="lbl" for="iQnttyBck">  المرتجع : </label>
-				<input class="inpt" type="number" name="iQnttyBck" id="iQnttyBck" />
-				<label class="lbl" for="iTnk"> التانك  : </label>
-				<select class="inpt" name="iTnk" id="iTnk">
-					<?php
-						$sql="SELECT * FROM Accounts WHERE aSub=". $_SESSION['Sub']. " AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp=9) ;" ;
-						$result=getRows($sql);
-						foreach($result as $row) {
-							echo ("<option value=". $row['aId']. ">". $row['aNm']. "</option> ");
-						}
-					?>
-				</select>
-				<label class="lbl" for="iNts">  ملاحظات: </label>
-				<input class="inpt" type="text" name="iNts" id="iNts" maxlength="99" />
+					</select><label for="iTnk"> التانك </label>
+				</span>
+				<span>
+					<input class="swing" id="iNts" name="iNts" type="text" maxlength = "99" autocomplete="off" placeholder="وصف للطلمبة" /><label for="iNts">ملاحظات</label>
+				</span>
 				
 				<button class ="btn" type="submit" name="btnSave" > حفظ  </button>
-				<button class ="btn" type="submit" name="btnDlt"  id="btnDlt" > حذف </button> 
-				
+				<button class ="btn" type="submit" name="btnDlt"  id="btnDlt" > حذف </button>
 			</form>
-		</div>  
+		</div>
 		<!-------------------------------- Script ---------------------------------->
 		<script src="layout/js/main.js" ></script>
 		<script> 

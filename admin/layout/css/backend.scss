@@ -7,7 +7,7 @@ $bc: #0d86f0;
    padding: 0;
    font-weight: 600;
    font-size: 1em;
-   font-family: sans-serif, Impact, Haettenschweiler, "Arial Narrow Bold";
+   font-family: 'Tahoma' 'sans-serif', 'Haettenschweiler', 'Impact',  'Arial Narrow Bold';
    list-style: none;
    text-decoration: none;
    box-sizing: border-box;
@@ -19,6 +19,12 @@ body {
    background-repeat: repeat;
    background-size: cover;
    background-attachment: fixed;
+}
+optgroup [label] {
+   color : yellow  ;
+   background-color: red  ;
+   margin: 1em;
+   border : 1px solid rebeccapurple;
 }
 /* ========== login Page ===========    */
 .LoginForm {
@@ -69,21 +75,11 @@ body {
       max-height: 400px;
    }
 }
-/*
-@media only screen and (max-width: 600px) {
-   .LoginForm {
-      margin: 100px auto;
-      float: none;
-   }
-   .LoginForm ~ img {
-      display: none;
-   }
-}
-*/
-/* ========== Navbar Page ===========    */
+// /* ========== Navbar Page ===========    */
 .navbar {
    color: #fff;
    background-color: $bc;
+   box-shadow: 5px 5px 5px white;
    padding: 1px;
    position: fixed;
    top: 0;
@@ -94,7 +90,7 @@ body {
       li {
          float: right;
          &:last-child {
-         float: left;
+            float: left;
          }
          a {
             display: block;
@@ -113,121 +109,9 @@ body {
 }
 section {
    display: flex;
-   flex-direction: row;
-   flex-wrap: wrap;
-   /* ========== Menu Page ===========    */
-   .wrapper{
-      float: right;
-      max-height: 595px ;
-      width: 23%;
-      overflow-y: auto;
-      line-height: 10px;
-      margin-top: 41px;
-      .mainMenu{
-         /* width: 250px; */
-         padding: 0 2px;
-         display: block;
-         border-radius: 20px;
-         overflow: hidden;
-         .item{
-            border-top: 1px solid  #0970a3;
-            overflow: hidden;
-            .btn{
-               display: block;
-               padding: 15px 20px;
-               background-color: $bc;
-               color: #fff;
-               position: relative;
-               &:hover{
-                  color: yellow ;
-                  background-color: black;
-               }
-               &:before{
-                  content: '';
-                  position: absolute;
-                  width: 0;
-                  height: 0;
-                  border-left: 8px solid transparent;
-                  border-right:8px solid transparent;
-                  border-top:10px solid $bc;
-                  right: 15px;
-                  bottom: -10px;
-                  z-index: 9;
-               }
-               i {
-                  margin-right: 10px;
-               }
-            }
-            .subMenu{
-               background: $sc;
-               overflow: hidden;
-               transition: max-height 0.7s;
-               max-height: 0;
-               a{
-                  display: block;
-                  padding: 15px 60px 15px 15px;
-                  color: #fff;
-                  font-size: 1em;
-                  border-bottom: 1px solid $mc;
-                  position: relative;
-                  &:before{
-                     content: '';
-                     opacity: 0;
-                     transition: opacity 0.3s;
-                  } 
-                  &:hover:before{
-                     content: '';
-                     position: absolute;
-                     height: 0;
-                     width: 6px;
-                     right: 0;
-                     top:0;
-                     opacity: 1;
-                     /* background-color: #d8d824; */
-                     border-top: 24px solid transparent;
-                     border-right: 11px solid $bc;
-                     border-bottom: 24px solid transparent;
-                  } 
-                  &:after{
-                     content: '';
-                     opacity: 0;
-                     transition: opacity 0.3s;
-                  }
-                  &:hover:after{
-                     content: '';
-                     position: absolute;
-                     height: 0;
-                     width: 6px;
-                     left: 0px;
-                     top:0;
-                     opacity: 1;
-                     /* background-color: #d8d824; */
-                     border-top: 24px solid transparent;
-                     border-left: 11px solid $bc;
-                     border-bottom: 24px solid transparent;
-                  }
-                  &:hover{
-                     color: #f00;
-                     background: #273057;
-                     background: -moz-linear-gradient(top, #273057 0%, #273057 50%, #394c7f 51%, #394c7f 100%);
-                     background: -webkit-linear-gradient(top, #273057 0%,#273057 50%,#394c7f 51%,#394c7f 100%);
-                     background: linear-gradient(to bottom, #273057 0%,#273057 50%,#394c7f 51%,#394c7f 100%);
-                     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#273057', endColorstr='#394c7f',GradientType=0 );
-                     transition: all 0.5s;
-                     border-bottom: 1px solid #394c7f;
-                  }
-                  &:last-child{
-                     border:none;
-                  }
-               }
-            }
-            &:target .subMenu{
-               max-height: 70em;
-            }
-         }
-      }
-   }
-   /* ========== Container Page ===========    */
+   // /* ========== Menu Page ===========    */
+   @import "wrapper" ;
+   // /* ========== Container Page ===========    */
    .container {
       margin-top: 41px;
       width: 77%;
@@ -247,177 +131,14 @@ section {
             margin: 0 auto;
             line-height: 2em;
          }
-         /* ========== Table show ===========    */
-         .mTbl {
-            margin: 2px auto;
-            width: 100%;
-            color: white;
-            border: 5px solid $bc;
-            background-color: #042331;
-            caption {
-               background-color: black;
-               color: #fff;
-               font-size: 1.5em;
-               line-height: 2em;
-               border-radius: 10px;
-               /* width: 60%; */
-               margin: 0 auto;
-               &:hover {
-                  color: yellow;
-                  text-shadow: 5px 5px 10px red;
-               }
-            }
-            thead {
-               tr th {
-                  position: sticky;
-                  top: -10px;
-                  background-color: $bc;
-                  a {
-                     display: block;
-                     margin: 0 auto;
-                     padding: 8px;
-                     color: rgb(255, 255, 255);
-                     text-shadow: 3px 3px 5px black;
-                     &:hover {
-                        color : yellow ;
-                        text-shadow: none;
-                     }
-                  }
-               }
-            }
-            tbody {
-               tr {
-                  td {
-                     direction: ltr;
-                     text-align: right;
-                     padding: 5px;
-                     div.btns {
-                        visibility: hidden;
-                        button {
-                           padding: 5px;
-                           border-radius: 10px;
-                           background-color: yellow;
-                           color: red;
-                           margin: 0 2px;
-                        }
-                     }
-                  }
-                  &:nth-child(even) {
-                     background-color: $mc;
-                  }
-                  &:nth-child(odd) {
-                     background-color: $sc;
-                  }
-                  &:hover {
-                     background-color: black;
-                     color: yellow;
-                     div.btns {
-                        visibility: visible;
-                     }
-                  }
-               }
-            }
-            thead th, tbody td {
-               border-bottom: 1px solid black;
-               border-top: 1px solid rgba(255, 255, 255, 0.1);
-               border-left: 1px solid black;
-               border-right: 1px solid rgba(255, 255, 255, 0.1);
-            }
-            tfoot {
-               font-weight: bold;
-               font-size: 1em;
-               background-color: $bc;
-               color: #fff;
-            }
-         }
+         // /* ========== Table show ===========    */
+         @import "mTbl" ;
       }
-      /* ========== Input Form ===========    */
-      .inptScrn {
-         background-color: $bc;
-         width: 30%; 
-         min-width: 300px;
-         border-radius: 25px;
-         border: 10px double $mc;
-         box-shadow: 5px 5px 15px rgb(140, 201, 251);
-         display: none;
-         position: absolute;
-         top: 5%;
-         left: 25%;
-         .btnClose {
-            color: $sc;
-            background-color: $bc;
-            width: 10%;
-            border: 10px double $mc;
-            box-shadow: 5px 5px 15px $sc;
-            position: absolute;
-            text-align: center;
-            left: -15px;
-            top: -20px;
-            &:hover {
-               color: $bc;
-               background-color: $sc;
-               border: 10px double $bc;
-               box-shadow: none;
-            }
-         }
-         form {
-            .btn[name="btnSave"]::after {
-               content: "\270D";
-            /* position: absolute; */
-               top: -3px;
-            }
-            .btn[name="btnDlt"]::before {
-               content: "\2704";
-               /* position: absolute; */
-               top: 0px;
-            }
-            button.btn {
-               width: 40%;
-               display: inline-block;
-               font-weight: bolder;
-               padding: 5px;
-               margin: 15px 4%;
-               border-radius: 25px;
-               outline: none;
-               color: white;
-               background-color: $sc;
-            }
-            .lbl {
-               display: block;
-               padding: 5px 25px 1px 10px;
-            }
-            .inpt {
-               color: white;
-               display: block;
-               padding: 5px;
-               outline: none;
-               background-color: $sc;
-               border-radius: 10px;
-               border: 1px solid $bc;
-               margin: 0 auto;
-               width: 86%;
-               direction: rtl;
-               transition: all 1s ease-in-out;
-            }
-            button.btn:hover, .inpt:focus {
-               color: red;
-               border-radius: 0px;
-            }
-            optgroup {
-               color: yellow;
-            }
-            option {
-               color: red;
-            }
-         }
-      }
-   }
-   &::after {
-      content: "";
-     /* clear: both; */
+      // /* ========== Input Form ===========    */
+      @import "inputstyle" ;
    }
 }
-/* ========== Footer Page ===========    */
+// /* ========== Footer Page ===========    */
 footer.myfooter {
    position: fixed;
    color: #f00;
@@ -436,30 +157,28 @@ footer.myfooter {
    display: none;
 }
 .dbl {
-   font-size: 1.5em;
-   line-height: 1.5em;
-   text-align: center;
+   padding-right: 200px ;
 }
-/*
+// /*
 
-   @media (max-width:767px) {
+//    @media (max-width:767px) {
 
-   }
-   @media (min-width:768px) {
+//    }
+//    @media (min-width:768px) {
       
-   }
-   @media (min-width:992px) {
+//    }
+//    @media (min-width:992px) {
       
-   }
-   @media (min-width:1200px) {
+//    }
+//    @media (min-width:1200px) {
       
-   }
+//    }
 
 
-   .container .mTbl tr > *:nth-child(2) {
-   display: none;
-}
-*/
+//    .container .mTbl tr > *:nth-child(2) {
+//    display: none;
+// }
+// */
 
 @media only print {
    .navbar , .wrapper , .myfooter {

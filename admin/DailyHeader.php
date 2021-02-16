@@ -216,44 +216,45 @@
 						<th> * </th>
 						<td class='hiddenCol'>   </td>
 						<td> ملاحظات </td>
-						<td class='hiddenCol'>  </td><td>  </td>
-						<td>  </td><td>  </td>
-						<td>  </td>
+						<td colspan="5">  </td>
 					</tr>
 				</tfoot>
          </table>
          <!-- <iframe src="pumpout.php" frameborder="0" ></iframe> -->
 		</div>
 		<!-------------------------------- Input Screen ---------------------------->
-		<div class="inptScrn" id="inptScrn">
+		<div class="row" id="row">
 			<div class="btnClose" id="btnClose" > &#10006; </div>
 			<form action="<?php echo ($_SERVER['PHP_SELF']); ?>" method="post" name="iFrm" onsubmit="return isValidForm()">
-				<input class="inpt" type="hidden" name="iId" id="iId" />
-				<label class="lbl" for="iNmbr">رقم اليومية  : </label>
-				<input class="inpt dbl" type="number" name="iNmbr" id="iNmbr" readonly />
-            <label class="lbl" for="iDt">  التاريخ : </label>
-				<input class="inpt dbl" type="date" name="iDt" id="iDt" />
-            <label class="lbl" for="iNm">اسم  : </label>
-				<select class="inpt" name="iNm" id="iNm">
-               <?php
-						for ($i=2;$i<6;$i++) {
-							echo "<optgroup label='". getNameById("Groups","g",$i). "'>";
-							$sql="SELECT * FROM Accounts WHERE aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp =". $i. ") AND (aSub=0 || aSub= ". $_SESSION['Sub'] . ")" ;
-							$result=getRows($sql);
-							foreach($result as $row) {
-								echo ("<option value=". $row['aId']. ">". $row['aNm']. "</option>");
+				<input class="" id="iId" name="iId" type="hidden"  />
+				<span>
+					<input class="swing" id="iNmbr" name="iNmbr" type="number" readonly/><label for="iNmbr">رقم الوردية</label>
+				</span>
+				<span>
+					<input class="swing" id="iDt" name="iDt" type="date" style="padding-right: 100px;" required/><label for="iDt">التاريخ</label>
+				</span>
+				<span>
+					<select class="swing" name="iNm" id="iNm" placeholder="اسم رئيس الوردية أو المسئول" >
+						<?php
+							for ($i=2;$i<6;$i++) {
+								echo "<optgroup label='". getNameById("Groups","g",$i). "'>";
+								$sql="SELECT * FROM Accounts WHERE aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp =". $i. ") AND (aSub=0 || aSub= ". $_SESSION['Sub'] . ")" ;
+								$result=getRows($sql);
+								foreach($result as $row) {
+									echo ("<option value=". $row['aId']. ">". $row['aNm']. "</option>");
+								}
+								echo "</optgroup>" ;
 							}
-							echo "</optgroup>" ;
-						}
-               ?>
-            </select>
-				<label class="lbl" for="iNts">  ملاحظات: </label>
-				<input class="inpt" type="text" name="iNts" id="iNts" maxlength="99" />
-				
+						?>
+					</select><label for="iNm"> الاسم </label>
+				</span>
+				<span>
+					<input class="swing" id="iNts" name="iNts" type="text" maxlength = "99" autocomplete="off" placeholder="وصف للوردية" /><label for="iNts">ملاحظات</label>
+				</span>
 				<button class ="btn" type="submit" name="btnSave" > حفظ  </button>
-				<button class ="btn" type="submit" name="btnDlt"  id="btnDlt" > حذف </button> 
+				<button class ="btn" type="submit" name="btnDlt"  id="btnDlt" > حذف </button>
 			</form>
-		</div>  
+		</div>
 		<!-------------------------------- Script ---------------------------------->
 		<script src="layout/js/main.js" ></script>
 		<script> 

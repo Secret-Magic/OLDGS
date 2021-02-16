@@ -207,26 +207,27 @@
 					</tbody>
 					<tfoot>
 						<tr>
-							<th> * </th><td class='hiddenCol'> </td><td> ملاحظات </td><td> </td><td> 	</td><td> </td>	<td> </td>
+							<th> * </th><td class='hiddenCol'> </td><td> ملاحظات </td><td colspan="4"> </td>
 						</tr>
 					</tfoot>
 				</table>
 			</div>
 			<!-------------------------------- Input Screen ---------------------------->
-			<div class="inptScrn" id="inptScrn">
+			<div class="row" id="row">
 				<div class="btnClose" id="btnClose" > &#10006; </div>
 				<form action="<?php echo ($_SERVER['PHP_SELF']); ?>" method="post" name="iFrm" onsubmit="return isValidForm()">
-					<input class="inpt" type="hidden" name="iId" id="iId" />
-					<label class="lbl" for="iNm">اسم المجموعة : </label>
-					<input class="inpt dbl" type="text" name="iNm" id="iNm" maxlength="99" required />
-					<label class="lbl" for="iNts">  ملاحظات: </label>
-					<input class="inpt" type="text" name="iNts" id="iNts" maxlength="99" />
-					<input class="inpt" type="hidden" name="iGrp" id="iGrp" />
-					
+					<input class="" id="iId" name="iId" type="hidden"  />
+					<span>
+						<input class="swing" id="iNm" name="iNm" type="text" maxlength = "99" autocomplete="off" placeholder="اسم المجموعة أو الفئة" required/><label for="iNm">الاسم</label>
+					</span>
+					<span>
+						<input class="swing" id="iNts" name="iNts" type="text" maxlength = "99" autocomplete="off" placeholder="وصف للمجموعة أو الفئة" /><label for="iNts">ملاحظات</label>
+					</span>
+					<input class="" id="iGrp" name="iGrp" type="hidden" />
 					<button class ="btn" type="submit" name="btnSave" > حفظ  </button>
-					<button class ="btn" type="submit" name="btnDlt"  id="btnDlt" > حذف </button> 
+					<button class ="btn" type="submit" name="btnDlt"  id="btnDlt" > حذف </button>
 				</form>
-			</div> 
+			</div>
 		<!-------------------------------- Script ---------------------------------->
 		<script src="layout/js/main.js" ></script>
 		<script> 

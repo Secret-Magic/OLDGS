@@ -176,7 +176,7 @@
 					</tbody>
 					<tfoot>
 						<tr>
-							<th> * </th> <td> </td> <td> ملاحظات </td> <td> </td> <td> </td> <td> </td>
+							<th> * </th> <td> </td> <td> ملاحظات </td> <td colspan="3"> </td>
 						</tr>
 					</tfoot>
 				</table>	

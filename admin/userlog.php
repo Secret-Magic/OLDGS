@@ -196,39 +196,44 @@
 					</tbody>
 					<tfoot>
 						<tr>
-							<th> * </th><td class='hiddenCol'> </td><td class='hiddenCol'> </td><td> ملاحظات </td><td> </td>	<td> </td><td> </td><td> </td>
+							<th> * </th><td class='hiddenCol'> </td><td class='hiddenCol'> </td><td> ملاحظات </td><td colspan="4"> </td>
 						</tr>
 					</tfoot>
 				</table>
 			</div>
 			<!-------------------------------- Input Screen ---------------------------->
-			<div class="inptScrn" id="inptScrn">
+			<div class="row" id="row">
 				<div class="btnClose" id="btnClose" > &#10006; </div>
 				<form action="<?php echo ($_SERVER['PHP_SELF']); ?>" method="post" name="iFrm" onsubmit="return isValidForm()">
-					<input class="inpt" type="hidden" name="iId" id="iId" />
-					<label class="lbl" for="iUsrId">اسم المستخدم : </label>
-					<select class="inpt" name="iUsrId" id="iUsrId">
-						<?php
-							//$sql="SELECT * FROM Users WHERE usId NOT IN (SELECT ulUsrId FROM UserLog) AND usGrp IN (SELECT gId FROM Groups WHERE gGrpTyp BETWEEN 2 AND 4) ;" ;
-							$sql="SELECT * FROM Accounts WHERE (aSub=0 || aSub = ". $_SESSION['Sub'] . " ) AND aWrk=1 AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp BETWEEN 2 AND 4) ;" ;
-							$result=getRows($sql);
-							foreach($result as $row) {
-								echo ("<option value=". $row['aId']. ">". $row['aNm']. "</option> ");
-							}
-						?>
-					</select>
-					<label class="lbl" for="iUsr"> اسم الدخول : </label>
-					<input class="inpt" type="text" name="iUsr" id="iUsr" maxlength="99" />
-					<label class="lbl" for="inPsswrd">  كلمة المرور: </label>
-					<input class="inpt" type="hidden" name="ioPsswrd" id="ioPsswrd" maxlength="255" />
-					<input class="inpt" type="password" name="inPsswrd" id="inPsswrd" maxlength="255" />
-					<label class="lbl" for="iEml"> البريد الالكترونى : </label>
-					<input class="inpt" type="text" name="iEml" id="iEml" />
-					<label class="lbl" for="iMxLg">  حد الدخول: </label>
-					<input class="inpt" type="number" name="iMxLg" id="iMxLg" maxlength="10" />
-
+					<input class="" id="iId" name="iId" type="hidden"  />
+					<span>
+                  <select class="swing" name="iUsrId" id="iUsrId">
+                     <?php
+                        //$sql="SELECT * FROM Users WHERE usId NOT IN (SELECT ulUsrId FROM UserLog) AND usGrp IN (SELECT gId FROM Groups WHERE gGrpTyp BETWEEN 2 AND 4) ;" ;
+								$sql="SELECT * FROM Accounts WHERE (aSub=0 || aSub = ". $_SESSION['Sub'] . " ) AND aWrk=1 AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp BETWEEN 2 AND 4) ;" ;
+								$result=getRows($sql);
+								foreach($result as $row) {
+									echo ("<option value=". $row['aId']. ">". $row['aNm']. "</option> ");
+								}
+                     ?>
+                  </select><label for="iUsrId"> المستخدم </label>
+               </span>
+					<span>
+						<input class="swing" id="iUsr" name="iUsr" type="text" maxlength = "99" autocomplete="off" placeholder="اسم الدخول" required/><label for="iUsr">الاسم</label>
+					</span>
+					<input class="" id="ioPsswrd" name="ioPsswrd" type="hidden" maxlength = "99" />
+					<span>
+						<input class="swing" id="inPsswrd" name="inPsswrd" type="password" maxlength = "99" placeholder="كلمة السر" /><label for="inPsswrd">كلمة المرور</label>
+					</span>
+					<span>
+						<input class="swing" id="iEml" name="iEml" type="text" maxlength = "99" autocomplete="off" placeholder="البريد الالكترونى" /><label for="iEml">البريد</label>
+					</span>
+               <span>
+						<input class="swing" id="iMxLg" name="iMxLg" type="number" maxlength = "10" /><label for="iMxLg">حد الدخول</label>
+					</span>
+					
 					<button class ="btn" type="submit" name="btnSave" > حفظ  </button>
-					<button class ="btn" type="submit" name="btnDlt"  id="btnDlt" > حذف </button> 
+					<button class ="btn" type="submit" name="btnDlt"  id="btnDlt" > حذف </button>
 				</form>
 			</div>  
 		<!-------------------------------- Script ---------------------------------->

@@ -146,7 +146,7 @@
 						<th class='hiddenCol'> الكود 	</th>
 						<th> رقم الفاتورة </th>
 						<th> نوع الفاتورة </th>
-                  <th class='hiddenCol'> كود الاسم 	 </th>
+                  <th class='hiddenCol'> كود الاسم  </th>
                   <th> الاسم 	 </th>
 						<th> التاريخ </th>
 						<th> ملاحظات  </th>
@@ -207,62 +207,64 @@
 				<tfoot>
 					<tr>
 						<th> * </th> <td class='hiddenCol'>   </td> <td class='hiddenCol'>  </td>
-						<td class='hiddenCol'> 	 </td> <td> ملاحظات	 </td> <td class='hiddenCol'> 	 </td>
-						<td> 	 </td> <td> 	 </td> <td> 	 </td>
-						<td> 	 </td> </td> <td> 
+						<td class='hiddenCol'> 	 </td> <td> ملاحظات	 </td> <td colspan="6"> 	 </td> 
 					</tr>
 				</tfoot>
 			</table>
 		</div>
 		<!-------------------------------- Input Screen ---------------------------->
-		<div class="inptScrn" id="inptScrn">
+		<div class="row" id="row">
 			<div class="btnClose" id="btnClose" > &#10006; </div>
 			<form action="<?php echo ($_SERVER['PHP_SELF']); ?>" method="post" name="iFrm" onsubmit="return isValidForm()">
-				<input class="inpt" type="hidden" name="iId" id="iId" />
-				<input class="inpt" type="hidden" name="iBll" id="iBll" />
-				<label class="lbl" for="iStr">اسم المخزن : </label>
-				<select class="inpt" name="iStr" id="iStr">
-					<?php
-						if ($tmpKnd) {
-							$sql="SELECT * FROM Accounts WHERE aSub=". $_SESSION['Sub'] . " AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp BETWEEN 9 AND 11)" ;	
-						}else {
-							$sql="SELECT * FROM Accounts WHERE aSub=". $_SESSION['Sub'] . " AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp BETWEEN 10 AND 11)" ;
-						}
-						$result=getRows($sql);
-						foreach($result as $row) {
-							echo ("<option value=". $row['aId']. ">". $row['aNm']. "</option> ");
-						}
-					?>
-				</select>
-				<label class="lbl" for="iGds"> الصنف  : </label>
-				<select class="inpt" name="iGds" id="iGds">
-					<?php
-						if ($tmpKnd) {
-							$sql="SELECT * FROM Goods ;" ;
-						} else {
-							$sql="SELECT * FROM Goods WHERE gGrp IN (SELECT gId FROM Groups WHERE gGrpTyp!=12) ;" ;
-						}
-						$result=getRows($sql);
-						foreach($result as $row) {
-							echo ("<option value=". $row['gId']. ">". $row['gNm']. "</option> ");
-						}
-					?>
-				</select>
-				<label class="lbl" for="iQntty">  الكمية : </label>
-				<input class="inpt" type="number" name="iQntty" id="iQntty" maxlength="10" min=0 />
-				<label class="lbl" for="iPrc"> السعر : </label>
-				<input class="inpt" type="text" name="iPrc" id="iPrc" maxlength="11" pattern="[0-9]+(\.[0-9]*)?" />
-				
-				<label class="lbl" for="iDscnt"> الخصم : </label>
-				<input class="inpt" type="text" name="iDscnt" id="iDscnt" maxlength="8" pattern="[0-9]+(\.[0-9]*)?"/>
-				
-				<label class="lbl" for="iNts">  ملاحظات: </label>
-				<input class="inpt" type="text" name="iNts" id="iNts" maxlength="99" />
-				
+				<input class="" id="iId" name="iId" type="hidden"  />
+				<input class="" id="iBll" name="iBll" type="hidden"  />
+				<span>
+					<select class="swing" name="iStr" id="iStr" placeholder="اسم المخزن" >
+						<?php
+							if ($tmpKnd) {
+								$sql="SELECT * FROM Accounts WHERE aSub=". $_SESSION['Sub'] . " AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp BETWEEN 9 AND 11)" ;	
+							}else {
+								$sql="SELECT * FROM Accounts WHERE aSub=". $_SESSION['Sub'] . " AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp BETWEEN 10 AND 11)" ;
+							}
+							$result=getRows($sql);
+							foreach($result as $row) {
+								echo ("<option value=". $row['aId']. ">". $row['aNm']. "</option> ");
+							}
+						?>
+					</select><label for="iStr"> المخزن </label>
+				</span>
+				<span>
+					<select class="swing" name="iGds" id="iGds" placeholder="اسم الصنف" >
+						<?php
+							if ($tmpKnd) {
+								$sql="SELECT * FROM Goods ;" ;
+							} else {
+								$sql="SELECT * FROM Goods WHERE gGrp IN (SELECT gId FROM Groups WHERE gGrpTyp!=12) ;" ;
+							}
+							$result=getRows($sql);
+							foreach($result as $row) {
+								echo ("<option value=". $row['gId']. ">". $row['gNm']. "</option> ");
+							}
+						?>
+					</select><label for="iGds"> الصنف </label>
+				</span>
+				<span>
+					<input class="swing" id="iQntty" name="iQntty" type="number" min="0" maxlength="10" placeholder="كمية الصنف" autocomplete="off"  /><label for="iQntty">الكمية</label>
+				</span>
+				<span>
+					<input class="swing" id="iPrc" name="iPrc" type="text" autocomplete="off" placeholder="سعر الصنف" pattern="[0-9]+(\.[0-9]*)?" /><label for="iPrc">السعر</label>
+				</span>
+				<span>
+					<input class="swing" id="iDscnt" name="iDscnt" type="text" autocomplete="off" placeholder="قيمة الخصم على الصنف" pattern="[0-9]+(\.[0-9]*)?" /><label for="iDscnt">الخصم</label>
+				</span>
+				<span>
+					<input class="swing" id="iNts" name="iNts" type="text" maxlength = "99" autocomplete="off" placeholder="وصف الصنف" /><label for="iNts">ملاحظات</label>
+				</span>
+
 				<button class ="btn" type="submit" name="btnSave" > حفظ  </button>
-				<button class ="btn" type="submit" name="btnDlt"  id="btnDlt" > حذف </button> 
+				<button class ="btn" type="submit" name="btnDlt"  id="btnDlt" > حذف </button>
 			</form>
-		</div>  
+		</div>
 		<!-------------------------------- Script ---------------------------------->
 		<script src="layout/js/main.js" ></script>
 		<script> 

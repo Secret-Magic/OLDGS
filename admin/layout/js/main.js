@@ -5,7 +5,7 @@
 function exitInptScrn() {
    "use strict";
 
-   document.getElementById('inptScrn').style.display = 'none';
+   document.getElementById('row').style.display = 'none';
    document.getElementById('dvTbl').style.opacity = 1;
    document.getElementById('dvTbl').style.pointerEvents = "visible";
    //document.getElementById('dvTbl').style.display = "block";
@@ -14,7 +14,7 @@ function exitInptScrn() {
 function showInptScrn() {
    "use strict";
 
-   document.getElementById('inptScrn').style.display = "block";
+   document.getElementById('row').style.display = "block";
    document.getElementById('dvTbl').style.opacity = 0.95;
    document.getElementById('dvTbl').style.pointerEvents = "none";
    if (document.getElementById('iId').value === "0") {

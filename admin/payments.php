@@ -178,49 +178,51 @@
 				<tfoot>
 					<tr>
 						<th> * </th> <td> </td> <td> ملاحظات </td>
-						<td> 	 </td> <td> </td>	<td> </td> <td> </td>
-						<td> 	 </td> <td> </td>
+						<td colspan="6"> 	 </td> 
 					</tr>
 				</tfoot>
 			</table>
 		</div>
 		<!-------------------------------- Input Screen ---------------------------->
-		<div class="inptScrn" id="inptScrn">
+		<div class="row" id="row">
 			<div class="btnClose" id="btnClose" > &#10006; </div>
 			<form action="<?php echo ($_SERVER['PHP_SELF']); ?>" method="post" name="iFrm" onsubmit="return isValidForm()">
-				<input class="inpt" type="hidden" name="iId" id="iId" />
-				<label class="lbl" for="iDt"> التاريخ : </label>
-				<input class="inpt dbl" type="date" name="iDt" id="iDt" required />
-				<label class="lbl" for="iCstmr"> العميل : </label>
-				<select class="inpt" name="iCstmr" id="iCstmr">
-					<?php
-						$sql="SELECT * FROM accounts WHERE aWrk=1 AND aSub = ".$_SESSION['Sub'] . " AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp BETWEEN 2 AND 8) ;" ;
-						$result=getRows($sql);
-						foreach($result as $row) {
-							echo ("<option value=". $row['aId']. ">". $row['aNm']. "</option> ");
-						}
-					?>
-				</select>
-				<label class="lbl" for="iVl"> المبلغ : </label>
-				<input class="inpt dbl" type="number" name="iVl" id="iVl" maxlength="10" required />
-				
-				<label class="lbl" for="iStr"> الخزينة  : </label>
-				<select class="inpt" name="iStr" id="iStr">
-					<?php
-						$sql="SELECT * FROM accounts WHERE aWrk=1 AND aSub = ".$_SESSION['Sub'] . " AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp BETWEEN 2 AND 8) ;" ;
-						$result=getRows($sql);
-						foreach($result as $row) {
-							echo ("<option value=". $row['aId']. ">". $row['aNm']. "</option> ");
-						}
-					?>
-				</select>
-				<label class="lbl" for="iNts">  ملاحظات: </label>
-				<input class="inpt" type="text" name="iNts" id="iNts" maxlength="99" />
-				
+				<input class="" id="iId" name="iId" type="hidden"  />
+				<span>
+					<input class="swing" id="iDt" name="iDt" type="date" style="padding-right: 100px;" required/><label for="iDt">التاريخ</label>
+				</span>
+				<span>
+					<select class="swing" name="iCstmr" id="iCstmr" placeholder="اسم العميل" >
+						<?php
+							$sql="SELECT * FROM accounts WHERE aWrk=1 AND aSub = ".$_SESSION['Sub'] . " AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp BETWEEN 2 AND 8) ;" ;
+							$result=getRows($sql);
+							foreach($result as $row) {
+								echo ("<option value=". $row['aId']. ">". $row['aNm']. "</option> ");
+							}
+						?>
+					</select><label for="iCstmr"> الاسم </label>
+				</span>
+				<span>
+					<input class="swing" id="iVl" name="iVl" type="number" required /><label for="iVl">المبلغ</label>
+				</span>
+				<span>
+					<select class="swing" name="iStr" id="iStr" placeholder="اسم الخزينة" >
+						<?php
+							$sql="SELECT * FROM accounts WHERE aWrk=1 AND aSub = ".$_SESSION['Sub'] . " AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp BETWEEN 2 AND 8) ;" ;
+							$result=getRows($sql);
+							foreach($result as $row) {
+								echo ("<option value=". $row['aId']. ">". $row['aNm']. "</option> ");
+							}
+						?>
+					</select><label for="iStr"> الخزينة </label>
+				</span>
+				<span>
+					<input class="swing" id="iNts" name="iNts" type="text" maxlength = "99" autocomplete="off" placeholder="وصف للعملية" /><label for="iNts">ملاحظات</label>
+				</span>
 				<button class ="btn" type="submit" name="btnSave" > حفظ  </button>
-					<button class ="btn" type="submit" name="btnDlt"  id="btnDlt" > حذف </button> 
+				<button class ="btn" type="submit" name="btnDlt"  id="btnDlt" > حذف </button>
 			</form>
-		</div>  
+		</div>
 		<!-------------------------------- Script ---------------------------------->
 		<script src="layout/js/main.js" ></script>
 		<script> 

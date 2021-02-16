@@ -208,50 +208,55 @@
 				<tfoot>
 					<tr>
 						<th> * </th> <td class='hiddenCol'> </td> <td> ملاحظات </td>
-						<td> 	 </td> <td> </td>	<td class='hiddenCol'> </td> <td> </td>
-						<td class='hiddenCol'> 	 </td> <td> </td> <td></td> <td></td> <td> </td>
+						<td colspan="9"> 	 </td> 
 					</tr>
 				</tfoot>
 			</table>
 		</div>
 		<!-------------------------------- Input Screen ---------------------------->
-		<div class="inptScrn" id="inptScrn">
+		<div class="row" id="row">
 			<div class="btnClose" id="btnClose" > &#10006; </div>
 			<form action="<?php echo ($_SERVER['PHP_SELF']); ?>" method="post" name="iFrm" onsubmit="return isValidForm()">
-				<input class="inpt" type="hidden" name="iId" id="iId" />
-				<label class="lbl" for="iNm">اسم الطلمبة : </label>
-				<input class="inpt" type="text" name="iNm" id="iNm" placeholder="الاسم" maxlength="99" required />
-				<label class="lbl" for="iFrstNmbr"> العداد السرى : </label>
-				<input class="inpt dbl" type="number" name="iFrstNmbr" id="iFrstNmbr" maxlength="10" required />
-				<label class="lbl" for="iFrstDt">  التاريخ : </label>
-				<input class="inpt dbl" type="date" name="iFrstDt" id="iFrstDt" required />
-				<label class="lbl" for="iTnk"> التانك  : </label>
-				<select class="inpt" name="iTnk" id="iTnk">
-					<?php
-						$sql="SELECT * FROM accounts WHERE aWrk=1 AND aSub = ".$_SESSION['Sub'] . " AND aGrp IN (SELECT gId FROM Groups WHERE gWrk=1 AND gGrpTyp=9) ;" ;
-						$result=getRows($sql);
-						foreach($result as $row) {
-							echo ("<option value=". $row['aId']. ">". $row['aNm']. "</option> ");
-						}
-					?>
-				</select>
-				<label class="lbl" for="iGds"> نوع الوقود  : </label>
-				<select class="inpt" name="iGds" id="iGds">
-					<?php
-						$sql="SELECT * FROM Goods WHERE gWrk=1 AND gGrp IN (SELECT gId FROM Groups WHERE gWrk=1 AND gGrpTyp=12) ;" ;
-						$result=getRows($sql);
-						foreach($result as $row) {
-							echo ("<option value=". $row['gId']. ">". $row['gNm']. "</option> ");
-						}
-					?>
-				</select>
-				<label class="lbl" for="iNts">  ملاحظات: </label>
-				<input class="inpt" type="text" name="iNts" id="iNts" maxlength="99" />
+				<input class="" id="iId" name="iId" type="hidden"  />
+				<span>
+					<input class="swing" id="iNm" name="iNm" type="text" maxlength = "99" autocomplete="off" placeholder="اسم الطلمبة" required/><label for="iNm">الاسم</label>
+				</span>
+				<span>
+					<input class="swing" id="iFrstNmbr" name="iFrstNmbr" type="number" maxlength = "10" placeholder="العداد السرى" required/><label for="iFrstNmbr">العداد</label>
+				</span>
+				<span>
+					<input class="swing" style="padding-right: 100px;" id="iFrstDt" name="iFrstDt" type="date" required/><label for="iFrstDt">التاريخ</label>
+				</span>
+				<span>
+					<select class="swing" name="iTnk" id="iTnk" placeholder="اسم التانك">
+						<?php
+							$sql="SELECT * FROM accounts WHERE aWrk=1 AND aSub = ".$_SESSION['Sub'] . " AND aGrp IN (SELECT gId FROM Groups WHERE gWrk=1 AND gGrpTyp=9) ;" ;
+							$result=getRows($sql);
+							foreach($result as $row) {
+								echo ("<option value=". $row['aId']. ">". $row['aNm']. "</option> ");
+							}
+						?>
+					</select><label for="iTnk"> التانك </label>
+				</span>
+				<span>
+					<select class="swing" name="iGds" id="iGds" placeholder="نوع الوقود">
+						<?php
+							$sql="SELECT * FROM Goods WHERE gWrk=1 AND gGrp IN (SELECT gId FROM Groups WHERE gWrk=1 AND gGrpTyp=12) ;" ;
+							$result=getRows($sql);
+							foreach($result as $row) {
+								echo ("<option value=". $row['gId']. ">". $row['gNm']. "</option> ");
+							}
+						?>
+					</select><label for="iGds"> التانك </label>
+				</span>
+				<span>
+					<input class="swing" id="iNts" name="iNts" type="text" maxlength = "99" autocomplete="off" placeholder="وصف للطلمبة" /><label for="iNts">ملاحظات</label>
+				</span>
 				
 				<button class ="btn" type="submit" name="btnSave" > حفظ  </button>
-					<button class ="btn" type="submit" name="btnDlt"  id="btnDlt" > حذف </button> 
+				<button class ="btn" type="submit" name="btnDlt"  id="btnDlt" > حذف </button>
 			</form>
-		</div>  
+		</div>
 		<!-------------------------------- Script ---------------------------------->
 		<script src="layout/js/main.js" ></script>
 		<script> 

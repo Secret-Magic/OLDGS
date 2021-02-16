@@ -203,9 +203,7 @@
 					<tfoot>
 						<tr>
 							<th> * </th> <td>   </td> <td> ملاحظات </td>
-							<td> 	 </td> 	<td> 	 </td> 	<td> 	 </td>
-							<td> 	 </td> <td> 	 </td> 
-							<td> 	 </td>
+							<td colspan="6"> 	 </td> 
 						</tr>
 					</tfoot>
 				</table>

@@ -17,15 +17,15 @@
          if(isset($_POST['btnSave'])) {	
             if (isset($_POST['iId'])) {
                if ($_POST['iId']>0 ) {
-                  if (isSaved("ssId", "Subsidairy", intval($_POST['iId']))) {
+                  if (isSaved("ssId", "Subsidiary", intval($_POST['iId']))) {
                      if (empty(vldtVrbl($_POST['iNm']))) {
                         $errs[]=" الاسم فارغ";
                      }
-                     elseif (isSaved("ssNm", "Subsidairy", vldtVrbl($_POST['iNm']),  " AND ssId<>". vldtVrbl($_POST['iId']))) {
+                     elseif (isSaved("ssNm", "Subsidiary", vldtVrbl($_POST['iNm']),  " AND ssId<>". vldtVrbl($_POST['iId']))) {
                         $errs[]=" الاسم مكرر ";
                      }
                      else {
-                        $sql="UPDATE Subsidairy SET ssNm=?, ssNts=? , ssGrp=? WHERE ssId=? ;";
+                        $sql="UPDATE Subsidiary SET ssNm=?, ssNts=? , ssGrp=? WHERE ssId=? ;";
                         $vl=array(vldtVrbl($_POST['iNm']), vldtVrbl($_POST['iNts']), vldtVrbl($_POST['iGrp']), vldtVrbl($_POST['iId']));
                         $report="تم حفظ التعديلات";
                         $goOn= TRUE ;
@@ -39,11 +39,11 @@
                   if (empty(vldtVrbl($_POST['iNm']))) {
                      $errs[]=" الاسم فارغ";
                   }
-                  elseif (isSaved("ssNm", "Subsidairy", vldtVrbl($_POST['iNm']))) {
+                  elseif (isSaved("ssNm", "Subsidiary", vldtVrbl($_POST['iNm']))) {
                      $errs[]=" الاسم مكرر ";
                   }
                   else {
-                     $sql="INSERT INTO Subsidairy (ssNm, ssNts, ssGrp) VALUES (?,?,?) ;";
+                     $sql="INSERT INTO Subsidiary (ssNm, ssNts, ssGrp) VALUES (?,?,?) ;";
                      $vl=array(vldtVrbl($_POST['iNm']), vldtVrbl($_POST['iNts']), vldtVrbl($_POST['iGrp']) );
                      $report="تم إضافة بيان جديد";
                      $goOn = TRUE ;
@@ -56,24 +56,20 @@
          }
          elseif(isset($_POST['btnDlt'])) {
             if (isset($_POST['iId']) && intval($_POST['iId'])>1) {
-               if (isSaved("ssId", "Subsidairy", intval($_POST['iId']))) {
+               if (isSaved("ssId", "Subsidiary", intval($_POST['iId']))) {
                   if (isSaved("aSub", "Accounts", intval($_POST['iId']))) {
                      $errs[]="يوجد حسابات لهذا الفرع";
                   }
                   elseif (isSaved("bhSub", "BillHeader", intval($_POST['iId']))) {
                      $errs[]="يوجد فواتير لهذا الفرع";
                   }
-                  elseif (isSaved("dhSub", "DialyHeader", intval($_POST['iId']))) {
-                     $errs[]="يوجد يوميات لهذا الفرع";
-                  }
+                  
                   elseif (isSaved("pSub", "Pumps", intval($_POST['iId']))) {
                      $errs[]="يوجد طلمبات لهذا الفرع";
                   }
-                  elseif (isSaved("usSub", "Users", intval($_POST['iId']))) {
-                     $errs[]="يوجد مستخدمين لهذا الفرع";
-                  }
+                  
                   else {
-                     $sql="DELETE FROM Subsidairy WHERE `ssId`=? ;";
+                     $sql="DELETE FROM Subsidiary WHERE `ssId`=? ;";
                      $vl = array(intval($_POST['iId']));
                      $report="تم حذفه";
                      $goOn=TRUE;
@@ -175,7 +171,7 @@
                <tbody>
                   <?php 
                      $rc=0;     
-                     $sql="SELECT * FROM Subsidairy WHERE ssNm like '%".vldtVrbl($_SESSION['strSrch'])."%' ".$_SESSION['strSrt']  ;
+                     $sql="SELECT * FROM Subsidiary WHERE ssNm like '%".vldtVrbl($_SESSION['strSrch'])."%' ".$_SESSION['strSrt']  ;
                      $result=getRows($sql);
                      foreach($result as $row) {
                         echo ("<tr> <td>". ++$rc. "</td> <td class='hiddenCol'>". $row['ssId']. "</td>
@@ -188,35 +184,37 @@
                </tbody>
                <tfoot>
                   <tr>
-                     <th> * </th><td class='hiddenCol'> </td><td> ملاحظات </td><td> </td><td> </td><td> </td><td> </td>
+                     <th> * </th><td class='hiddenCol'> </td><td> ملاحظات </td><td colspan="4"> </td>
                   </tr>
                </tfoot>
             </table>
          </div>
          <!-------------------------------- Input Screen ---------------------------->
-         <div class="inptScrn" id="inptScrn">
-            <div class="btnClose" id="btnClose" > &#10006; </div>
-            <form action="<?php echo ($_SERVER['PHP_SELF']); ?>" method="post" name="iFrm" onsubmit="return isValidForm()">
-               <input class="inpt" type="hidden" name="iId" id="iId" />
-               <label class="lbl" for="iNm">اسم الفرع : </label>
-               <input class="inpt dbl" type="text" name="iNm" id="iNm" maxlength="99" required />
-               <label class="lbl" for="iNts">  ملاحظات: </label>
-               <input class="inpt" type="text" name="iNts" id="iNts" maxlength="99" />
-               <label class="lbl" for="iGrp">  المجموعة: </label>
-               <select class="inpt" name="iGrp" id="iGrp">
-                  <?php
-                     $sql="SELECT * FROM Groups WHERE gWrk=1 AND gGrpTyp =1 " ;
-                     $result=getRows($sql);
-                     foreach($result as $row) {
-                        echo ("<option value=". $row['gId']. ">". $row['gNm']. "</option> ");
-                     }
-                  ?>
-               </select>
-
-               <button class ="btn" type="submit" name="btnSave" > حفظ  </button>
-					<button class ="btn" type="submit" name="btnDlt"  id="btnDlt" > حذف </button> 
-            </form>
-         </div>  
+         <div class="row" id="row">
+				<div class="btnClose" id="btnClose" > &#10006; </div>
+				<form action="<?php echo ($_SERVER['PHP_SELF']); ?>" method="post" name="iFrm" onsubmit="return isValidForm()">
+					<input class="" id="iId" name="iId" type="hidden"  />
+					<span>
+						<input class="swing" id="iNm" name="iNm" type="text" maxlength = "99" autocomplete="off" placeholder="اسم الفرع" required/><label for="iNm">الاسم</label>
+					</span>
+					<span>
+						<input class="swing" id="iNts" name="iNts" type="text" maxlength = "99" autocomplete="off" placeholder="وصف للفرع" /><label for="iNts">ملاحظات</label>
+					</span>
+               <span>
+                  <select class="swing" name="iGrp" id="iGrp">
+                     <?php
+                        $sql="SELECT * FROM Groups WHERE gWrk=1 AND gGrpTyp =1 " ;
+                        $result=getRows($sql);
+                        foreach($result as $row) {
+                           echo ("<option value=". $row['gId']. ">". $row['gNm']. "</option> ");
+                        }
+                     ?>
+                  </select><label for="iGrp">  المجموعة: </label>
+               </span>
+					<button class ="btn" type="submit" name="btnSave" > حفظ  </button>
+					<button class ="btn" type="submit" name="btnDlt"  id="btnDlt" > حذف </button>
+				</form>
+			</div>
       <!-------------------------------- Script ---------------------------------->
       <script src="layout/js/main.js" ></script>
       <script> 

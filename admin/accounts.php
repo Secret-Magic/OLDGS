@@ -202,41 +202,41 @@
 							<th> * </th>
 							<td class='hiddenCol'>   </td>
 							<td> ملاحظات </td>
-							<td> 	 </td>
-							<td> 	 </td><td> 	 </td>
-							<td> 	 </td>
-							<td> 	 </td>
-							<td class='hiddenCol'> 	 </td>
+							<td colspan="6"> 	 </td>
 						</tr>
 					</tfoot>
 				</table>
 			</div>
 			<!-------------------------------- Input Screen ---------------------------->
-			<div class="inptScrn" id="inptScrn">
+			<div class="row" id="row">
 				<div class="btnClose" id="btnClose" > &#10006; </div>
 				<form action="<?php echo ($_SERVER['PHP_SELF']); ?>" method="post" name="iFrm" onsubmit="return isValidForm()">
-					<input class="inpt" type="hidden" name="iId" id="iId" />
-					<label class="lbl" for="iNm">اسم الحساب : </label>
-					<input class="inpt dbl" type="text" name="iNm" id="iNm" maxlength="99" required />
-					<label class="lbl" for="iMax"> المسموح : </label>
-					<input class="inpt" type="number" name="iMax" id="iMax" maxlength="10"  />
-					<label class="lbl" for="iNts">  ملاحظات: </label>
-					<input class="inpt" type="text" name="iNts" id="iNts" maxlength="99" />
-					<label class="lbl" for="iGrp">  المجموعة: </label>
-					<select class="inpt" name="iGrp" id="iGrp">
-						<?php
-							$sql="SELECT * FROM Groups WHERE gWrk=1 AND gGrpTyp = ". $_SESSION['iCstmrTyp']. " ;" ;
-							$result=getRows($sql);
-							foreach($result as $row) {
-								echo "<option value=". $row['gId']. ">". $row['gNm']. "</option> ";
-							}
-						?>
-					</select>
-
+					<input class="" id="iId" name="iId" type="hidden"  />
+					<span>
+						<input class="swing" id="iNm" name="iNm" type="text" maxlength = "99" autocomplete="off" placeholder="اسم الحساب" required/><label for="iNm">الاسم</label>
+					</span>
+					<span>
+						<input class="swing" id="iMax" name="iMax" type="number" maxlength = "10" /><label for="iMax">المسموح</label>
+					</span>
+					<span>
+						<input class="swing" id="iNts" name="iNts" type="text" maxlength = "99" autocomplete="off" placeholder="وصف الحساب" /><label for="iNts">ملاحظات</label>
+					</span>
+               <span>
+                  <select class="swing" name="iGrp" id="iGrp">
+                     <?php
+                        $sql="SELECT * FROM Groups WHERE gWrk=1 AND gGrpTyp = ". $_SESSION['iCstmrTyp']. " ;" ;
+								$result=getRows($sql);
+								foreach($result as $row) {
+									echo "<option value=". $row['gId']. ">". $row['gNm']. "</option> ";
+								}
+                     ?>
+                  </select><label for="iGrp">  المجموعة: </label>
+               </span>
+					
 					<button class ="btn" type="submit" name="btnSave" > حفظ  </button>
-					<button class ="btn" type="submit" name="btnDlt"  id="btnDlt" > حذف </button> 
+					<button class ="btn" type="submit" name="btnDlt"  id="btnDlt" > حذف </button>
 				</form>
-			</div>  
+			</div>
 		<!-------------------------------- Script ---------------------------------->
 		<script src="layout/js/main.js" ></script>
 		<script> 
@@ -263,10 +263,10 @@
 			}
 		</script>
 <?php
-        include_once TPL. 'footer.php' ;
+      include_once TPL. 'footer.php' ;
 	}
 	else {
-        header("location: index.php");
-        exit ();
-    }
+		header("location: index.php");
+		exit ();
+   }
 ?>
