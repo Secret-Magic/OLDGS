@@ -1,6 +1,9 @@
-$mc: #042331;
-$sc: #063146;
-$bc: #0d86f0;
+$mc : #042331 ;
+$sc : #063146 ;
+$bc : #0d86f0 ;
+$c  : #ffffff ;
+$hc : #ffff00 ;
+$hbc: #000000 ;
 
 * {
    margin: 0;
@@ -21,8 +24,8 @@ body {
    background-attachment: fixed;
 }
 optgroup [label] {
-   color : yellow  ;
-   background-color: red  ;
+   color : $hc  ;
+   background-color: $hbc  ;
    margin: 1em;
    border : 1px solid rebeccapurple;
 }
@@ -65,7 +68,7 @@ optgroup [label] {
       }
       .btn {
          background-color: #3d0101;
-         color: white;
+         color: $c;
          text-align: center;
          width: 50%;
       }
@@ -77,9 +80,9 @@ optgroup [label] {
 }
 // /* ========== Navbar Page ===========    */
 .navbar {
-   color: #fff;
+   color:$c;
    background-color: $bc;
-   box-shadow: 5px 5px 5px white;
+   box-shadow: 5px 5px 5px $c;
    padding: 1px;
    position: fixed;
    top: 0;
@@ -94,13 +97,13 @@ optgroup [label] {
          }
          a {
             display: block;
-            color: white;
+            color: $c;
             text-align: center;
             padding: 10px 16px;
             margin: 3px 1px;
             &:focus {
-               background-color: #111;
-               color: yellow;
+               background-color: $hbc;
+               color: $hc;
                border-radius: 10px;
             }
          }
@@ -149,8 +152,8 @@ footer.myfooter {
    padding: 3px;
    border: 2px solid #111;
    &:hover {
-      color: yellow;
-      background-color: black;
+      color: $hc;
+      background-color: $hbc;
    }
 }
 .hiddenCol {

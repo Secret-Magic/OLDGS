@@ -1,19 +1,18 @@
 .mTbl {
    margin: 2px auto;
    width: 100%;
-   color: white;
+   color: $c;
    border: 5px solid $bc;
    background-color: #042331;
    caption {
       background-color: black;
-      color: #fff;
+      color: $c;
       font-size: 1.5em;
       line-height: 2em;
       border-radius: 10px;
-      /* width: 60%; */
       margin: 0 auto;
       &:hover {
-         color: yellow;
+         color: $hc;
          text-shadow: 5px 5px 10px red;
       }
    }
@@ -26,10 +25,10 @@
             display: block;
             margin: 0 auto;
             padding: 8px;
-            color: rgb(255, 255, 255);
+            color: $c;
             text-shadow: 3px 3px 5px black;
             &:hover {
-               color : yellow ;
+               color : $hc ;
                text-shadow: none;
             }
          }
@@ -46,8 +45,8 @@
                button {
                   padding: 5px;
                   border-radius: 10px;
-                  background-color: yellow;
-                  color: red;
+                  background-color: $bc;
+                  color: $c;
                   margin: 0 2px;
                }
             }
@@ -59,8 +58,8 @@
             background-color: $sc;
          }
          &:hover {
-            background-color: black;
-            color: yellow;
+            background-color: $hbc;
+            color: $hc;
             div.btns {
                visibility: visible;
             }
@@ -76,7 +75,8 @@
    tfoot {
       font-weight: bold;
       font-size: 1em;
+      text-align: center;
       background-color: $bc;
-      color: #fff;
+      color: $c;
    }
 }

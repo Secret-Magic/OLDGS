@@ -20,8 +20,8 @@ body {
 }
 
 optgroup [label] {
-  color: yellow;
-  background-color: red;
+  color: #ffff00;
+  background-color: #000000;
   margin: 1em;
   border: 1px solid rebeccapurple;
 }
@@ -80,7 +80,7 @@ optgroup [label] {
 
 .LoginForm form .btn {
   background-color: #3d0101;
-  color: white;
+  color: #ffffff;
   text-align: center;
   width: 50%;
 }
@@ -91,10 +91,10 @@ optgroup [label] {
 }
 
 .navbar {
-  color: #fff;
+  color: #ffffff;
   background-color: #0d86f0;
-  -webkit-box-shadow: 5px 5px 5px white;
-          box-shadow: 5px 5px 5px white;
+  -webkit-box-shadow: 5px 5px 5px #ffffff;
+          box-shadow: 5px 5px 5px #ffffff;
   padding: 1px;
   position: fixed;
   top: 0;
@@ -116,15 +116,15 @@ optgroup [label] {
 
 .navbar ul li a {
   display: block;
-  color: white;
+  color: #ffffff;
   text-align: center;
   padding: 10px 16px;
   margin: 3px 1px;
 }
 
 .navbar ul li a:focus {
-  background-color: #111;
-  color: yellow;
+  background-color: #000000;
+  color: #ffff00;
   border-radius: 10px;
 }
 
@@ -134,7 +134,7 @@ section {
   display: flex;
 }
 
-section .wrapper {
+section aside.wrapper {
   float: right;
   max-height: 595px;
   width: 23%;
@@ -143,33 +143,33 @@ section .wrapper {
   margin-top: 41px;
 }
 
-section .wrapper .mainMenu {
+section aside.wrapper ul.mainMenu {
   padding: 0 2px;
   display: block;
   border-radius: 20px;
   overflow: hidden;
 }
 
-section .wrapper .mainMenu .item {
+section aside.wrapper ul.mainMenu li.item {
   border-top: 1px solid #4eaeee;
   border-bottom: 1px solid #747f86;
   overflow: hidden;
 }
 
-section .wrapper .mainMenu .item .btn {
+section aside.wrapper ul.mainMenu li.item a.btn {
   display: block;
   padding: 15px 20px;
   background-color: #0d86f0;
-  color: #fff;
+  color: #ffffff;
   position: relative;
 }
 
-section .wrapper .mainMenu .item .btn:hover {
-  color: yellow;
-  background-color: black;
+section aside.wrapper ul.mainMenu li.item a.btn:hover {
+  color: #ffff00;
+  background-color: #000000;
 }
 
-section .wrapper .mainMenu .item .btn:before {
+section aside.wrapper ul.mainMenu li.item a.btn:before {
   content: '';
   position: absolute;
   width: 0;
@@ -182,35 +182,35 @@ section .wrapper .mainMenu .item .btn:before {
   z-index: 9;
 }
 
-section .wrapper .mainMenu .item .btn i {
+section aside.wrapper ul.mainMenu li.item a.btn i {
   margin-right: 10px;
 }
 
-section .wrapper .mainMenu .item .subMenu {
-  background: #063146;
+section aside.wrapper ul.mainMenu li.item div.subMenu {
+  background-color: #063146;
   overflow: hidden;
   -webkit-transition: max-height 0.7s;
   transition: max-height 0.7s;
   max-height: 0;
 }
 
-section .wrapper .mainMenu .item .subMenu a {
+section aside.wrapper ul.mainMenu li.item div.subMenu a {
   display: block;
   padding: 15px 60px 15px 15px;
-  color: #fff;
+  color: #ffffff;
   font-size: 1em;
   border-bottom: 1px solid #042331;
   position: relative;
 }
 
-section .wrapper .mainMenu .item .subMenu a:before {
+section aside.wrapper ul.mainMenu li.item div.subMenu a:before {
   content: '';
   opacity: 0;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
 }
 
-section .wrapper .mainMenu .item .subMenu a:hover:before {
+section aside.wrapper ul.mainMenu li.item div.subMenu a:hover:before {
   content: '';
   position: absolute;
   height: 0;
@@ -218,20 +218,19 @@ section .wrapper .mainMenu .item .subMenu a:hover:before {
   right: 0;
   top: 0;
   opacity: 1;
-  /* background-color: #d8d824; */
   border-top: 24px solid transparent;
   border-right: 11px solid #0d86f0;
   border-bottom: 24px solid transparent;
 }
 
-section .wrapper .mainMenu .item .subMenu a:after {
+section aside.wrapper ul.mainMenu li.item div.subMenu a:after {
   content: '';
   opacity: 0;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
 }
 
-section .wrapper .mainMenu .item .subMenu a:hover:after {
+section aside.wrapper ul.mainMenu li.item div.subMenu a:hover:after {
   content: '';
   position: absolute;
   height: 0;
@@ -244,7 +243,7 @@ section .wrapper .mainMenu .item .subMenu a:hover:after {
   border-bottom: 24px solid transparent;
 }
 
-section .wrapper .mainMenu .item .subMenu a:hover {
+section aside.wrapper ul.mainMenu li.item div.subMenu a:hover {
   color: #f00;
   background: #273057;
   background: -webkit-gradient(linear, left top, left bottom, from(#273057), color-stop(50%, #273057), color-stop(51%, #394c7f), to(#394c7f));
@@ -255,11 +254,11 @@ section .wrapper .mainMenu .item .subMenu a:hover {
   border-bottom: 1px solid #394c7f;
 }
 
-section .wrapper .mainMenu .item .subMenu a:last-child {
+section aside.wrapper ul.mainMenu li.item div.subMenu a:last-child {
   border: none;
 }
 
-section .wrapper .mainMenu .item:target .subMenu {
+section aside.wrapper ul.mainMenu li.item:target .subMenu {
   max-height: 70em;
 }
 
@@ -290,23 +289,22 @@ section .container #dvTbl form .srch {
 section .container #dvTbl .mTbl {
   margin: 2px auto;
   width: 100%;
-  color: white;
+  color: #ffffff;
   border: 5px solid #0d86f0;
   background-color: #042331;
 }
 
 section .container #dvTbl .mTbl caption {
   background-color: black;
-  color: #fff;
+  color: #ffffff;
   font-size: 1.5em;
   line-height: 2em;
   border-radius: 10px;
-  /* width: 60%; */
   margin: 0 auto;
 }
 
 section .container #dvTbl .mTbl caption:hover {
-  color: yellow;
+  color: #ffff00;
   text-shadow: 5px 5px 10px red;
 }
 
@@ -321,12 +319,12 @@ section .container #dvTbl .mTbl thead tr th a {
   display: block;
   margin: 0 auto;
   padding: 8px;
-  color: white;
+  color: #ffffff;
   text-shadow: 3px 3px 5px black;
 }
 
 section .container #dvTbl .mTbl thead tr th a:hover {
-  color: yellow;
+  color: #ffff00;
   text-shadow: none;
 }
 
@@ -343,8 +341,8 @@ section .container #dvTbl .mTbl tbody tr td div.btns {
 section .container #dvTbl .mTbl tbody tr td div.btns button {
   padding: 5px;
   border-radius: 10px;
-  background-color: yellow;
-  color: red;
+  background-color: #0d86f0;
+  color: #ffffff;
   margin: 0 2px;
 }
 
@@ -357,8 +355,8 @@ section .container #dvTbl .mTbl tbody tr:nth-child(odd) {
 }
 
 section .container #dvTbl .mTbl tbody tr:hover {
-  background-color: black;
-  color: yellow;
+  background-color: #000000;
+  color: #ffff00;
 }
 
 section .container #dvTbl .mTbl tbody tr:hover div.btns {
@@ -375,8 +373,9 @@ section .container #dvTbl .mTbl thead th, section .container #dvTbl .mTbl tbody 
 section .container #dvTbl .mTbl tfoot {
   font-weight: bold;
   font-size: 1em;
+  text-align: center;
   background-color: #0d86f0;
-  color: #fff;
+  color: #ffffff;
 }
 
 section .container .row {
@@ -392,7 +391,7 @@ section .container .row {
   -webkit-box-shadow: 2px 2px 5px white;
           box-shadow: 2px 2px 5px white;
   padding: 30px 20px 10px;
-  background: #032429;
+  background-color: #032429;
   text-align: center;
   z-index: 1;
 }
@@ -430,7 +429,7 @@ section .container .row form span .swing {
   width: 100%;
   padding: 6px 15px;
   color: blue;
-  background: #efefef;
+  background-color: #efefef;
   border: 0;
   border-radius: 7px;
   outline: 0;
@@ -450,9 +449,10 @@ section .container .row form span .swing + label {
   border: 1px solid #063146;
   border-radius: 3px;
   text-shadow: 0 1px 0 rgba(19, 74, 70, 0.4);
-  background: #0d86f0;
-  -webkit-transform-origin: top right;
-          transform-origin: top right;
+  background-color: #0d86f0;
+  color: #ffffff;
+  -webkit-transform-origin: 95% 5%;
+          transform-origin: 95% 5%;
   -webkit-transform: rotate(0);
           transform: rotate(0);
   -webkit-animation: swing-back 1.4s 1 ease-in-out;
@@ -538,7 +538,7 @@ section .container .row form span .swing + label {
 section .container .row form span .swing:focus, section .container .row form span .swing:active {
   color: red;
   text-indent: 0;
-  background: #fff;
+  background-color: #fff;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
@@ -572,7 +572,7 @@ section .container .row form button.btn {
   margin: 15px 4%;
   border-radius: 25px;
   outline: none;
-  color: white;
+  color: #ffffff;
   background-color: #0d86f0;
 }
 
@@ -588,8 +588,8 @@ footer.myfooter {
 }
 
 footer.myfooter:hover {
-  color: yellow;
-  background-color: black;
+  color: #ffff00;
+  background-color: #000000;
 }
 
 .hiddenCol {
