@@ -192,11 +192,11 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 					$vl = array($row['bhId']);
 					$po = getRC($sql, $vl);
 					echo ("<tr> <td>" . ++$rc . "</td> <td class='hiddenCol'>" . $row['bhId'] . "</td>
-										<td>" . $row['bhNmbr'] . "</td>
-										<td class='hiddenCol'>" . $row['bhNm'] . "</td> <td>" . $row['aNm'] . "</td> <td>" . $row['bhDt'] . "</td>
-										<td>" . $row['bhNts'] . "</td> <td> <div class='btns' >
-										<button><a href ='BillBody.php?iBll=" . $row['bhId'] . "' target=''> " . $po . " = الأصناف</a></button>
-										</div> </td></tr>");
+							<td>" . $row['bhNmbr'] . "</td>
+							<td class='hiddenCol'>" . $row['bhNm'] . "</td> <td>" . $row['aNm'] . "</td> <td>" . $row['bhDt'] . "</td>
+							<td>" . $row['bhNts'] . "</td> <td> <div class='btns' >
+							<button><a href ='BillBody.php?iBll=" . $row['bhId'] . "' target=''> " . $po . " = الأصناف</a></button>
+							</div> </td></tr>");
 				}
 				$sql = "SELECT * FROM BillHeader WHERE bhSub=? AND bhKnd=?";
 				$vl = array($_SESSION['Sub'], $_SESSION['iKnd']);
@@ -228,11 +228,11 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			<span>
 				<select class="swing" name="iNm" id="iNm" placeholder="اسم صاحب الفاتورة">
 					<?php
-					$sql = "SELECT * FROM Accounts WHERE aSub= " . $_SESSION['Sub'] . " AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp = " . $_SESSION['iPrsn'] . ")";
-					$result = getRows($sql);
-					foreach ($result as $row) {
-						echo ("<option value=" . $row['aId'] . ">" . $row['aNm'] . "</option> ");
-					}
+						$sql = "SELECT * FROM Accounts WHERE aSub= " . $_SESSION['Sub'] . " AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp = " . $_SESSION['iPrsn'] . ")";
+						$result = getRows($sql);
+						foreach ($result as $row) {
+							echo ("<option value=" . $row['aId'] . ">" . $row['aNm'] . "</option> ");
+						}
 					?>
 				</select><label for="iNm"> الاسم </label>
 			</span>
@@ -245,7 +245,6 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		</form>
 	</div>
 	<!-------------------------------- Script ---------------------------------->
-	<script src="layout/js/main.js"></script>
 	<script>
 		var x;
 		var tbl01 = document.getElementById("mTbl");
@@ -253,21 +252,23 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			tbl01.rows[x].ondblclick = function() {
 				document.getElementById('iId').value = this.cells[1].innerHTML;
 				document.getElementById('iNmbr').value = this.cells[2].innerHTML;
-				document.getElementById('iNm').value = this.cells[3].innerHTML;
-				document.getElementById('iDt').value = this.cells[5].innerHTML;
 				document.getElementById('iNts').value = this.cells[6].innerHTML;
 				if (document.getElementById('iId').value == 0) {
 					var iniDay = new Date();
 					document.getElementById('iDt').value = iniDay.toISOString().substr(0, 10);
+					document.getElementById('iNm').selectedIndex = 0;
+				} else {
+					document.getElementById('iNm').value = this.cells[3].innerHTML;
+					document.getElementById('iDt').value = this.cells[5].innerHTML;
 				}
 				showInptScrn();
 			}
 		}
 	</script>
 <?php
-	include_once TPL . 'footer.php';
-} else {
-	header("location: index.php");
-	exit();
-}
+		include_once TPL . 'footer.php';
+	} else {
+		header("location: index.php");
+		exit();
+	}
 ?>

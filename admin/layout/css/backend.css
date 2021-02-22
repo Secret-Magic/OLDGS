@@ -19,20 +19,16 @@ body {
   background-attachment: fixed;
 }
 
-optgroup [label] {
-  color: #ffff00;
-  background-color: #000000;
-  margin: 1em;
-  border: 1px solid rebeccapurple;
-}
-
 /* ========== login Page ===========    */
 .LoginForm {
   margin: 10px auto;
-  padding: 5%;
+  padding: 7% 5%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
@@ -40,7 +36,8 @@ optgroup [label] {
 }
 
 .LoginForm form {
-  max-width: 600px;
+  width: 50%;
+  max-width: 500px;
   padding: 30px 30px 5px;
   border: 1px solid black;
   background-color: brown;
@@ -54,7 +51,7 @@ optgroup [label] {
 }
 
 .LoginForm form img[alt="lock"] {
-  width: 17%;
+  width: 20%;
   position: absolute;
   top: -10%;
   left: 7%;
@@ -63,8 +60,13 @@ optgroup [label] {
 .LoginForm form h3 {
   text-align: center;
   color: #f0f0f0;
-  font-size: 3em;
-  text-shadow: 5px 5px 15px #00eeff;
+  font-size: 5vmax;
+  text-shadow: 5px 5px 15px black;
+}
+
+.LoginForm form h3:hover {
+  text-shadow: none;
+  margin: 1px;
 }
 
 .LoginForm form .inpt {
@@ -90,11 +92,40 @@ optgroup [label] {
   max-height: 400px;
 }
 
+.LoginForm div {
+  width: 15%;
+}
+
+@media (max-width: 550px) {
+  .LoginForm {
+    padding: 7% 1%;
+  }
+  .LoginForm form {
+    width: 90%;
+  }
+  .LoginForm img[alt="pump"] {
+    display: none;
+  }
+  .LoginForm form h3 {
+    font-size: 10vw;
+  }
+  .LoginForm div {
+    display: none;
+  }
+}
+
+@media (max-width: 992px) {
+  .LoginForm {
+    padding: 7% 1%;
+  }
+  .LoginForm div {
+    display: none;
+  }
+}
+
 .navbar {
   color: #ffffff;
   background-color: #0d86f0;
-  -webkit-box-shadow: 5px 5px 5px #ffffff;
-          box-shadow: 5px 5px 5px #ffffff;
   padding: 1px;
   position: fixed;
   top: 0;
@@ -122,31 +153,42 @@ optgroup [label] {
   margin: 3px 1px;
 }
 
-.navbar ul li a:focus {
+.navbar ul li a:focus, .navbar ul li a:hover {
   background-color: #000000;
   color: #ffff00;
   border-radius: 10px;
 }
 
-section {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+@media (max-width: 549px) {
+  section {
+    display: block;
+  }
+}
+
+@media (min-width: 550px) {
+  section {
+    display: block;
+  }
+}
+
+@media (min-width: 992px) {
+  section {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
 }
 
 section aside.wrapper {
-  float: right;
-  max-height: 595px;
+  max-height: 599px;
   width: 23%;
   overflow-y: auto;
   line-height: 10px;
-  margin-top: 41px;
+  margin-top: 39px;
 }
 
 section aside.wrapper ul.mainMenu {
-  padding: 0 2px;
   display: block;
-  border-radius: 20px;
   overflow: hidden;
 }
 
@@ -199,6 +241,7 @@ section aside.wrapper ul.mainMenu li.item div.subMenu a {
   padding: 15px 60px 15px 15px;
   color: #ffffff;
   font-size: 1em;
+  text-indent: S0px;
   border-bottom: 1px solid #042331;
   position: relative;
 }
@@ -258,19 +301,40 @@ section aside.wrapper ul.mainMenu li.item div.subMenu a:last-child {
   border: none;
 }
 
+section aside.wrapper ul.mainMenu li.item div.subMenu a i::after {
+  content: '';
+}
+
 section aside.wrapper ul.mainMenu li.item:target .subMenu {
   max-height: 70em;
 }
 
 section .container {
-  margin-top: 41px;
-  width: 77%;
+  margin-top: 39px;
   line-height: 2em;
   border-radius: 20px;
 }
 
+@media (max-width: 549px) {
+  section .container {
+    width: 100%;
+  }
+}
+
+@media (min-width: 550px) {
+  section .container {
+    width: 100%;
+  }
+}
+
+@media (min-width: 992px) {
+  section .container {
+    width: 77%;
+  }
+}
+
 section .container #dvTbl {
-  max-height: 595px;
+  max-height: 599px;
   overflow: auto;
   /* ========== Search Form ===========    */
 }
@@ -329,9 +393,7 @@ section .container #dvTbl .mTbl thead tr th a:hover {
 }
 
 section .container #dvTbl .mTbl tbody tr td {
-  direction: ltr;
-  text-align: right;
-  padding: 5px;
+  padding: 5px 10px;
 }
 
 section .container #dvTbl .mTbl tbody tr td div.btns {
@@ -341,8 +403,6 @@ section .container #dvTbl .mTbl tbody tr td div.btns {
 section .container #dvTbl .mTbl tbody tr td div.btns button {
   padding: 5px;
   border-radius: 10px;
-  background-color: #0d86f0;
-  color: #ffffff;
   margin: 0 2px;
 }
 
@@ -382,12 +442,8 @@ section .container .row {
   display: none;
   position: absolute;
   top: 10%;
-  left: 25%;
-  width: 70%;
-  max-width: 500px;
-  margin: 0 auto;
   border: 1px solid #0d86f0;
-  border-radius: 10px;
+  border-radius: 20px;
   -webkit-box-shadow: 2px 2px 5px white;
           box-shadow: 2px 2px 5px white;
   padding: 30px 20px 10px;
@@ -400,6 +456,7 @@ section .container .row .btnClose {
   color: #0d86f0;
   background-color: #042331;
   width: 7%;
+  border-radius: 40% 10%;
   border: 7px double #0d86f0;
   -webkit-box-shadow: 5px 5px 15px #063146;
           box-shadow: 5px 5px 15px #063146;
@@ -417,14 +474,31 @@ section .container .row .btnClose:hover {
           box-shadow: none;
 }
 
-section .container .row form span {
+@media (max-width: 549px) {
+  section .container .row {
+    width: 94%;
+    left: 3%;
+  }
+  section .container .row .btnClose {
+    width: 33px;
+  }
+}
+
+@media (min-width: 550px) {
+  section .container .row {
+    width: 500px;
+    left: calc(50% - 250px);
+  }
+}
+
+section .container form span {
   position: relative;
   display: inline-block;
   margin: 15px 10px;
   width: 90%;
 }
 
-section .container .row form span .swing {
+section .container form span .swing {
   display: inline-block;
   width: 100%;
   padding: 6px 15px;
@@ -439,7 +513,7 @@ section .container .row form span .swing {
   transition: all 1.3s ease-in-out;
 }
 
-section .container .row form span .swing + label {
+section .container form span .swing + label {
   display: inline-block;
   position: absolute;
   top: -1px;
@@ -455,8 +529,8 @@ section .container .row form span .swing + label {
           transform-origin: 95% 5%;
   -webkit-transform: rotate(0);
           transform: rotate(0);
-  -webkit-animation: swing-back 1.4s 1 ease-in-out;
-          animation: swing-back 1.4s 1 ease-in-out;
+  -webkit-animation: swing-back 1.3s 1 ease-in-out;
+          animation: swing-back 1.3s 1 ease-in-out;
 }
 
 @-webkit-keyframes swing {
@@ -535,7 +609,7 @@ section .container .row form span .swing + label {
   }
 }
 
-section .container .row form span .swing:focus, section .container .row form span .swing:active {
+section .container form span .swing:focus, section .container form span .swing:active {
   color: red;
   text-indent: 0;
   background-color: #fff;
@@ -543,28 +617,33 @@ section .container .row form span .swing:focus, section .container .row form spa
   border-bottom-left-radius: 0;
 }
 
-section .container .row form span .swing:focus::-webkit-input-placeholder, section .container .row form span .swing:active::-webkit-input-placeholder {
+section .container form span .swing:focus::-webkit-input-placeholder, section .container form span .swing:active::-webkit-input-placeholder {
   color: #aaa;
 }
 
-section .container .row form span .swing:focus + label, section .container .row form span .swing:active + label {
-  -webkit-animation: swing 1.4s 1 ease-in-out;
-          animation: swing 1.4s 1 ease-in-out;
+section .container form span .swing:focus + label, section .container form span .swing:active + label {
+  -webkit-animation: swing 1.3s 1 ease-in-out;
+          animation: swing 1.3s 1 ease-in-out;
   -webkit-transform: rotate(-82deg);
           transform: rotate(-82deg);
+  z-index: 9;
 }
 
-section .container .row form .btn[name="btnSave"]::after {
+section .container form .btn[name="btnSave"]::after {
   content: "\270D";
   top: -3px;
 }
 
-section .container .row form .btn[name="btnDlt"]::before {
+section .container form .btn[name="btnSave"]:hover #rebot {
+  visibility: visible;
+}
+
+section .container form .btn[name="btnDlt"]::before {
   content: "\2704";
   top: 0px;
 }
 
-section .container .row form button.btn {
+section .container form button.btn {
   width: 40%;
   display: inline-block;
   font-weight: bolder;
@@ -598,6 +677,17 @@ footer.myfooter:hover {
 
 .dbl {
   padding-right: 200px;
+}
+
+a.active {
+  background-color: #000000;
+  color: #ffff00;
+  border-radius: 10px;
+}
+
+option {
+  color: purple;
+  line-height: 5em;
 }
 
 @media only print {

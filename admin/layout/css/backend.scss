@@ -1,9 +1,11 @@
-$mc : #042331 ;
-$sc : #063146 ;
+$mc : #042331 ; 
+$sc : #063146 ; 
 $bc : #0d86f0 ;
 $c  : #ffffff ;
 $hc : #ffff00 ;
 $hbc: #000000 ;
+$mh : 599px;
+$s  : 1.3s ;
 
 * {
    margin: 0;
@@ -23,20 +25,17 @@ body {
    background-size: cover;
    background-attachment: fixed;
 }
-optgroup [label] {
-   color : $hc  ;
-   background-color: $hbc  ;
-   margin: 1em;
-   border : 1px solid rebeccapurple;
-}
+
 /* ========== login Page ===========    */
 .LoginForm {
    margin: 10px auto;
-   padding: 5%;
+   padding: 7% 5%;
    display: flex;
+   justify-content: center;
    flex-direction: row;
    form {
-      max-width: 600px;
+      width: 50%;
+      max-width: 500px;
       padding: 30px 30px 5px;
       border: 1px solid black;
       background-color: brown;
@@ -44,8 +43,9 @@ optgroup [label] {
       box-shadow: 15px 15px 15px #444;
       position: relative;
       flex-grow: 1;
+      
       img[alt="lock"] {
-         width: 17%;
+         width: 20%;
          position: absolute;
          top: -10%;
          left: 7%;
@@ -53,8 +53,13 @@ optgroup [label] {
       h3 {
          text-align: center;
          color: rgb(240, 240, 240);
-         font-size: 3em;
-         text-shadow: 5px 5px 15px rgb(0, 238, 255);
+         font-size: 5vmax;
+         text-shadow: 5px 5px 15px black; //rgb(0, 238, 255);
+         &:hover {
+            text-shadow: none;
+            // color: $hc;
+            margin: 1px ;
+         }
       }
       .inpt {
          display: block;
@@ -77,12 +82,40 @@ optgroup [label] {
       width: 25%;
       max-height: 400px;
    }
+   div {
+      width: 15%;
+   }
+}
+@media (max-width:550px) {
+   .LoginForm {
+      padding: 7% 1%;
+      form {
+         width: 90%;
+      }
+      img[alt="pump"] {
+         display: none;
+      }
+      form h3 {
+         font-size: 10vw;
+      }
+      div {
+         display: none;
+      }
+   }
+}
+@media (max-width:992px) {
+   .LoginForm {
+      padding: 7% 1%;
+      div {
+         display: none;
+      }
+   }
 }
 // /* ========== Navbar Page ===========    */
 .navbar {
    color:$c;
    background-color: $bc;
-   box-shadow: 5px 5px 5px $c;
+   // box-shadow: 5px 5px 5px $c;
    padding: 1px;
    position: fixed;
    top: 0;
@@ -101,7 +134,7 @@ optgroup [label] {
             text-align: center;
             padding: 10px 16px;
             margin: 3px 1px;
-            &:focus {
+            &:focus, &:hover {
                background-color: $hbc;
                color: $hc;
                border-radius: 10px;
@@ -111,28 +144,54 @@ optgroup [label] {
    }
 }
 section {
-   display: flex;
+   // display: flex;
+   @media (max-width:549px) {
+      display: block;
+   }
+   @media (min-width:550px) {
+      display: block;
+   }
+   @media (min-width:992px) {
+      display: flex;
+   }
    // /* ========== Menu Page ===========    */
    @import "wrapper" ;
    // /* ========== Container Page ===========    */
    .container {
-      margin-top: 41px;
-      width: 77%;
+      margin-top: 39px;
+      // width: 77%;
       line-height: 2em;
       border-radius: 20px;
+      @media (max-width:549px) {
+         width: 100%  ;
+      }
+      @media (min-width:550px) {
+         width: 100%;
+      }
+      @media (min-width:768px) {
+         // left : 16%
+      }
+      @media (min-width:992px) {
+         width: 77%;
+      }
+      @media (min-width:1200px) {
+         // left: 33%;
+      }
       #dvTbl {
-         max-height: 595px;
+         max-height: $mh;
          overflow: auto;
          /* ========== Search Form ===========    */
-         form .srch {
-            width: 60%;
-            padding: 1px 25px;
-            border: 5px solid $bc;
-            border-radius: 25px;
-            outline: none;
-            display: block;
-            margin: 0 auto;
-            line-height: 2em;
+         form {
+            .srch {
+               width: 60%;
+               padding: 1px 25px;
+               border: 5px solid $bc;
+               border-radius: 25px;
+               outline: none;
+               display: block;
+               margin: 0 auto;
+               line-height: 2em;
+            }
          }
          // /* ========== Table show ===========    */
          @import "mTbl" ;
@@ -161,6 +220,15 @@ footer.myfooter {
 }
 .dbl {
    padding-right: 200px ;
+}
+a.active {
+   background-color: $hbc;
+   color: $hc ;
+   border-radius: 10px;
+}
+option {
+   color : purple ;
+   line-height: 5em;
 }
 // /*
 

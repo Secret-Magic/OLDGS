@@ -39,7 +39,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				} elseif ($_POST['iId'] == '0') {
 					if (empty(vldtVrbl($_POST['iNm']))) {
 						$errs[] = " الاسم فارغ";
-					} elseif (isSaved("usNm", "Users", vldtVrbl($_POST['iNm']))) {
+					} elseif (isSaved("gNm", "Goods", vldtVrbl($_POST['iNm']))) {
 						$errs[] = " الاسم مكرر ";
 					} elseif (!(intval($_POST['iByLmt']) >= 0)) {
 						$errs[] = "حد الشراء غير صحيح";
@@ -238,7 +238,6 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		</form>
 	</div>
 	<!-------------------------------- Script ---------------------------------->
-	<script src="layout/js/main.js"></script>
 	<script>
 		var x;
 		var tbl01 = document.getElementById("mTbl");

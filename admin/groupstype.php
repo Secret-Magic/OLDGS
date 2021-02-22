@@ -170,9 +170,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		</table>
 	</div>
 	<!-------------------------------- Input Screen ---------------------------->
-	<!-- <div class="inptScrn" id="inptScrn" style="<?php if (!$goOn) {
-																		echo 'display:block;';
-																	} ?> "> -->
+	
 	<div class="inptScrn" id="inptScrn">
 		<div class="btnClose" id="btnClose"> &#10006; </div>
 		<form action="<?php echo ($_SERVER['PHP_SELF']); ?>" method="post" name="iFrm" onsubmit="return isValidForm()">
@@ -187,7 +185,6 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		</form>
 	</div>
 	<!-------------------------------- Script ---------------------------------->
-	<script src="layout/js/main.js"></script>
 	<script>
 		var x;
 		var tbl01 = document.getElementById("mTbl");

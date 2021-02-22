@@ -14,8 +14,8 @@ function exitInptScrn() {
 function showInptScrn() {
    "use strict";
 
-   document.getElementById('row').style.display = "block";
-   document.getElementById('dvTbl').style.opacity = 0.95;
+   document.getElementById('row').style.display = "inline-block";
+   document.getElementById('dvTbl').style.opacity = 0.75;
    document.getElementById('dvTbl').style.pointerEvents = "none";
    if (document.getElementById('iId').value === "0") {
       document.getElementById('btnDlt').style.display = "none";
@@ -78,12 +78,22 @@ function myFiltr() {
 //   }
 // }
 //---------------------------------------------------------------------------
+var nav01 = document.querySelectorAll('nav ul li a') ;
+nav01.forEach(element => {
+   element.onclick = function () {
+      document.getElementsByClassName('wrapper')[0].classList.toggle('hiddenCol');
+   }
+}); 
+
 var btn01 = document.getElementById("btnClose");
-btn01.onclick = function () {
-   exitInptScrn();
+if (btn01 != null) {
+   btn01.onclick = function () {
+      exitInptScrn();
+   }
 }
 
 /*
 <button onclick="document.location='default.asp'">HTML Tutorial</button>
 <button onclick="window.location.href='default.asp'">HTML Tutorial</button>
 */
+

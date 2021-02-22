@@ -37,16 +37,12 @@
    tbody {
       tr {
          td {
-            direction: ltr;
-            text-align: right;
-            padding: 5px;
+            padding: 5px 10px;
             div.btns {
                visibility: hidden;
                button {
                   padding: 5px;
                   border-radius: 10px;
-                  background-color: $bc;
-                  color: $c;
                   margin: 0 2px;
                }
             }

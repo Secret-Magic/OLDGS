@@ -43,7 +43,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 					}
 				}
 			} else {
-				$report = "خطأ غير متوقع";
+				$errs[] = "خطأ غير متوقع";
 			}
 		} elseif (isset($_POST['btnDlt'])) {
 			if (isset($_POST['iId']) && $_POST['iId'] > 0) {
@@ -258,7 +258,6 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		</form>
 	</div>
 	<!-------------------------------- Script ---------------------------------->
-	<script src="layout/js/main.js"></script>
 	<script>
 		var x;
 		var tbl01 = document.getElementById("mTbl");
@@ -266,12 +265,17 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			tbl01.rows[x].ondblclick = function() {
 				document.getElementById('iId').value = this.cells[1].innerHTML;
 				document.getElementById('iBll').value = this.cells[2].innerHTML;
-				document.getElementById('iStr').value = this.cells[3].innerHTML;
-				document.getElementById('iGds').value = this.cells[5].innerHTML;
 				document.getElementById('iQntty').value = this.cells[7].innerHTML;
 				document.getElementById('iPrc').value = this.cells[8].innerHTML;
 				document.getElementById('iDscnt').value = this.cells[9].innerHTML;
 				document.getElementById('iNts').value = this.cells[10].innerHTML;
+				if (document.getElementById('iId').value ==0) {
+					document.getElementById('iStr').selectedIndex = 0;
+					document.getElementById('iGds').selectedIndex = 0;
+				} else {
+					document.getElementById('iStr').value = this.cells[3].innerHTML;
+					document.getElementById('iGds').value = this.cells[5].innerHTML;
+				}
 				showInptScrn();
 			}
 		}

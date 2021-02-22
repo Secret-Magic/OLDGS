@@ -231,7 +231,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 						echo ("<option value=" . $row['gId'] . ">" . $row['gNm'] . "</option> ");
 					}
 					?>
-				</select><label for="iGds"> التانك </label>
+				</select><label for="iGds"> نوع الوقود </label>
 			</span>
 			<span>
 				<input class="swing" id="iNts" name="iNts" type="text" maxlength="99" autocomplete="off" placeholder="وصف للطلمبة" /><label for="iNts">ملاحظات</label>
@@ -242,7 +242,6 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		</form>
 	</div>
 	<!-------------------------------- Script ---------------------------------->
-	<script src="layout/js/main.js"></script>
 	<script>
 		var x;
 		var tbl01 = document.getElementById("mTbl");
@@ -257,7 +256,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				if (this.cells[1].innerHTML == 0) {
 					var iniDay = new Date();
 					document.getElementById("iTnk").selectedIndex = "0";
-					document.getElementById("iGds").selectedIndex = "1";
+					document.getElementById("iGds").selectedIndex = "0";
 					document.getElementById('iFrstDt').value = iniDay.toISOString().substr(0, 10);;
 				} else {
 					document.getElementById('iTnk').value = this.cells[5].innerHTML;

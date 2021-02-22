@@ -4,16 +4,16 @@
             <li class="item" id="Groups">
                <a href="#Groups" class="btn"><i>&#9742;&#8195;</i>المجموعات</a>
                <div class="subMenu">
-                  <a href="Groups.php?iGrpTyp=0" target=''><i>&#9775;&#8195;</i> فئات المجموعات</a>
-                  <a href="Groups.php?iGrpTyp=1" target=''><i>&#9775;&#8195;</i> مجموعات الفروع</a>
-                  <a href="Groups.php?iGrpTyp=2" target=''><i>&#9775;&#8195;</i> مجموعات المبرمجين</a>
-                  <a href="Groups.php?iGrpTyp=3" target=''><i>&#9775;&#8195;</i> مجموعات المديرين</a>
-                  <a href="Groups.php?iGrpTyp=4" target=''><i>&#9775;&#8195;</i> مجموعات الموظفين</a>
-                  <a href="Groups.php?iGrpTyp=5" target=''><i>&#9775;&#8195;</i> مجموعات العمال</a>
-                  <a href="Groups.php?iGrpTyp=6" target=''><i>&#9775;&#8195;</i> مجموعات الموردين</a>
-                  <a href="Groups.php?iGrpTyp=7" target=''><i>&#9775;&#8195;</i> مجموعات العملاء</a>
-                  <a href="Groups.php?iGrpTyp=8" target=''><i>&#9775;&#8195;</i> مجموعات الخزائن </a>
-                  <a href="Groups.php?iGrpTyp=9" target=''><i>&#9775;&#8195;</i> مجموعات التانكات</a>
+                  <a href="Groups.php?iGrpTyp=0"  target=''><i>&#9775;&#8195;</i> فئات المجموعات</a>
+                  <a href="Groups.php?iGrpTyp=1"  target=''><i>&#9775;&#8195;</i> مجموعات الفروع</a>
+                  <a href="Groups.php?iGrpTyp=2"  target=''><i>&#9775;&#8195;</i> مجموعات المبرمجين</a>
+                  <a href="Groups.php?iGrpTyp=3"  target=''><i>&#9775;&#8195;</i> مجموعات المديرين</a>
+                  <a href="Groups.php?iGrpTyp=4"  target=''><i>&#9775;&#8195;</i> مجموعات الموظفين</a>
+                  <a href="Groups.php?iGrpTyp=5"  target=''><i>&#9775;&#8195;</i> مجموعات العمال</a>
+                  <a href="Groups.php?iGrpTyp=6"  target=''><i>&#9775;&#8195;</i> مجموعات الموردين</a>
+                  <a href="Groups.php?iGrpTyp=7"  target=''><i>&#9775;&#8195;</i> مجموعات العملاء</a>
+                  <a href="Groups.php?iGrpTyp=8"  target=''><i>&#9775;&#8195;</i> مجموعات الخزائن </a>
+                  <a href="Groups.php?iGrpTyp=9"  target=''><i>&#9775;&#8195;</i> مجموعات التانكات</a>
                   <a href="Groups.php?iGrpTyp=10" target=''><i>&#9775;&#8195;</i> مجموعات مخازن الزيوت</a>
                   <a href="Groups.php?iGrpTyp=11" target=''><i>&#9775;&#8195;</i> مجموعات مخازن الأصناف</a>
                   <a href="Groups.php?iGrpTyp=12" target=''><i>&#9775;&#8195;</i> مجموعات المواد البترولية</a>
@@ -109,7 +109,8 @@
             <li class="item" id="Coupons">
                <a href="#Coupons" class="btn"><i>&#9742;&#8195;</i> البونات </a>
                <div class="subMenu">
-                  <a href="Coupons.php" target=''><i>&#9775;&#8195;</i> البونات </a>
+                  <a href="Coupons.php?iGrpTyp=18" target=''><i>&#9775;&#8195;</i> البونات </a>
+                  <a href="" target=''><i>&#9775;&#8195;</i> 2البونات </a>
                </div>
             </li>
       </ul>

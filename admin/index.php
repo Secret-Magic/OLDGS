@@ -66,6 +66,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
       <input class="btn inpt" type="submit" value="دخول" />
    </form>
+   <!--   وهومية لحجز مساحة لتوسيط شاشة الادخال لكى تعادل الصورة div -->
+   <div></div>
 </div>
 <?php
 include_once TPL . 'footer.php';

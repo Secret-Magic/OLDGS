@@ -216,7 +216,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			</span>
 			<?php
 			if ($_SESSION['iPlTyp'] == 1) {
-				echo ('<span> <input class="swing" id="iByPrc" name="iByPrc" type="text"  placeholder="سعر الشراء" /><label for="iByPrc">الشراء</label> </span>');
+				echo ('<span> <input class="swing" id="iByPrc" name="iByPrc" type="text"  placeholder="سعر الشراء" readonly/><label for="iByPrc">الشراء</label> </span>');
 				echo ('<span> <input class="swing" id="iSllPrc" name="iSllPrc" type="text" placeholder="سعر البيع" onchange="getByPrc();" /><label for="iSllPrc">البيع</label> </span>');
 				echo ('<span> <input class="swing" id="iCmsn" name="iCmsn" type="text" placeholder="قيمة العمولة أو الخصم" onchange="getByPrc();" /><label for="iCmsn">العمولة</label> </span>');
 				echo ('<span> <input class="swing" id="iPkhr" name="iPkhr" type="text" placeholder="نسبة البخر" /><label for="iPkhr">البخر</label> </span>');
@@ -224,7 +224,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				echo ('<span> <input class="swing" id="iByPrc" name="iByPrc" type="text" placeholder="سعر الشراء" /><label for="iByPrc">الشراء</label> </span>');
 				echo ('<span> <input class="swing" id="iSllPrc" name="iSllPrc" type="text" placeholder="سعر البيع" /><label for="iSllPrc">البيع</label> </span>');
 				echo ('<span> <input class="swing" id="iCmsn" name="iCmsn" type="text" placeholder="قيمة العمولة أو الخصم" /><label for="iCmsn">العمولة</label> </span>');
-				echo ('<input class="swing" id="iPkhr" name="iPkhr" type="text" style="display:none ;" />');
+				echo ('<input class="swing" id="iPkhr" name="iPkhr" type="hidden" />');
 			}
 			?>
 
@@ -233,19 +233,24 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		</form>
 	</div>
 	<!-------------------------------- Script ---------------------------------->
-	<script src="layout/js/main.js"></script>
 	<script>
 		var x;
 		var tbl01 = document.getElementById("mTbl");
 		for (x = 1; x < tbl01.rows.length - 1; x = x + 1) {
 			tbl01.rows[x].ondblclick = function() {
 				document.getElementById('iId').value = this.cells[1].innerHTML;
-				document.getElementById('iGds').value = this.cells[2].innerHTML;
-				document.getElementById('iDt').value = this.cells[4].innerHTML;
 				document.getElementById('iByPrc').value = this.cells[5].innerHTML;
 				document.getElementById('iSllPrc').value = this.cells[6].innerHTML;
 				document.getElementById('iCmsn').value = this.cells[7].innerHTML;
 				document.getElementById('iPkhr').value = this.cells[8].innerHTML;
+				if (document.getElementById('iId').value ==0) {
+					document.getElementById('iGds').selectedIndex = 0 ;
+					var iniDay = new Date();
+					document.getElementById('iDt').value = iniDay.toISOString().substr(0, 10);
+				} else {
+					document.getElementById('iGds').value = this.cells[2].innerHTML;
+					document.getElementById('iDt').value = this.cells[4].innerHTML;
+				}
 				showInptScrn();
 			}
 		}

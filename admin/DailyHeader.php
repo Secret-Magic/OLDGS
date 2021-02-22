@@ -182,16 +182,19 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 					$sql = "SELECT * FROM BillBody WHERE bbBllHdr =? ";
 					$vl = array($row['bhId']);
 					$po[1] = getRC($sql, $vl);
+					$sql = "SELECT * FROM CouponInOut WHERE cioSrcId =? ";
+					$vl = array($row['bhId']);
+					$po[2] = getRC($sql, $vl);
 					echo ("<tr> <td>" . ++$rc . "</td> <td class='hiddenCol'>" . $row['bhId'] . "</td>
-										<td>" . $row['bhNmbr'] . "</td>
-										<td class='hiddenCol'>" . $row['bhNm'] . "</td> <td>" . $row['aNm'] . "</td>
-										<td>" . $row['bhDt'] . "</td>	<td>" . $row['bhNts'] . "</td> <td> <div class='btns' >
-										<button><a href ='PumpOut.php?iDly=" . $row['bhId'] . "' target='_blank' >" . $po[0] . " = الطلمبات</a></button>
-										<button><a href ='BillBody.php?iBll=" . $row['bhId'] . "' target='_blank'>" . $po[1] . " = الزيوت </a></button>
-										<button><a href ='PumpOut.php?iDly=" . $row['bhId'] . "' target='_blank'> المصروفات</a></button>
-										<button><a href ='PumpOut.php?iDly=" . $row['bhId'] . "' target='_blank'> البونات</a></button>
-										<button><a href ='PumpOut.php?iDly=" . $row['bhId'] . "' target='_blank'> النولون</a></button>
-										</div> </td></tr>");
+							<td>" . $row['bhNmbr'] . "</td>
+							<td class='hiddenCol'>" . $row['bhNm'] . "</td> <td>" . $row['aNm'] . "</td>
+							<td>" . $row['bhDt'] . "</td>	<td>" . $row['bhNts'] . "</td> <td> <div class='btns' >
+							<button><a href ='PumpOut.php?iDly=" . $row['bhId'] . "' target='_blank' >" . $po[0] . " = الطلمبات</a></button>
+							<button><a href ='BillBody.php?iBll=" . $row['bhId'] . "' target='_blank'>" . $po[1] . " = الزيوت </a></button>
+							<button><a href ='PumpOut.php?iDly=" . $row['bhId'] . "' target='_blank'> المصروفات</a></button>
+							<button><a href ='couponsinout.php?iDly=" . $row['bhId'] . "' target='_blank'> " . $po[2] . " = البونات</a></button>
+							<button><a href ='PumpOut.php?iDly=" . $row['bhId'] . "' target='_blank'> النولون</a></button>
+							</div> </td></tr>");
 				}
 				$sql = "SELECT * FROM BillHeader WHERE bhKnd=8 AND bhSub=?";
 				$vl = array($_SESSION['Sub']);
@@ -208,7 +211,6 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				</tr>
 			</tfoot>
 		</table>
-		<!-- <iframe src="pumpout.php" frameborder="0" ></iframe> -->
 	</div>
 	<!-------------------------------- Input Screen ---------------------------->
 	<div class="row" id="row">
@@ -225,7 +227,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				<select class="swing" name="iNm" id="iNm" placeholder="اسم رئيس الوردية أو المسئول">
 					<?php
 					for ($i = 2; $i < 6; $i++) {
-						echo "<optgroup label='" . getNameById("Groups", "g", $i) . "'>";
+						echo "<optgroup label='" . getNameById("Groups", "g", $i) . ":'>";
 						$sql = "SELECT * FROM Accounts WHERE aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp =" . $i . ") AND (aSub=0 || aSub= " . $_SESSION['Sub'] . ")";
 						$result = getRows($sql);
 						foreach ($result as $row) {
@@ -244,7 +246,6 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		</form>
 	</div>
 	<!-------------------------------- Script ---------------------------------->
-	<script src="layout/js/main.js"></script>
 	<script>
 		var x;
 		var tbl01 = document.getElementById("mTbl");
@@ -252,21 +253,23 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			tbl01.rows[x].ondblclick = function() {
 				document.getElementById('iId').value = this.cells[1].innerHTML;
 				document.getElementById('iNmbr').value = this.cells[2].innerHTML;
-				document.getElementById('iNm').value = this.cells[3].innerHTML;
-				document.getElementById('iDt').value = this.cells[5].innerHTML;
 				document.getElementById('iNts').value = this.cells[6].innerHTML;
 				if (document.getElementById('iId').value == 0) {
 					var iniDay = new Date();
 					document.getElementById('iDt').value = iniDay.toISOString().substr(0, 10);
+					document.getElementById('iNm').selectedIndex = "0" ;
+				} else {
+					document.getElementById('iDt').value = this.cells[5].innerHTML;
+					document.getElementById('iNm').value = this.cells[3].innerHTML;
 				}
 				showInptScrn();
 			}
 		}
 	</script>
 <?php
-	include_once TPL . 'footer.php';
-} else {
-	header("location: index.php");
-	exit();
-}
+		include_once TPL . 'footer.php';
+	} else {
+		header("location: index.php");
+		exit();
+	}
 ?>

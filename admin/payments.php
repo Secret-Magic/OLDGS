@@ -138,12 +138,12 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			<thead>
 				<tr>
 					<th> م </th>
-					<th> <a href="?srt=0"> <?php echo ($srtSymbl[0]); ?> الكود </a> </th>
+					<th class='hiddenCol'> <a href="?srt=0"> <?php echo ($srtSymbl[0]); ?> الكود </a> </th>
 					<th> <a href="?srt=1"> <?php echo ($srtSymbl[1]); ?> التاريخ </a> </th>
-					<th> <a href="?srt=2"> <?php echo ($srtSymbl[2]); ?> كود الحساب </a> </th>
+					<th class='hiddenCol'> <a href="?srt=2"> <?php echo ($srtSymbl[2]); ?> كود الحساب </a> </th>
 					<th> <a href="?srt=3"> <?php echo ($srtSymbl[3]); ?> الحساب </a> </th>
 					<th> <a href="?srt=4"> <?php echo ($srtSymbl[4]); ?> المبلغ </a> </th>
-					<th> <a href="?srt=5"> <?php echo ($srtSymbl[5]); ?> كود الخزينة </a> </th>
+					<th class='hiddenCol'> <a href="?srt=5"> <?php echo ($srtSymbl[5]); ?> كود الخزينة </a> </th>
 					<th> <a href="?srt=6"> <?php echo ($srtSymbl[6]); ?> الخزينة </a> </th>
 					<th> <a href="?srt=7"> <?php echo ($srtSymbl[7]); ?> ملاحظات </a> </th>
 				</tr>
@@ -151,15 +151,15 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			<tbody>
 				<?php
 				$rc = 0;
-				$sql = "SELECT * FROM Payments INNER JOIN Accounts ON pCstmr=aId WHERE aSub=" . $_SESSION['Sub'] . " AND aNm like '%" . vldtVrbl($_SESSION['strSrch']) . "%' " . $_SESSION['strSrt'];
+				$sql = "SELECT * FROM Payments INNER JOIN Accounts ON pCstmr=aId WHERE (aSub=0 OR aSub=" . $_SESSION['Sub'] . ") AND aNm like '%" . vldtVrbl($_SESSION['strSrch']) . "%' " . $_SESSION['strSrt'];
 				$result = getRows($sql);
 				foreach ($result as $row) {
-					echo ("<tr> <td>" . ++$rc . "</td> <td>" . $row['pId'] . "</td>
-										<td>" . $row['pDt'] . "</td> <td>" . $row['pCstmr'] . "</td>
-										<td>" . $row['aNm'] . "</td> <td>" . $row['pVl'] . "</td> <td>" . $row['pStr'] . "</td> 
+					echo ("<tr> <td>" . ++$rc . "</td> <td class='hiddenCol'>" . $row['pId'] . "</td>
+										<td>" . $row['pDt'] . "</td> <td class='hiddenCol'>" . $row['pCstmr'] . "</td>
+										<td>" . $row['aNm'] . "</td> <td>" . $row['pVl'] . "</td> <td class='hiddenCol'>" . $row['pStr'] . "</td> 
 										<td>" . getNameById('accounts', 'a',  $row['pStr']) . "</td> <td>" . $row['pNts'] . "</td> </tr>");
 				}
-				echo ("<tr> <td>" . ++$rc . "</td> <td>0</td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>	</tr>");
+				echo ("<tr> <td>" . ++$rc . "</td> <td class='hiddenCol'>0</td> <td></td> <td class='hiddenCol'></td> <td></td> <td></td> <td class='hiddenCol'></td> <td></td> <td></td>	</tr>");
 				?>
 			</tbody>
 			<tfoot>
@@ -183,11 +183,15 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			<span>
 				<select class="swing" name="iCstmr" id="iCstmr" placeholder="اسم العميل">
 					<?php
-					$sql = "SELECT * FROM accounts WHERE aWrk=1 AND aSub = " . $_SESSION['Sub'] . " AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp BETWEEN 2 AND 8) ;";
-					$result = getRows($sql);
-					foreach ($result as $row) {
-						echo ("<option value=" . $row['aId'] . ">" . $row['aNm'] . "</option> ");
-					}
+						for ($i=2 ; $i <=8 ; $i++) {
+							echo "<optgroup label='" . getNameById("Groups", "g", $i) . ":'>";
+							$sql = "SELECT * FROM accounts WHERE aWrk=1 AND (aSub=0 OR aSub = " . $_SESSION['Sub'] . ") AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp= " .$i . ") ;";
+							$result = getRows($sql);
+							foreach ($result as $row) {
+								echo ("<option value=" . $row['aId'] . ">" . $row['aNm'] . "</option> ");
+							}
+							echo "</optgroup>";
+						}
 					?>
 				</select><label for="iCstmr"> الاسم </label>
 			</span>
@@ -197,11 +201,15 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			<span>
 				<select class="swing" name="iStr" id="iStr" placeholder="اسم الخزينة">
 					<?php
-					$sql = "SELECT * FROM accounts WHERE aWrk=1 AND aSub = " . $_SESSION['Sub'] . " AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp BETWEEN 2 AND 8) ;";
-					$result = getRows($sql);
-					foreach ($result as $row) {
-						echo ("<option value=" . $row['aId'] . ">" . $row['aNm'] . "</option> ");
-					}
+						for ($i=2 ; $i <=8 ; $i++) {
+							echo "<optgroup label='" . getNameById("Groups", "g", $i) . ":'>";
+							$sql = "SELECT * FROM accounts WHERE aWrk=1 AND (aSub=0 OR aSub = " . $_SESSION['Sub'] . ") AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp= " .$i . ") ;";
+							$result = getRows($sql);
+							foreach ($result as $row) {
+								echo ("<option value=" . $row['aId'] . ">" . $row['aNm'] . "</option> ");
+							}
+							echo "</optgroup>";
+						}
 					?>
 				</select><label for="iStr"> الخزينة </label>
 			</span>
@@ -213,21 +221,23 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		</form>
 	</div>
 	<!-------------------------------- Script ---------------------------------->
-	<script src="layout/js/main.js"></script>
 	<script>
 		var x;
 		var tbl01 = document.getElementById("mTbl");
 		for (x = 1; x < tbl01.rows.length - 1; x = x + 1) {
 			tbl01.rows[x].ondblclick = function() {
 				document.getElementById('iId').value = this.cells[1].innerHTML;
-				document.getElementById('iDt').value = this.cells[2].innerHTML;
-				document.getElementById('iCstmr').value = this.cells[3].innerHTML;
 				document.getElementById('iVl').value = this.cells[5].innerHTML;
-				document.getElementById('iStr').value = this.cells[6].innerHTML;
 				document.getElementById('iNts').value = this.cells[8].innerHTML;
 				if (this.cells[1].innerHTML == 0) {
 					var iniDay = new Date();
-					document.getElementById('iDt').value = iniDay.toISOString().substr(0, 10);;
+					document.getElementById('iDt').value = iniDay.toISOString().substr(0, 10);
+					document.getElementById('iCstmr').selectedIndex = "0";
+					document.getElementById('iStr').selectedIndex = "0";
+				} else {
+					document.getElementById('iDt').value = this.cells[2].innerHTML;
+					document.getElementById('iCstmr').value = this.cells[3].innerHTML;
+					document.getElementById('iStr').value = this.cells[6].innerHTML;
 				}
 				showInptScrn();
 			}

@@ -177,7 +177,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 											<td>" . $row['gNts'] . "</td> <td>" . $row['gWrk'] . "</td> 
 											<td>" . $row['gGrpTyp'] . "</td> <td>" . $row['gAdDt'] . "</td></tr>");
 				}
-				echo ("<tr> <td>" . ++$rc . "</td> <td class='hiddenCol'>0</td> <td></td> <td></td> <td></td> <td>" . $_SESSION['iGrpTyp'] . "</td> <td></td> </tr>");
+				echo ("<tr> <td>" . ++$rc . "</td> <td class='hiddenCol'>0</td> <td></td> <td></td> <td></td> <td></td> <td></td> </tr>");
 				?>
 			</tbody>
 			<tfoot>
@@ -207,7 +207,6 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		</form>
 	</div>
 	<!-------------------------------- Script ---------------------------------->
-	<script src="layout/js/main.js"></script>
 	<script>
 		var x;
 		var tbl01 = document.getElementById("mTbl");
@@ -216,7 +215,11 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				document.getElementById('iId').value = this.cells[1].innerHTML;
 				document.getElementById('iNm').value = this.cells[2].innerHTML;
 				document.getElementById('iNts').value = this.cells[3].innerHTML;
-				document.getElementById('iGrp').value = this.cells[5].innerHTML;
+				if (document.getElementById('iId').value ==0) {
+					document.getElementById('iGrp').selectedIndex = 0;
+				} else {
+					document.getElementById('iGrp').value = this.cells[5].innerHTML;
+				}
 				showInptScrn();
 			}
 		}

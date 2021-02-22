@@ -223,21 +223,22 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		</form>
 	</div>
 	<!-------------------------------- Script ---------------------------------->
-	<script src="layout/js/main.js"></script>
 	<script>
 		var x;
 		var tbl01 = document.getElementById("mTbl");
 		for (x = 1; x < tbl01.rows.length - 1; x = x + 1) {
 			tbl01.rows[x].ondblclick = function() {
 				document.getElementById('iId').value = this.cells[1].innerHTML;
-				document.getElementById('iUsrId').value = this.cells[2].innerHTML;
+				
 				document.getElementById('iUsr').value = this.cells[4].innerHTML;
 				document.getElementById('ioPsswrd').value = this.cells[5].innerHTML;
 				document.getElementById('inPsswrd').value = "";
 				document.getElementById('iEml').value = this.cells[6].innerHTML;
 				document.getElementById('iMxLg').value = this.cells[7].innerHTML;
 				if (document.getElementById('iId').value == 0) {
-					document.getElementById('iMxLg').value = 0;
+					document.getElementById('iUsrId').selectedIndex=0;
+				} else {
+					document.getElementById('iUsrId').value = this.cells[2].innerHTML;
 				}
 				showInptScrn();
 			}

@@ -2,12 +2,12 @@
    display: none;
    position: absolute;
    top: 10%;
-   left: 25%;
-   width: 70%;
-   max-width: 500px;
-   margin: 0 auto;
+   // left: 30%;
+   // width: 40;
+   // max-width: 500px;
+   // margin: 0 auto;
    border : 1px solid $bc;
-   border-radius: 10px;
+   border-radius: 20px;
    box-shadow: 2px 2px 5px white;
    padding: 30px 20px 10px;
    background-color: #032429;
@@ -17,6 +17,7 @@
       color: $bc;
       background-color: $mc;
       width: 7%;
+      border-radius: 40% 10%;
       border: 7px double $bc;
       box-shadow: 5px 5px 15px $sc;
       position: absolute;
@@ -30,106 +31,135 @@
          box-shadow: none;
       }
    }
-   form {
-      span {
-         position: relative;
-         display:inline-block;
-         margin: 15px 10px;
-         width: 90%;
+   @media (max-width:549px) {
+      width: 94%  ;
+      left: 3%;
+      .btnClose {
+         width: 33px;
+      }
+   }
+   @media (min-width:550px) {
+      // max-width: 500px  ;  
+      width: 500px;
+      left :calc(50% - 250px) ;
+   }
+   @media (min-width:768px) {
+      // left : 16%
+   }
+   @media (min-width:992px) {
+      // left: 26%;
+   }
+   @media (min-width:1200px) {
+      // left: 33%;
+   }
+}
+form {
+   span {
+      position: relative;
+      display:inline-block;
+      margin: 15px 10px;
+      width: 90%;
+      
+      .swing {
+         display: inline-block;
+         width: 100%;
+         padding: 6px 15px;
+         color: blue;
+         background-color: #efefef;
+         border: 0;
+         border-radius: 7px;
+         outline: 0;
+         text-indent: 80px; // Arbitrary.
+         text-align: right;
+         transition: all $s ease-in-out;
          
-         .swing {
+         + label {
             display: inline-block;
-            width: 100%;
-            padding: 6px 15px;
-            color: blue;
-            background-color: #efefef;
-            border: 0;
-            border-radius: 7px;
-            outline: 0;
-            text-indent: 80px; // Arbitrary.
-            text-align: right;
-            transition: all 1.3s ease-in-out;
-            
-            + label {
-               display: inline-block;
-               position: absolute;
-               top: -1px;
-               right: 0;
-               width: 90px;
-               padding: 0 5px ;
-               border : 1px solid $sc;
-               border-radius:3px;
-               text-shadow: 0 1px 0 rgba(19, 74, 70, 0.4);
-               background-color: $bc;
-               color : $c ;
-               transform-origin: 95% 5%;
-               transform: rotate(0);
-               // There should be a better way
-               animation: swing-back 1.4s 1 ease-in-out;
-            }
-         }
-         @keyframes swing {
-            0% {
-               transform: rotate(0);
-            }
-            20% {
-               transform: rotate(-116deg);
-            }
-            40% {
-               transform: rotate(-60deg);
-            }
-            60% {
-               transform: rotate(-98deg);
-            }
-            80% {
-               transform: rotate(-76deg);
-            }
-            100% {
-               transform: rotate(-82deg);
-            }
-         }
-         @keyframes swing-back {
-            0% {
-               transform: rotate(-82deg);
-            }
-            100% {
-               transform: rotate(0);
-            }
-         }
-         .swing:focus,    .swing:active {
-            color: red;
-            text-indent: 0;
-            background-color: #fff;
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-            
-            &::-webkit-input-placeholder {
-               color: #aaa;
-            }
-            + label {
-               animation: swing 1.4s 1 ease-in-out;
-               transform: rotate(-82deg);
-            }
+            position: absolute;
+            top: -1px;
+            right: 0;
+            width: 90px;
+            padding: 0 5px ;
+            border : 1px solid $sc;
+            border-radius:3px;
+            text-shadow: 0 1px 0 rgba(19, 74, 70, 0.4);
+            background-color: $bc;
+            color : $c ;
+            transform-origin: 95% 5%;
+            transform: rotate(0);
+            // There should be a better way
+            animation: swing-back $s 1 ease-in-out;
          }
       }
-      .btn[name="btnSave"]::after {
+      @keyframes swing {
+         0% {
+            transform: rotate(0);
+         }
+         20% {
+            transform: rotate(-116deg);
+         }
+         40% {
+            transform: rotate(-60deg);
+         }
+         60% {
+            transform: rotate(-98deg);
+         }
+         80% {
+            transform: rotate(-76deg);
+         }
+         100% {
+            transform: rotate(-82deg);
+         }
+      }
+      @keyframes swing-back {
+         0% {
+            transform: rotate(-82deg);
+         }
+         100% {
+            transform: rotate(0);
+         }
+      }
+      .swing:focus,    .swing:active {
+         color: red;
+         text-indent: 0;
+         background-color: #fff;
+         border-top-left-radius: 0;
+         border-bottom-left-radius: 0;
+         
+         &::-webkit-input-placeholder {
+            color: #aaa;
+         }
+         + label {
+            animation: swing $s 1 ease-in-out;
+            transform: rotate(-82deg);
+            z-index: 9;
+         }
+      }
+   }
+   .btn[name="btnSave"]{
+      &::after {
          content: "\270D";
          top: -3px;
       }
-      .btn[name="btnDlt"]::before {
-         content: "\2704";
-         top: 0px;
+      &:hover {
+         #rebot {
+            visibility: visible;
+         }
       }
-      button.btn {
-         width: 40%;
-         display: inline-block;
-         font-weight: bolder;
-         padding: 5px;
-         margin: 15px 4%;
-         border-radius: 25px;
-         outline: none;
-         color: $c;
-         background-color: $bc;
-      }
+   }
+   .btn[name="btnDlt"]::before {
+      content: "\2704";
+      top: 0px;
+   }
+   button.btn {
+      width: 40%;
+      display: inline-block;
+      font-weight: bolder;
+      padding: 5px;
+      margin: 15px 4%;
+      border-radius: 25px;
+      outline: none;
+      color: $c;
+      background-color: $bc;
    }
 }
