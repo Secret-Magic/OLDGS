@@ -2,38 +2,49 @@
 session_start();
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	include_once "init.php";
-	include_once TPL . 'navbar.php';
-	include_once TPL . 'slider.php';
 
 	$pageTitle = "خرج الطلمبات";
-	$goOn = FALSE;
 
 	for ($i = 0; $i < 9; $i++) {
 		$srtSymbl[$i] = "   &#9670;";
 	}
 	//--------------------------------------------
 	if ($_SERVER['REQUEST_METHOD'] == "POST") {
+		$errs = array();
+		$report = "";
+		$iss = 0;
+		$goOn = FALSE;
+
+		$tmpId = intval($_POST['iId']);
+		$tmpDly = intval($_POST['iDly']);
+		$tmpPmp = intval($_POST['iPmp']);
+		$tmpPmpNm = vldtVrbl($_POST['iPmpNm']);
+		$tmpNmbr = intval($_POST['iNmbr']);
+		$tmpQnttyBck = intval($_POST['iQnttyBck']);
+		$tmpTnk = intval($_POST['iTnk']);
+		$tmpNts = vldtVrbl($_POST['iNts']);
+
 		if (isset($_POST['btnSave'])) {
-			if (isset($_POST['iId'])) {
-				if ($_POST['iId'] > 0) {
-					if (isSaved("poId", "PumpOut", intval($_POST['iId']))) {
-						if (isSaved("bhSub", "BillHeader", $_SESSION['Sub'], " AND bhKnd=8 AND bhId > " . $_POST['iDly'])) {
+			if (isset($tmpId)) {
+				if ($tmpId > 0) {
+					if (isSaved("poId", "PumpOut", $tmpId)) {
+						if (isSaved("bhSub", "BillHeader", $_SESSION['Sub'], " AND bhKnd=8 AND bhId > " . $tmpDly)) {
 							$errs[] = "يتعذر التعديل لأنه تم تسجيل وردية بعدها";
 							/*نسمح للمدير بالتعديل */
 						} else {
 							$sql = "SELECT MAX(poNmbr) AS mNm FROM `pumpout` WHERE poDly != " . $_POST['iDly'] . " AND `poPmp`= ?";
-							$vl = array(vldtVrbl($_POST['iPmp']));
+							$vl = array($tmpPmp);
 							$row = getRow($sql, $vl);
 							$mNm = $row['mNm'];
 							if ($mNm == NULL) {
 								$sql = "SELECT * FROM `Pumps` WHERE pId =? ";
-								$vl = array(vldtVrbl($_POST['iPmp']));
+								$vl = array($tmpPmp);
 								$row = getRow($sql, $vl);
 								$mNm = $row['pFrstNmbr'];
 							}
 							if ($_POST['iNmbr'] >= $mNm) {
 								$sql = "UPDATE PumpOut SET  poNmbr=?, poQnttyBck=?,poTnk=?, poNts=?  WHERE `poId`=? ;";
-								$vl = array(vldtVrbl($_POST['iNmbr']), vldtVrbl($_POST['iQnttyBck']), vldtVrbl($_POST['iTnk']), vldtVrbl($_POST['iNts']), vldtVrbl($_POST['iId']));
+								$vl = array($tmpNmbr, $tmpQnttyBck, $tmpTnk, $tmpNts, $tmpId);
 								$report = "تم حفظ التعديلات";
 								$goOn = TRUE;
 							} else {
@@ -54,7 +65,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				$report = "لم يحدث شئ";
 			}
 		} else {
-			$report = "";
+			$iss = 1;
 			foreach ($errs as $err) {
 				$report .= " # " . $err;
 			}
@@ -67,6 +78,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			//$_SESSION['strSrch'] ;
 		} else {
 			$_SESSION['iDly'] = 1;
+			$report = "لم يتم تحديد الوردية بشكل صحيح" ;
 		}
 		//------------------------------------------
 		if (isset($_GET['srt'])) {
@@ -116,7 +128,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		}
 		$_SESSION['strSrt'] .= ($_SESSION['srtKnd'] == 9652) ? " ASC ;" : " DESC ;";
 	} else {
-		echo ("خطأ غير متوقع");
+		$report = "لا أظن يمكن تحقيقه";
 	}
 	$srtSymbl[$_SESSION['srt']] = " &#" . $_SESSION['srtKnd'] . "; ";
 ?>
@@ -139,9 +151,8 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				$vl = array($_SESSION['iDly']);
 				$row = getRow($sql, $vl);
 				echo ("<tr> <td class='hiddenCol'>" . $row['bhId'] . "</td> <td>" . $row['bhNmbr'] . "</td>
-										<td class='hiddenCol'>" . $row['bhNm'] . "</td><td>" . $row['aNm'] . "</td> <td>" . $row['bhDt'] . "</td>
-										<td>" . $row['bhNts'] . "</td> </tr>");
-
+						<td class='hiddenCol'>" . $row['bhNm'] . "</td><td>" . $row['aNm'] . "</td> <td>" . $row['bhDt'] . "</td>
+						<td>" . $row['bhNts'] . "</td> </tr>");
 				?>
 			</tbody>
 		</table>
@@ -168,10 +179,10 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				$result = getRows($sql);
 				foreach ($result as $row) {
 					echo ("<tr> <td>" . ++$rc . "</td> <td class='hiddenCol'>" . $row['poId'] . "</td> <td class='hiddenCol'>" . $row['poDly'] . "</td>
-										<td class='hiddenCol'>" . $row['poPmp'] . "</td> <td>" . $row['pNm'] . "</td> 
-										<td>" . $row['poNmbr'] . "</td> <td>" . $row['poQnttyBck'] . "</td>
-										<td class='hiddenCol'>" . $row['poTnk'] . "</td> <td>" . $row['aNm'] . "</td> 
-										<td>" . $row['poNts'] . "</td> </tr>");
+							<td class='hiddenCol'>" . $row['poPmp'] . "</td> <td>" . $row['pNm'] . "</td> 
+							<td>" . $row['poNmbr'] . "</td> <td>" . $row['poQnttyBck'] . "</td>
+							<td class='hiddenCol'>" . $row['poTnk'] . "</td> <td>" . $row['aNm'] . "</td> 
+							<td>" . $row['poNts'] . "</td> </tr>");
 				}
 				//echo ("<tr> <td>". ++$rc. "</td> <td class='hiddenCol'>0</td> <td class='hiddenCol'></td> <td class='hiddenCol'></td> <td></td><td></td> <td></td> <td></td> <td></td> <td></td>	</tr>");
 				?>
@@ -192,18 +203,18 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	<div class="row" id="row">
 		<div class="btnClose" id="btnClose"> &#10006; </div>
 		<form action="<?php echo ($_SERVER['PHP_SELF']); ?>" method="post" name="iFrm" onsubmit="return isValidForm()">
-			<input class="" id="iId" name="iId" type="hidden" />
-			<input class="" id="iDly" name="iDly" type="hidden" />
-			<input class="" id="iPmp" name="iPmp" type="hidden" />
+			<input class="" id="iId" name="iId" type="hidden" value="<?php echo($tmpId) ?>" />
+			<input class="" id="iDly" name="iDly" type="hidden" value="<?php echo($tmpDly) ?>" />
+			<input class="" id="iPmp" name="iPmp" type="hidden"  value="<?php echo($tmpPmp) ?>" />
 
 			<span>
-				<input class="swing" id="iPmpNm" name="iPmpNm" type="text" maxlength="99" autocomplete="off" placeholder="اسم الطلمبة" readonly /><label for="iPmpNm">الطلمبة</label>
+				<input class="swing" id="iPmpNm" name="iPmpNm" type="text" maxlength="99" autocomplete="off" placeholder="اسم الطلمبة" value="<?php echo($tmpPmpNm) ?>" readonly /><label for="iPmpNm">الطلمبة</label>
 			</span>
 			<span>
-				<input class="swing" id="iNmbr" name="iNmbr" type="number" maxlength="10" placeholder="العداد السرى" required /><label for="iNmbr">العداد</label>
+				<input class="swing" id="iNmbr" name="iNmbr" type="number" maxlength="10" placeholder="العداد السرى" value="<?php echo($tmpNmbr) ?>" required /><label for="iNmbr">العداد</label>
 			</span>
 			<span>
-				<input class="swing" id="iQnttyBck" name="iQnttyBck" type="number" placeholder="كمية المرتجع" required /><label for="iQnttyBck">المرتجع</label>
+				<input class="swing" id="iQnttyBck" name="iQnttyBck" type="number" placeholder="كمية المرتجع" value="<?php echo($tmpQnttyBck) ?>" required /><label for="iQnttyBck">المرتجع</label>
 			</span>
 			<span>
 				<select class="swing" name="iTnk" id="iTnk" placeholder="اسم التانك">
@@ -211,17 +222,21 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 					$sql = "SELECT * FROM Accounts WHERE aSub=" . $_SESSION['Sub'] . " AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp=9) ;";
 					$result = getRows($sql);
 					foreach ($result as $row) {
-						echo ("<option value=" . $row['aId'] . ">" . $row['aNm'] . "</option> ");
+						$sl = "";
+						if ($row['aId'] == $tmpTnk) {
+							$sl = " selected ";
+						}
+						echo ("<option value='" . $row['aId']."'". $sl . ">" . $row['aNm'] . "</option> ");
 					}
 					?>
 				</select><label for="iTnk"> التانك </label>
 			</span>
 			<span>
-				<input class="swing" id="iNts" name="iNts" type="text" maxlength="99" autocomplete="off" placeholder="وصف للطلمبة" /><label for="iNts">ملاحظات</label>
+				<input class="swing" id="iNts" name="iNts" type="text" maxlength="99" autocomplete="off" placeholder="وصف للطلمبة" value="<?php echo($tmpNts) ?>" /><label for="iNts">ملاحظات</label>
 			</span>
 
 			<button class="btn" type="submit" name="btnSave"> حفظ </button>
-			<button class="btn" type="submit" name="btnDlt" id="btnDlt"> حذف </button>
+			<!-- <button class="btn" type="submit" name="btnDlt" id="btnDlt"> حذف </button> -->
 		</form>
 	</div>
 	<!-------------------------------- Script ---------------------------------->
@@ -239,7 +254,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				document.getElementById('iTnk').value = this.cells[7].innerHTML;
 				document.getElementById('iNts').value = this.cells[9].innerHTML;
 				showInptScrn();
-				document.getElementById('btnDlt').style.display = "none";
+				// document.getElementById('btnDlt').style.display = "none";
 			}
 		}
 	</script>

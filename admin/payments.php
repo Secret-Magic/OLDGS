@@ -2,8 +2,6 @@
 session_start();
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	include_once "init.php";
-	include_once TPL . 'navbar.php';
-	include_once TPL . 'slider.php';
 
 	$pageTitle = "المدفوعات";
 	$goOn = FALSE;
@@ -124,7 +122,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		}
 		$_SESSION['strSrt'] .= ($_SESSION['srtKnd'] == 9652) ? " ASC ;" : " DESC ;";
 	} else {
-		echo ("خطأ غير متوقع");
+		$report = "لا أظن يمكن تحقيقه";
 	}
 	$srtSymbl[$_SESSION['srt']] = " &#" . $_SESSION['srtKnd'] . "; ";
 ?>

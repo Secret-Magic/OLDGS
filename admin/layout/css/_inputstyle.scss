@@ -136,30 +136,30 @@ form {
          }
       }
    }
-   .btn[name="btnSave"]{
-      &::after {
-         content: "\270D";
-         top: -3px;
-      }
-      &:hover {
-         #rebot {
-            visibility: visible;
-         }
-      }
-   }
-   .btn[name="btnDlt"]::before {
-      content: "\2704";
-      top: 0px;
-   }
    button.btn {
       width: 40%;
       display: inline-block;
       font-weight: bolder;
       padding: 5px;
-      margin: 15px 4%;
-      border-radius: 25px;
+      margin: 10px 4%;
+      border-radius: 40% 10%;
+      border: 7px double $mc;
       outline: none;
       color: $c;
       background-color: $bc;
+      position: relative;
+      &[name="btnSave"]{
+         &::after {
+            content: "\270D";
+            position: absolute;
+            top: 0px;
+            // left: 32px;
+         }
+      }
+      &[name="btnDlt"]::before {
+         content: " \2704 ";
+         // position: absolute;
+         // top: 0px;
+      }
    }
 }

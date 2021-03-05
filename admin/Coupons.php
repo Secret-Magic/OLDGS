@@ -2,10 +2,6 @@
 session_start();
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	include_once "init.php";
-	include_once TPL . 'navbar.php';
-	include_once TPL . 'slider.php';
-
-	$goOn = FALSE;
 
 	for ($i = 0; $i < 12; $i++) {
 		$srtSymbl[$i] = "   &#9670;";
@@ -13,31 +9,42 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	//--------------------------------------------
 	if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		$errs = array();
+		$report = "";
+		$iss = 0;
+		$goOn = FALSE;
+
+		$tmpId = intval($_POST['iId']);
+		$tmpNm = vldtVrbl($_POST['iNm']);
+		$tmpByPrc = floatval($_POST['iByPrc']);
+		$tmpSllPrc = floatval($_POST['iSllPrc']);
+		$tmpNts = vldtVrbl($_POST['iNts']);
+		$tmpGrp = vldtVrbl($_POST['iGrp']);
+
 		if (isset($_POST['btnSave'])) {
-			if (isset($_POST['iId'])) {
-				if ($_POST['iId'] > 0) {
-					if (isSaved("cId", "coupons", intval($_POST['iId']))) {
-						if (empty(vldtVrbl($_POST['iNm']))) {
+			if (isset($tmpId)) {
+				if ($tmpId > 0) {
+					if (isSaved("cId", "coupons", $tmpId)) {
+						if (empty($tmpNm)) {
 							$errs[] = " الاسم فارغ";
-						} elseif (isSaved("cNm", "coupons", vldtVrbl($_POST['iNm']), " AND cId <> " . vldtVrbl($_POST['iId']))) {
+						} elseif (isSaved("cNm", "coupons", $tmpNm, " AND cId <> " . $tmpId)) {
 							$errs[] = " الاسم مكرر ";
 						} else {
 							$sql = "UPDATE coupons SET cNm=?, cByPrc=?, cSllPrc=?, cNts=?, cGrp=? WHERE `cId`=? ;";
-							$vl = array(vldtVrbl($_POST['iNm']), vldtVrbl($_POST['iByPrc']), vldtVrbl($_POST['iSllPrc']), vldtVrbl($_POST['iNts']), vldtVrbl($_POST['iGrp']), vldtVrbl($_POST['iId']));
+							$vl = array($tmpNm, $tmpByPrc, $tmpSllPrc, $tmpNts, $tmpGrp, $tmpId);
 							$report = "تم حفظ التعديلات";
 							$goOn = TRUE;
 						}
 					} else {
 						$errs[] = "تم حذفه بواسطة مستخدم آخر";
 					}
-				} elseif ($_POST['iId'] == '0') {
-					if (empty(vldtVrbl($_POST['iNm']))) {
+				} elseif ($tmpId == '0') {
+					if (empty($tmpNm)) {
 						$errs[] = " الاسم فارغ";
-					} elseif (isSaved("cNm", "Coupons", vldtVrbl($_POST['iNm']))) {
+					} elseif (isSaved("cNm", "Coupons", $tmpNm)) {
 						$errs[] = " الاسم مكرر ";
 					} else {
 						$sql = "INSERT INTO coupons (cNm, cByPrc, cSllPrc, cNts, cGrp) VALUES (?,?,?,?,?) ;";
-						$vl = array(vldtVrbl($_POST['iNm']), vldtVrbl($_POST['iByPrc']), vldtVrbl($_POST['iSllPrc']), vldtVrbl($_POST['iNts']), vldtVrbl($_POST['iGrp']));
+						$vl = array($tmpNm, $tmpByPrc, $tmpSllPrc, $tmpNts, $tmpGrp);
 						$report = "تم إضافة بيان جديد";
 						$goOn = TRUE;
 					}
@@ -46,10 +53,10 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				$errs[] = "خطأ غير متوقع";
 			}
 		} elseif (isset($_POST['btnDlt'])) {
-			if (isset($_POST['iId']) && intval($_POST['iId']) > 5) {
-				if (isSaved("cId", "coupons", intval($_POST['iId']))) {
+			if (isset($tmpId) && $tmpId > 5) {
+				if (isSaved("cId", "coupons", $tmpId)) {
 					$sql = "DELETE FROM coupons WHERE `cId`=? ;";
-					$vl = array(intval($_POST['iId']));
+					$vl = array($tmpId);
 					$report = "تم حذفه";
 					$goOn = TRUE;
 				} else {
@@ -66,7 +73,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				$report = "لم يحدث شئ";
 			}
 		} else {
-			$report = "";
+			$iss = 1;
 			foreach ($errs as $err) {
 				$report .= " # " . $err;
 			}
@@ -79,6 +86,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			//$_SESSION['iGrpTyp'] ;
 		} else {
 			$_SESSION['iGrpTyp'] = 18;
+			$report = "لم يتم تحديد نوع البون بشكل صحيح" ;
 		}
 		//------------------------------------------
 		if (isset($_GET['iSrch'])) {
@@ -97,7 +105,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				$_SESSION['srtKnd'] = 9652;
 			}
 		} else {
-			$_SESSION['srt'] = 7;
+			$_SESSION['srt'] = 0;
 			$_SESSION['srtKnd'] = 9652;
 			$_SESSION['strSrt'] = " ;";
 		}
@@ -133,7 +141,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		}
 		$_SESSION['strSrt'] .= ($_SESSION['srtKnd'] == 9652) ? " ASC ;" : " DESC ;";
 	} else {
-		echo ("خطأ غير متوقع");
+		$report = "لا أظن يمكن تحقيقه";
 	}
 	$srtSymbl[$_SESSION['srt']] = " &#" . $_SESSION['srtKnd'] . "; ";
 	$pageTitle ="البونات";
@@ -165,9 +173,9 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				$result = getRows($sql);
 				foreach ($result as $row) {
 					echo ("<tr> <td>" . ++$rc . "</td> <td class='hiddenCol'>" . $row['cId'] . "</td>	<td>" . $row['cNm'] . "</td> 
-											<td>" . $row['cByPrc'] . "</td> <td>" . $row['cSllPrc'] . "</td>
-											<td>" . $row['cGrp'] . "</td> <td>" . $row['cWrk'] . "</td>
-											<td>" . $row['gNts'] . "</td> <td>" . $row['cAdDt'] . "</td> </tr>");
+							<td>" . $row['cByPrc'] . "</td> <td>" . $row['cSllPrc'] . "</td>
+							<td>" . $row['cGrp'] . "</td> <td>" . $row['cWrk'] . "</td>
+							<td>" . $row['gNts'] . "</td> <td>" . $row['cAdDt'] . "</td> </tr>");
 				}
 				echo ("<tr> <td>" . ++$rc . "</td> <td class='hiddenCol'>0</td> <td></td><td></td> <td></td> <td></td> <td></td> <td></td> <td></td>	</tr>");
 				?>
@@ -186,15 +194,15 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	<div class="row" id="row">
 		<div class="btnClose" id="btnClose"> &#10006; </div>
 		<form action="<?php echo ($_SERVER['PHP_SELF']); ?>" method="post" name="iFrm" > 
-			<input class="" id="iId" name="iId" type="hidden" />
+			<input class="" id="iId" name="iId" type="hidden" value="<?php echo($tmpId) ?>"  />
 			<span>
-				<input class="swing" id="iNm" name="iNm" type="text" maxlength="99" autocomplete="off" placeholder="اسم البون" required /><label for="iNm">الاسم</label>
+				<input class="swing" id="iNm" name="iNm" type="text" maxlength="99" autocomplete="off" placeholder="اسم البون" value="<?php echo($tmpNm) ?>"  required /><label for="iNm">الاسم</label>
 			</span>
 			<span>
-				<input class="swing" id="iByPrc" name="iByPrc" type="text" maxlength="10" autocomplete="off" placeholder="سعر شراء البون" required /><label for="iByPrc">شراء</label>
+				<input class="swing" id="iByPrc" name="iByPrc" type="text" maxlength="10" autocomplete="off" placeholder="سعر شراء البون" value="<?php echo($tmpByPrc) ?>"  required /><label for="iByPrc">شراء</label>
 			</span>
 			<span>
-				<input class="swing" id="iSllPrc" name="iSllPrc" type="text" maxlength="10" autocomplete="off" placeholder="سعر بيع البون" required /><label for="iSllPrc">بيع</label>
+				<input class="swing" id="iSllPrc" name="iSllPrc" type="text" maxlength="10" autocomplete="off" placeholder="سعر بيع البون" value="<?php echo($tmpSllPrc) ?>"  required /><label for="iSllPrc">بيع</label>
 			</span>
 			<span>
 				<select class="swing" name="iGrp" id="iGrp" placeholder="نوع المجموعة"> 
@@ -202,13 +210,17 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 					$sql = "SELECT * FROM Groups WHERE gWrk=1 AND gGrpTyp = " . vldtVrbl($_SESSION['iGrpTyp']) . " ;";
 					$result = getRows($sql);
 					foreach ($result as $row) {
-						echo ("<option value=" . $row['gId'] . ">" . $row['gNm'] . "</option> ");
+						$sl = "";
+						if ($row['gId'] == $tmpGrp) {
+							$sl = " selected ";
+						}
+						echo ("<option value='" . $row['gId']."'". $sl . ">" . $row['gNm'] . "</option> ");
 					}
 					?>
 				</select><label for="iGrp"> المجموعة </label>
 			</span>
 			<span>
-				<input class="swing" id="iNts" name="iNts" type="text" maxlength="99" autocomplete="off" placeholder="وصف البون" /><label for="iNts">ملاحظات</label>
+				<input class="swing" id="iNts" name="iNts" type="text" maxlength="99" autocomplete="off" placeholder="وصف البون" value="<?php echo($tmpNts) ?>"  /><label for="iNts">ملاحظات</label>
 			</span>
 
 			<button class="btn" type="submit" name="btnSave"> حفظ </button>

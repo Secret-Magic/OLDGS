@@ -2,27 +2,35 @@
 session_start();
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	include_once "init.php";
-	include_once TPL . 'navbar.php';
-	include_once TPL . 'slider.php';
 
 	$pageTitle = "اليومية";
-	$goOn = FALSE;
-	$pk = 0;
-
+	
 	for ($i = 0; $i < 7; $i++) {
 		$srtSymbl[$i] = "   &#9670;";
 	}
 	//--------------------------------------------
 	if ($_SERVER['REQUEST_METHOD'] == "POST") {
+		$errs = array();
+		$report = "";
+		$pk = 0;
+		$iss = 0;
+		$goOn = FALSE;
+
+		$tmpId = intval($_POST['iId']);
+		$tmpNm = intval($_POST['iNm']);
+		$tmpDt = vldtVrbl($_POST['iDt']);
+		$tmpNmbr = intval($_POST['iNmbr']);
+		$tmpNts = vldtVrbl($_POST['iNts']);
+
 		if (isset($_POST['btnSave'])) {
-			if (isset($_POST['iId'])) {
-				if ($_POST['iId'] > 0) {
-					if (isSaved("bhId", "BillHeader", intval($_POST['iId']))) {
-						if (empty(vldtVrbl($_POST['iNm']))) {
+			if (isset($tmpId)) {
+				if ($tmpId > 0) {
+					if (isSaved("bhId", "BillHeader", $tmpId)) {
+						if (empty($tmpNm)) {
 							$errs[] = " الاسم فارغ";
 						} else {
 							$sql = "UPDATE BillHeader SET bhNm=?, bhDt=?, bhNts=?  WHERE `bhId`=? ;";
-							$vl = array(vldtVrbl($_POST['iNm']), vldtVrbl($_POST['iDt']), vldtVrbl($_POST['iNts']), vldtVrbl($_POST['iId']));
+							$vl = array($tmpNm, $tmpDt, $tmpNts, $tmpId);
 							$report = "تم حفظ التعديلات";
 							$goOn = TRUE;
 						}
@@ -30,11 +38,11 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 						$errs[] = "تم حذفه بواسطة مستخدم آخر";
 					}
 				} elseif ($_POST['iId'] == '0') {
-					if (empty(vldtVrbl($_POST['iNm']))) {
+					if (empty($tmpNm)) {
 						$errs[] = " الاسم فارغ";
 					} else {
 						$sql = "INSERT INTO BillHeader (bhNmbr, bhNm, bhDt, bhNts, bhSub , bhKnd) VALUES (?,?,?,?,?,?) ;";
-						$vl = array(vldtVrbl($_POST['iNmbr']), vldtVrbl($_POST['iNm']), vldtVrbl($_POST['iDt']), vldtVrbl($_POST['iNts']), $_SESSION['Sub'], 8);
+						$vl = array($tmpNmbr, $tmpNm, $tmpDt, $tmpNts, $_SESSION['Sub'], 8);
 						$report = "تم إضافة بيان جديد";
 						$goOn = TRUE;
 						$pk = 2;
@@ -44,9 +52,9 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				$errs[] = "خطأ غير متوقع";
 			}
 		} elseif (isset($_POST['btnDlt'])) {
-			if (isset($_POST['iId']) && intval($_POST['iId']) > 1) {
-				if (isSaved("dhId", "DailyHeader", intval($_POST['iId']))) {
-					if (isSaved("bhSub", "BillHeader", $_SESSION['Sub'], " AND bhId > " . $_POST['iId'])) {
+			if (isset($tmpId) && $tmpId > 1) {
+				if (isSaved("bhId", "BillHeader", $tmpId)) {
+					if (isSaved("bhSub", "BillHeader", $_SESSION['Sub'], " AND bhId > " . $tmpId)) {
 						$errs[] = "يتعذر الحذف لأنه تم تسجيل وردية بعدها";
 						/*نسمح للمدير بالحذف */
 					} else {
@@ -55,7 +63,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 							}
 							*/
 						$sql = "DELETE FROM BillHeader WHERE `bhId`=? ;";
-						$vl = array(vldtVrbl($_POST['iId']));
+						$vl = array($tmpId);
 						$report = "تم حذفه";
 						$goOn = TRUE;
 					}
@@ -85,7 +93,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 							$mNmbr = $row['pFrstNmbr'];
 						}
 						$sql = "INSERT INTO PumpOut (poDly, poPmp, poNmbr, poTnk) VALUES (?,?,?,?)";
-						$vl = array(vldtVrbl($mId), vldtVrbl($row['pId']), $mNmbr, vldtVrbl($row['pTnk']));
+						$vl = array($mId, $row['pId'], $mNmbr, $row['pTnk']);
 						getRC($sql, $vl);
 					}
 				}
@@ -93,7 +101,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				$report = "لم يحدث شئ";
 			}
 		} else {
-			$report = "";
+			$iss = 1;
 			foreach ($errs as $err) {
 				$report .= " # " . $err;
 			}
@@ -146,7 +154,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		}
 		$_SESSION['strSrt'] .= ($_SESSION['srtKnd'] == 9652) ? " ASC ;" : " DESC ;";
 	} else {
-		echo ("خطأ غير متوقع");
+		$report = "لا أظن يمكن تحقيقه";
 	}
 	$srtSymbl[$_SESSION['srt']] = " &#" . $_SESSION['srtKnd'] . "; ";
 ?>
@@ -215,13 +223,13 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	<!-------------------------------- Input Screen ---------------------------->
 	<div class="row" id="row">
 		<div class="btnClose" id="btnClose"> &#10006; </div>
-		<form action="<?php echo ($_SERVER['PHP_SELF']); ?>" method="post" name="iFrm" onsubmit="return isValidForm()">
-			<input class="" id="iId" name="iId" type="hidden" />
+		<form action="<?php echo ($_SERVER['PHP_SELF']); ?>" method="post" name="iFrm" id="iFrm" >
+			<input class="" id="iId" name="iId" type="hidden" value="<?php echo($tmpId) ?>" />
 			<span>
-				<input class="swing" id="iNmbr" name="iNmbr" type="number" readonly /><label for="iNmbr">رقم الوردية</label>
+				<input class="swing" id="iNmbr" name="iNmbr" type="number" value="<?php echo($tmpNmbr) ?>" readonly /><label for="iNmbr">رقم الوردية</label>
 			</span>
 			<span>
-				<input class="swing" id="iDt" name="iDt" type="date" style="padding-right: 100px;" required /><label for="iDt">التاريخ</label>
+				<input class="swing" id="iDt" name="iDt" type="date" style="padding-right: 100px;" value="<?php echo($tmpDt) ?>" required /><label for="iDt">التاريخ</label>
 			</span>
 			<span>
 				<select class="swing" name="iNm" id="iNm" placeholder="اسم رئيس الوردية أو المسئول">
@@ -231,7 +239,11 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 						$sql = "SELECT * FROM Accounts WHERE aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp =" . $i . ") AND (aSub=0 || aSub= " . $_SESSION['Sub'] . ")";
 						$result = getRows($sql);
 						foreach ($result as $row) {
-							echo ("<option value=" . $row['aId'] . ">" . $row['aNm'] . "</option>");
+							$sl = "";
+							if ($row['aId'] == $tmpNm) {
+								$sl = " selected ";
+							}
+							echo ("<option value='" . $row['aId']."'". $sl. ">" . $row['aNm'] . "</option>");
 						}
 						echo "</optgroup>";
 					}
@@ -239,7 +251,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				</select><label for="iNm"> الاسم </label>
 			</span>
 			<span>
-				<input class="swing" id="iNts" name="iNts" type="text" maxlength="99" autocomplete="off" placeholder="وصف للوردية" /><label for="iNts">ملاحظات</label>
+				<input class="swing" id="iNts" name="iNts" type="text" maxlength="99" autocomplete="off" placeholder="وصف للوردية" value="<?php echo($tmpNts) ?>" /><label for="iNts">ملاحظات</label>
 			</span>
 			<button class="btn" type="submit" name="btnSave"> حفظ </button>
 			<button class="btn" type="submit" name="btnDlt" id="btnDlt"> حذف </button>

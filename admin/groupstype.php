@@ -3,8 +3,6 @@ ob_start();
 session_start();
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	include_once "init.php";
-	include_once TPL . 'navbar.php';
-	include_once TPL . 'slider.php';
 
 	$pageTitle = "أنواع المجموعات";
 	$goOn = FALSE;

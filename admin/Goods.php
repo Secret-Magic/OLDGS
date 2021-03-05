@@ -2,10 +2,6 @@
 session_start();
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	include_once "init.php";
-	include_once TPL . 'navbar.php';
-	include_once TPL . 'slider.php';
-
-	$goOn = FALSE;
 
 	for ($i = 0; $i < 12; $i++) {
 		$srtSymbl[$i] = "   &#9670;";
@@ -13,23 +9,35 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	//--------------------------------------------
 	if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		$errs = array();
+		$report = "";
+		$iss = 0;
+		$goOn = FALSE;
+
+		$tmpId = intval($_POST['iId']);
+		$tmpNm = vldtVrbl($_POST['iNm']);
+		$tmpByLmt = intval($_POST['iByLmt']);
+		$tmpByPrc = floatval($_POST['iByPrc']);
+		$tmpSllPrc = floatval($_POST['iSllPrc']);
+		$tmpNts = vldtVrbl($_POST['iNts']);
+		$tmpGrp = vldtVrbl($_POST['iGrp']);
+		
 		if (isset($_POST['btnSave'])) {
-			if (isset($_POST['iId'])) {
-				if ($_POST['iId'] > 0) {
-					if (isSaved("gId", "Goods", intval($_POST['iId']))) {
-						if (empty(vldtVrbl($_POST['iNm']))) {
+			if (isset($tmpId)) {
+				if ($tmpId > 0) {
+					if (isSaved("gId", "Goods", $tmpId)) {
+						if (empty($tmpNm)) {
 							$errs[] = " الاسم فارغ";
-						} elseif (isSaved("gNm", "Goods", vldtVrbl($_POST['iNm']), " AND gId <> " . vldtVrbl($_POST['iId']))) {
+						} elseif (isSaved("gNm", "Goods", $tmpNm, " AND gId <> " . $tmpId)) {
 							$errs[] = " الاسم مكرر ";
-						} elseif (!(intval($_POST['iByLmt']) >= 0)) {
+						} elseif (!($tmpByLmt >= 0)) {
 							$errs[] = "حد الشراء غير صحيح";
-						} elseif (!(intval($_POST['iByPrc']) >= 0)) {
+						} elseif (!($tmpByPrc >= 0)) {
 							$errs[] = "سعر الشراء غير صحيح";
-						} elseif (!(intval($_POST['iSllPrc']) >= 0)) {
+						} elseif (!($tmpSllPrc >= 0)) {
 							$errs[] = "سعر البيع غير صحيح";
 						} else {
 							$sql = "UPDATE Goods SET gNm=?, gByLmt=?, gByPrc=?, gSllPrc=?, gNts=?, gGrp=? WHERE `gId`=? ;";
-							$vl = array(vldtVrbl($_POST['iNm']), vldtVrbl($_POST['iByLmt']), vldtVrbl($_POST['iByPrc']), vldtVrbl($_POST['iSllPrc']), vldtVrbl($_POST['iNts']), vldtVrbl($_POST['iGrp']), vldtVrbl($_POST['iId']));
+							$vl = array($tmpNm, $tmpByLmt, $tmpByPrc, $tmpSllPrc, $tmpNts, $tmpGrp, $tmpId);
 							$report = "تم حفظ التعديلات";
 							$goOn = TRUE;
 						}
@@ -37,19 +45,19 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 						$errs[] = "تم حذفه بواسطة مستخدم آخر";
 					}
 				} elseif ($_POST['iId'] == '0') {
-					if (empty(vldtVrbl($_POST['iNm']))) {
+					if (empty($tmpNm)) {
 						$errs[] = " الاسم فارغ";
-					} elseif (isSaved("gNm", "Goods", vldtVrbl($_POST['iNm']))) {
+					} elseif (isSaved("gNm", "Goods", $tmpNm)) {
 						$errs[] = " الاسم مكرر ";
-					} elseif (!(intval($_POST['iByLmt']) >= 0)) {
+					} elseif (!($tmpByLmt >= 0)) {
 						$errs[] = "حد الشراء غير صحيح";
-					} elseif (!(intval($_POST['iByPrc']) >= 0)) {
+					} elseif (!($tmpByPrc >= 0)) {
 						$errs[] = "سعر الشراء غير صحيح";
-					} elseif (!(intval($_POST['iSllPrc']) >= 0)) {
+					} elseif (!($tmpSllPrc >= 0)) {
 						$errs[] = "سعر البيع غير صحيح";
 					} else {
 						$sql = "INSERT INTO Goods (gNm, gByLmt, gByPrc, gSllPrc, gNts, gGrp) VALUES (?,?,?,?,?,?) ;";
-						$vl = array(vldtVrbl($_POST['iNm']), vldtVrbl($_POST['iByLmt']), vldtVrbl($_POST['iByPrc']), vldtVrbl($_POST['iSllPrc']), vldtVrbl($_POST['iNts']), vldtVrbl($_POST['iGrp']));
+						$vl = array($tmpNm, $tmpByLmt, $tmpByPrc, $tmpSllPrc, $tmpNts, $tmpGrp);
 						$report = "تم إضافة بيان جديد";
 						$goOn = TRUE;
 					}
@@ -58,13 +66,13 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				$errs[] = "خطأ غير متوقع";
 			}
 		} elseif (isset($_POST['btnDlt'])) {
-			if (isset($_POST['iId']) && intval($_POST['iId']) > 5) {
-				if (isSaved("gId", "Goods", intval($_POST['iId']))) {
-					if (isSaved("pGds", "Pumps", intval($_POST['iId']))) {
+			if (isset($tmpId) && $tmpId > 5) {
+				if (isSaved("gId", "Goods", $tmpId)) {
+					if (isSaved("pGds", "Pumps", $tmpId)) {
 						$errs[] = "يوجد طلمبة مرتبطة بهذا الوقود";
 					} else {
 						$sql = "DELETE FROM Goods WHERE `gId`=? ;";
-						$vl = array(intval($_POST['iId']));
+						$vl = array($tmpId);
 						$report = "تم حذفه";
 						$goOn = TRUE;
 					}
@@ -81,7 +89,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				$report = "لم يحدث شئ";
 			}
 		} else {
-			$report = "";
+			$iss = 1;
 			foreach ($errs as $err) {
 				$report .= " # " . $err;
 			}
@@ -94,6 +102,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			//$_SESSION['iGdTyp'] ;
 		} else {
 			$_SESSION['iGdTyp'] = 14;
+			$report = "لم يتم تحديد نوع الصنف بشكل صحيح" ;
 		}
 		//------------------------------------------
 		if (isset($_GET['iSrch'])) {
@@ -112,7 +121,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				$_SESSION['srtKnd'] = 9652;
 			}
 		} else {
-			$_SESSION['srt'] = 7;
+			$_SESSION['srt'] = 0;
 			$_SESSION['srtKnd'] = 9652;
 			$_SESSION['strSrt'] = " ;";
 		}
@@ -151,7 +160,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		}
 		$_SESSION['strSrt'] .= ($_SESSION['srtKnd'] == 9652) ? " ASC ;" : " DESC ;";
 	} else {
-		echo ("خطأ غير متوقع");
+		$report = "لا أظن يمكن تحقيقه";
 	}
 	$srtSymbl[$_SESSION['srt']] = " &#" . $_SESSION['srtKnd'] . "; ";
 	$pageTitle = str_replace("فئة", 'الأصناف :', getNameById('Groups', 'g', $_SESSION['iGdTyp']));
@@ -169,12 +178,12 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 					<th class='hiddenCol'> <a href="?srt=0"> <?php echo ($srtSymbl[0]); ?> الكود </a> </th>
 					<th> <a href="?srt=1"> <?php echo ($srtSymbl[1]); ?> الاسم </a> </th>
 					<th> <a href="?srt=2"> <?php echo ($srtSymbl[2]); ?> حد الشراء </a> </th>
-					<th> <a href="?srt=2"> <?php echo ($srtSymbl[3]); ?> سعر الشراء </a> </th>
-					<th> <a href="?srt=3"> <?php echo ($srtSymbl[4]); ?> سعر البيع </a> </th>
-					<th> <a href="?srt=4"> <?php echo ($srtSymbl[5]); ?> ملاحظات </a> </th>
-					<th> <a href="?srt=5"> <?php echo ($srtSymbl[6]); ?> نشط </a> </th>
-					<th> <a href="?srt=6"> <?php echo ($srtSymbl[7]); ?> مجموعة </a> </th>
-					<th> <a href="?srt=7"> <?php echo ($srtSymbl[8]); ?>تاريخ الانشاء</a> </th>
+					<th> <a href="?srt=3"> <?php echo ($srtSymbl[3]); ?> سعر الشراء </a> </th>
+					<th> <a href="?srt=4"> <?php echo ($srtSymbl[4]); ?> سعر البيع </a> </th>
+					<th> <a href="?srt=5"> <?php echo ($srtSymbl[5]); ?> ملاحظات </a> </th>
+					<th> <a href="?srt=6"> <?php echo ($srtSymbl[6]); ?> نشط </a> </th>
+					<th> <a href="?srt=7"> <?php echo ($srtSymbl[7]); ?> مجموعة </a> </th>
+					<th> <a href="?srt=8"> <?php echo ($srtSymbl[8]); ?> تاريخ الانشاء </a> </th>
 				</tr>
 			</thead>
 			<tbody>
@@ -183,9 +192,9 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				$sql = "SELECT * FROM Goods WHERE gGrp IN (SELECT gId FROM Groups WHERE gGrpTyp=" . vldtVrbl($_SESSION['iGdTyp']) . ") AND gNm like '%" . vldtVrbl($_SESSION['strSrch']) . "%' " . $_SESSION['strSrt'];
 				$result = getRows($sql);
 				foreach ($result as $row) {
-					echo ("<tr> <td>" . ++$rc . "</td> <td class='hiddenCol'>" . $row['gId'] . "</td>	<td>" . $row['gNm'] . "</td> <td>" . $row['gByLmt'] . "</td>
-											<td>" . $row['gByPrc'] . "</td><td>" . $row['gSllPrc'] . "</td> <td>" . $row['gNts'] . "</td>
-											<td>" . $row['gWrk'] . "</td> <td>" . $row['gGrp'] . "</td> <td>" . $row['gAdDt'] . "</td> </tr>");
+					echo ("<tr> <td>" . ++$rc . "</td> <td class='hiddenCol'>" . $row['gId'] . "</td>	<td>" . $row['gNm'] . "</td> 
+						<td>" . $row['gByLmt'] . "</td><td>" . $row['gByPrc'] . "</td><td>" . $row['gSllPrc'] . "</td> 
+						<td>" . $row['gNts'] . "</td>	<td>" . $row['gWrk'] . "</td> <td>" . $row['gGrp'] . "</td> <td>" . $row['gAdDt'] . "</td> </tr>");
 				}
 				echo ("<tr> <td>" . ++$rc . "</td> <td class='hiddenCol'>0</td> <td></td> <td></td><td></td> <td></td> <td></td> <td></td> <td></td> <td></td>	</tr>");
 				?>
@@ -203,34 +212,38 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	<!-------------------------------- Input Screen ---------------------------->
 	<div class="row" id="row">
 		<div class="btnClose" id="btnClose"> &#10006; </div>
-		<form action="<?php echo ($_SERVER['PHP_SELF']); ?>" method="post" name="iFrm" onsubmit="return isValidForm()">
-			<input class="" id="iId" name="iId" type="hidden" />
+		<form action="<?php echo ($_SERVER['PHP_SELF']); ?>" method="post" name="iFrm" id="iFrm" >
+			<input class="" id="iId" name="iId" type="hidden" value="<?php echo($tmpId) ?>" />
 			<span>
-				<input class="swing" id="iNm" name="iNm" type="text" maxlength="99" autocomplete="off" placeholder="اسم الصنف" required /><label for="iNm">الاسم</label>
+				<input class="swing" id="iNm" name="iNm" type="text" maxlength="99" autocomplete="off" placeholder="اسم الصنف" value="<?php echo($tmpNm) ?>" required /><label for="iNm">الاسم</label>
 			</span>
 			<span>
-				<input class="swing" id="iByLmt" name="iByLmt" type="number" maxlength="10" placeholder="حد الطلب أو حد الشراء" /><label for="iByLmt">حد الشراء</label>
+				<input class="swing" id="iByLmt" name="iByLmt" type="number" maxlength="10" placeholder="حد الطلب أو حد الشراء" value="<?php echo($tmpByLmt) ?>" /><label for="iByLmt">حد الشراء</label>
 			</span>
 			<span>
-				<input class="swing" id="iByPrc" name="iByPrc" type="text" maxlength="10" placeholder="سعر الشراء" required /><label for="iByPrc">شراء</label>
+				<input class="swing" id="iByPrc" name="iByPrc" type="text" maxlength="10" placeholder="سعر الشراء" value="<?php echo($tmpByPrc) ?>" required /><label for="iByPrc">شراء</label>
 			</span>
 			<span>
-				<input class="swing" id="iSllPrc" name="iSllPrc" type="text" maxlength="10" placeholder="سعر البيع" required /><label for="iSllPrc">بيع</label>
+				<input class="swing" id="iSllPrc" name="iSllPrc" type="text" maxlength="10" placeholder="سعر البيع" value="<?php echo($tmpSllPrc) ?>" required /><label for="iSllPrc">بيع</label>
 			</span>
 
 			<span>
 				<select class="swing" name="iGrp" id="iGrp" placeholder="نوع المجموعة">
 					<?php
-					$sql = "SELECT * FROM Groups WHERE gWrk=1 AND gGrpTyp = " . vldtVrbl($_SESSION['iGdTyp']) . " ;";
-					$result = getRows($sql);
-					foreach ($result as $row) {
-						echo ("<option value=" . $row['gId'] . ">" . $row['gNm'] . "</option> ");
-					}
+						$sql = "SELECT * FROM Groups WHERE gWrk=1 AND gGrpTyp = " . vldtVrbl($_SESSION['iGdTyp']) . " ;";
+						$result = getRows($sql);
+						foreach ($result as $row) {
+							$sl = "";
+							if ($row['gId'] == $tmpGrp) {
+								$sl = " selected ";
+							}
+							echo ("<option value='" . $row['gId']. "'". $sl. " >" . $row['gNm'] . "</option> ");
+						}
 					?>
 				</select><label for="iGrp"> المجموعة </label>
 			</span>
 			<span>
-				<input class="swing" id="iNts" name="iNts" type="text" maxlength="99" autocomplete="off" placeholder="وصف للصنف" /><label for="iNts">ملاحظات</label>
+				<input class="swing" id="iNts" name="iNts" type="text" maxlength="99" autocomplete="off" placeholder="وصف للصنف" value="<?php echo($tmpNts) ?>" /><label for="iNts">ملاحظات</label>
 			</span>
 
 			<button class="btn" type="submit" name="btnSave"> حفظ </button>

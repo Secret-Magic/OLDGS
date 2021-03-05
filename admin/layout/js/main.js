@@ -14,6 +14,7 @@ function exitInptScrn() {
 function showInptScrn() {
    "use strict";
 
+   document.getElementById('iss').value = '0';
    document.getElementById('row').style.display = "inline-block";
    document.getElementById('dvTbl').style.opacity = 0.75;
    document.getElementById('dvTbl').style.pointerEvents = "none";
@@ -92,6 +93,9 @@ if (btn01 != null) {
    }
 }
 
+if (document.getElementById('iss').value == '1') {
+   showInptScrn();
+}
 /*
 <button onclick="document.location='default.asp'">HTML Tutorial</button>
 <button onclick="window.location.href='default.asp'">HTML Tutorial</button>

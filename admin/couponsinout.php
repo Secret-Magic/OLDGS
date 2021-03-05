@@ -2,19 +2,26 @@
 session_start();
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	include_once "init.php";
-	include_once TPL . 'navbar.php';
-	include_once TPL . 'slider.php';
 
 	$pageTitle = "البونات";
-	$goOn = FALSE;
 
 	for ($i = 0; $i < 9; $i++) {
 		$srtSymbl[$i] = "   &#9670;";
 	}
 	//--------------------------------------------
 	if ($_SERVER['REQUEST_METHOD'] == "POST") {
+		$errs = array();
+		$report = "";
+		$iss = 0;
+		$goOn = FALSE;
+
+		$tmpId = intval($_POST['iId']);
+		$tmpNm = vldtVrbl($_POST['iNm']);
+		$tmpMax = intval($_POST['iMax']);
+		$tmpNts = vldtVrbl($_POST['iNts']);
+		$tmpGrp = vldtVrbl($_POST['iGrp']);
+		
 		if (isset($_POST['btnSave'])) {
-			
 			if (isset($_POST['iId'])) {
 				if ($_POST['iId'] > 0) {
 					if (isSaved("cioId", "CouponInOut", intval($_POST['iId']))) {
@@ -118,7 +125,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		}
 		$_SESSION['strSrt'] .= ($_SESSION['srtKnd'] == 9652) ? " ASC ;" : " DESC ;";
 	} else {
-		echo ("خطأ غير متوقع");
+		$report = "لا أظن يمكن تحقيقه";
 	}
 	$srtSymbl[$_SESSION['srt']] = " &#" . $_SESSION['srtKnd'] . "; ";
 ?>
@@ -164,16 +171,16 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			</thead>
 			<tbody>
 				<?php
-				$rc = 0;
-				$sql = "SELECT * FROM CouponInOut INNER JOIN Coupons ON cioCpnId=cId WHERE cioSrcId = " . vldtVrbl($_SESSION['iDly']) . "  " . $_SESSION['strSrt'];
-				$result = getRows($sql);
-				foreach ($result as $row) {
-					echo ("<tr> <td>" . ++$rc . "</td> <td class='hiddenCol'>" . $row['cioId'] . "</td> <td class='hiddenCol'>" . $row['cioSrcId'] . "</td>
-							<td class='hiddenCol'>" . $row['cioCpnId'] . "</td> <td>" . $row['cNm'] . "</td> 
-							<td>" . $row['cioQntty'] . "</td> <td>" . $row['cioPrc'] . "</td>
-							<td>" . $row['cioDscnt'] . "</td> <td>" . $row['cioNts'] . "</td> </tr>");
-				}
-				echo ("<tr> <td>". ++$rc. "</td> <td class='hiddenCol'>0</td> <td class='hiddenCol'></td> <td class='hiddenCol'></td> <td></td><td></td> <td></td> <td></td> <td></td>	</tr>");
+					$rc = 0;
+					$sql = "SELECT * FROM CouponInOut INNER JOIN Coupons ON cioCpnId=cId WHERE cioSrcId = " . vldtVrbl($_SESSION['iDly']) . "  " . $_SESSION['strSrt'];
+					$result = getRows($sql);
+					foreach ($result as $row) {
+						echo ("<tr> <td>" . ++$rc . "</td> <td class='hiddenCol'>" . $row['cioId'] . "</td> <td class='hiddenCol'>" . $row['cioSrcId'] . "</td>
+								<td class='hiddenCol'>" . $row['cioCpnId'] . "</td> <td>" . $row['cNm'] . "</td> 
+								<td>" . $row['cioQntty'] . "</td> <td>" . $row['cioPrc'] . "</td>
+								<td>" . $row['cioDscnt'] . "</td> <td>" . $row['cioNts'] . "</td> </tr>");
+					}
+					echo ("<tr> <td>". ++$rc. "</td> <td class='hiddenCol'>0</td> <td class='hiddenCol'></td> <td class='hiddenCol'></td> <td></td><td></td> <td></td> <td></td> <td></td>	</tr>");
 				?>
 			</tbody>
 			<tfoot>
@@ -209,8 +216,8 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			<!-- قائمة لجلب سعر البون المختار  -->
 			<select class="hiddenCol" name="tmp" id="tmp" >
 				<?php
-					$sql = "SELECT * FROM Coupons WHERE cWrk=1 ;";
-					$result = getRows($sql);
+					// $sql = "SELECT * FROM Coupons WHERE cWrk=1 ;";
+					// $result = getRows($sql);
 					foreach ($result as $row) {
 						echo ("<option value=" . $row['cId'] . ">" . $row['cByPrc']. "</option> ");
 					}

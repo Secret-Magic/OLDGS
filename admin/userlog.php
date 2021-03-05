@@ -6,7 +6,6 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	include_once TPL . 'slider.php';
 
 	$pageTitle = "بيانات الدخول";
-	$goOn = FALSE;
 
 	for ($i = 0; $i < 9; $i++) {
 		$srtSymbl[$i] = "   &#9670;";
@@ -14,45 +13,57 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	//--------------------------------------------
 	if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		$errs = array();
+		$report = "";
+		$iss = 0;
+		$goOn = FALSE;
+
+		$tmpId		 = intval($_POST['iId']);
+		$tmpUsrId 	 = intval($_POST['iUsrId']);
+		$tmpUsr 		 = vldtVrbl($_POST['iUsr']);
+		$tmpioPsswrd = $_POST['ioPsswrd'];
+		$tmpinPsswrd = vldtVrbl($_POST['inPsswrd']);
+		$tmpEml 		 = vldtVrbl($_POST['iEml']);
+		$tmpMxLg 	 = intval($_POST['iMxLg']);
+
 		if (isset($_POST['btnSave'])) {
-			if (isset($_POST['iId'])) {
-				if ($_POST['iId'] > 0) {
-					if (isSaved("ulId", "UserLog", intval($_POST['iId']))) {
-						if (isSaved("ulUsrId", "UserLog", vldtVrbl($_POST['iUsrId']), " AND ulId <> " . vldtVrbl($_POST['iId']))) {
+			if (isset($tmpId)) {
+				if ($tmpId > 0) {
+					if (isSaved("ulId", "UserLog", $tmpId)) {
+						if (isSaved("ulUsrId", "UserLog", $tmpUsrId, " AND ulId <> " . $tmpId)) {
 							$errs[] = " اسم المستخدم مكرر ";
-						} elseif (empty(vldtVrbl($_POST['iUsr']))) {
+						} elseif (empty($tmpUsr)) {
 							$errs[] = " اسم الدخول فارغ";
-						} elseif (isSaved("ulUsr", "UserLog", vldtVrbl($_POST['iUsr']), " AND ulId <> " . vldtVrbl($_POST['iId']))) {
+						} elseif (isSaved("ulUsr", "UserLog", $tmpUsr, " AND ulId <> " . $tmpId)) {
 							$errs[] = " اسم الدخول مكرر ";
 						} else {
-							if (empty(vldtVrbl($_POST['inPsswrd']))) {
+							if (empty($tmpinPsswrd)) {
 								$hashedpass = $_POST['ioPsswrd'];
 							} else {
-								$hashedpass = sha1(vldtVrbl($_POST['inPsswrd']));
+								$hashedpass = sha1($tmpinPsswrd);
 							}
 							$sql = "UPDATE UserLog SET ulUsrId=?, ulUsr=?, ulPsswrd=?, ulEml=?, ulMxLg=? WHERE ulId=? ";
-							$vl = array(vldtVrbl($_POST['iUsrId']), vldtVrbl($_POST['iUsr']), $hashedpass, vldtVrbl($_POST['iEml']), vldtVrbl($_POST['iMxLg']), vldtVrbl($_POST['iId']));
+							$vl = array($tmpUsrId, $tmpUsr, $hashedpass, $tmpEml, $tmpMxLg, $tmpId);
 							$report = "تم حفظ التعديلات";
 							$goOn = TRUE;
 						}
 					} else {
 						$errs[] = "تم حذفه بواسطة مستخدم آخر";
 					}
-				} elseif ($_POST['iId'] == '0') {
-					if (isSaved("ulUsrId", "UserLog", vldtVrbl($_POST['iUsrId']), " AND ulId <> " . vldtVrbl($_POST['iId']))) {
+				} elseif ($tmpId == '0') {
+					if (isSaved("ulUsrId", "UserLog", $tmpUsrId, " AND ulId <> " . $tmpId)) {
 						$errs[] = " اسم المستخدم مكرر ";
-					} elseif (empty(vldtVrbl($_POST['iUsr']))) {
+					} elseif (empty($tmpUsr)) {
 						$errs[] = " اسم الدخول فارغ";
-					} elseif (isSaved("ulUsr", "UserLog", vldtVrbl($_POST['iUsr']))) {
+					} elseif (isSaved("ulUsr", "UserLog", $tmpUsr)) {
 						$errs[] = " اسم الدخول مكرر ";
-					} elseif (isSaved("ulEml", "UserLog", vldtVrbl($_POST['iEml']))) {
+					} elseif (isSaved("ulEml", "UserLog", $tmpEml)) {
 						$errs[] = " البريد الالكترونى مكرر ";
-					} elseif (empty(vldtVrbl($_POST['inPsswrd']))) {
+					} elseif (empty($tmpinPsswrd)) {
 						$errs[] = " كلمة السر فارغة";
 					} else {
-						$hashedpass = sha1(vldtVrbl($_POST['inPsswrd']));
+						$hashedpass = sha1($tmpinPsswrd);
 						$sql = "INSERT INTO UserLog (ulUsrId, ulUsr, ulPsswrd, ulEml, ulMxLg) VALUES (?,?,?,?,?) ";
-						$vl = array(vldtVrbl($_POST['iUsrId']), vldtVrbl($_POST['iUsr']), $hashedpass, vldtVrbl($_POST['iEml']), vldtVrbl($_POST['iMxLg']));
+						$vl = array($tmpUsrId, $tmpUsr, $hashedpass, $tmpEml, $tmpMxLg);
 						$report = "تم إضافة بيان جديد";
 						$goOn = TRUE;
 					}
@@ -61,10 +72,10 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				$errs[] = "خطأ غير متوقع";
 			}
 		} elseif (isset($_POST['btnDlt'])) {
-			if (isset($_POST['iId']) && $_POST['iId'] > 1) {
-				if (isSaved("ulId", "UserLog", intval($_POST['iId']))) {
+			if (isset($tmpId) && $tmpId > 1) {
+				if (isSaved("ulId", "UserLog", $tmpId)) {
 					$sql = "DELETE FROM UserLog WHERE `ulId`=? ;";
-					$vl = array(intval($_POST['iId']));
+					$vl = array($tmpId);
 					$report = "تم حذفه";
 					$goOn = TRUE;
 				} else {
@@ -80,7 +91,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				$report = "لم يحدث شئ";
 			}
 		} else {
-			$report = "";
+			$iss = 1;
 			foreach ($errs as $err) {
 				$report .= " # " . $err;
 			}
@@ -162,18 +173,16 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			</thead>
 			<tbody>
 				<?php
-				$rc = 0;
-				$sql = "SELECT * FROM UserLog INNER JOIN Accounts ON ulUsrId=aId WHERE (aSub=0 || aSub=" . $_SESSION['Sub'] . ") AND aNm like '%" . vldtVrbl($_SESSION['strSrch']) . "%' " . $_SESSION['strSrt'];
-				$result = getRows($sql);
-				foreach ($result as $row) {
-					echo ("<tr> <td>" . ++$rc . "</td> <td class='hiddenCol'>" . $row['ulId'] . "</td>
-											<td class='hiddenCol'>" . $row['ulUsrId'] . "</td> <td>" . $row['aNm'] . "</td> 
-											<td>" . $row['ulUsr'] . "</td>
-											<td>" . $row['ulPsswrd'] . "</td> 
-											<td>" . $row['ulEml'] . "</td>
-											<td>" . $row['ulMxLg'] . "</td> </tr>");
-				}
-				echo ("<tr> <td>" . ++$rc . "</td> <td class='hiddenCol'>0</td> <td class='hiddenCol'></td> <td></td> <td></td> <td></td> <td></td> <td></td>	</tr>");
+					$rc = 0;
+					$sql = "SELECT * FROM UserLog INNER JOIN Accounts ON ulUsrId=aId WHERE (aSub=0 OR aSub=" . $_SESSION['Sub'] . ") AND aNm like '%" . vldtVrbl($_SESSION['strSrch']) . "%' " . $_SESSION['strSrt'];
+					$result = getRows($sql);
+					foreach ($result as $row) {
+						echo ("<tr> <td>" . ++$rc . "</td> <td class='hiddenCol'>" . $row['ulId'] . "</td>
+								<td class='hiddenCol'>" . $row['ulUsrId'] . "</td> <td>" . $row['aNm'] . "</td> 
+								<td>" . $row['ulUsr'] . "</td> <td>" . $row['ulPsswrd'] . "</td> 
+								<td>" . $row['ulEml'] . "</td> <td>" . $row['ulMxLg'] . "</td> </tr>");
+					}
+					echo ("<tr> <td>" . ++$rc . "</td> <td class='hiddenCol'>0</td> <td class='hiddenCol'></td> <td></td> <td></td> <td></td> <td></td> <td></td>	</tr>");
 				?>
 			</tbody>
 			<tfoot>
@@ -191,31 +200,38 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	<div class="row" id="row">
 		<div class="btnClose" id="btnClose"> &#10006; </div>
 		<form action="<?php echo ($_SERVER['PHP_SELF']); ?>" method="post" name="iFrm" onsubmit="return isValidForm()">
-			<input class="" id="iId" name="iId" type="hidden" />
+			<input class="" id="iId" name="iId" type="hidden" value="<?php echo($tmpId) ?>" />
 			<span>
 				<select class="swing" name="iUsrId" id="iUsrId">
 					<?php
-					//$sql="SELECT * FROM Users WHERE usId NOT IN (SELECT ulUsrId FROM UserLog) AND usGrp IN (SELECT gId FROM Groups WHERE gGrpTyp BETWEEN 2 AND 4) ;" ;
-					$sql = "SELECT * FROM Accounts WHERE (aSub=0 || aSub = " . $_SESSION['Sub'] . " ) AND aWrk=1 AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp BETWEEN 2 AND 4) ;";
-					$result = getRows($sql);
-					foreach ($result as $row) {
-						echo ("<option value=" . $row['aId'] . ">" . $row['aNm'] . "</option> ");
-					}
+						for ($i=2; $i<5; $i++) {
+							echo "<optgroup label='" . getNameById("Groups", "g", $i) . ":'>";
+							$sql = "SELECT * FROM Accounts WHERE (aSub=0 || aSub = " . $_SESSION['Sub'] . " ) AND aWrk=1 AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp =". $i. ") ;";
+							$result = getRows($sql);
+							foreach ($result as $row) {
+								$sl = "";
+								if ($row['aId'] == $tmpUsrId) {
+									$sl = " selected ";
+								}
+								echo ("<option value='" . $row['aId'] . "' ". $sl. ">" . $row['aNm'] . "</option> ");
+							}
+							echo ('</optgroup>');
+						}
 					?>
 				</select><label for="iUsrId"> المستخدم </label>
 			</span>
 			<span>
-				<input class="swing" id="iUsr" name="iUsr" type="text" maxlength="99" autocomplete="off" placeholder="اسم الدخول" required /><label for="iUsr">الاسم</label>
+				<input class="swing" id="iUsr" name="iUsr" type="text" maxlength="99" autocomplete="off" placeholder="اسم الدخول" value="<?php echo($tmpUsr) ?>" required /><label for="iUsr">الاسم</label>
 			</span>
-			<input class="" id="ioPsswrd" name="ioPsswrd" type="hidden" maxlength="99" />
+			<input class="" id="ioPsswrd" name="ioPsswrd" type="hidden" maxlength="99" value="<?php echo($tmpioPsswrd) ?>" />
 			<span>
-				<input class="swing" id="inPsswrd" name="inPsswrd" type="password" maxlength="99" placeholder="كلمة السر" /><label for="inPsswrd">كلمة المرور</label>
-			</span>
-			<span>
-				<input class="swing" id="iEml" name="iEml" type="text" maxlength="99" autocomplete="off" placeholder="البريد الالكترونى" /><label for="iEml">البريد</label>
+				<input class="swing" id="inPsswrd" name="inPsswrd" type="password" maxlength="99" placeholder="كلمة السر" value="<?php echo($tmpinPsswrd) ?>" /><label for="inPsswrd">كلمة المرور</label>
 			</span>
 			<span>
-				<input class="swing" id="iMxLg" name="iMxLg" type="number" maxlength="10" /><label for="iMxLg">حد الدخول</label>
+				<input class="swing" id="iEml" name="iEml" type="text" maxlength="99" autocomplete="off" placeholder="البريد الالكترونى" value="<?php echo($tmpEml) ?>" /><label for="iEml">البريد</label>
+			</span>
+			<span>
+				<input class="swing" id="iMxLg" name="iMxLg" type="number" maxlength="10" value="<?php echo($tmpMxLg) ?>" /><label for="iMxLg">حد الدخول</label>
 			</span>
 
 			<button class="btn" type="submit" name="btnSave"> حفظ </button>

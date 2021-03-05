@@ -14,5 +14,6 @@
    include_once 'includes/func/myfun.php' ;
    include_once TPL. 'header.php' ;
    if(!isset($nonav)) {
-      
+      include_once TPL . 'navbar.php';
+      include_once TPL . 'slider.php'; 
    }
