@@ -32,7 +32,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 					} else {
 						$errs[] = "تم حذفها بواسطة مستخدم آخر";
 					}
-				} elseif ($_POST['iId'] == '0') {
+				} elseif ($tmpId == '0') {
 					$sql = "INSERT INTO BillHeader (bhNmbr, bhNm, bhDt, bhNts, bhSub, bhKnd) VALUES (?,?,?,?,?,?) ;";
 					$vl = array($tmpNmbr, $tmpNm, $tmpDt, $tmpNts, $_SESSION['Sub'], $_SESSION['iKnd']);
 					$report = "تم إضافة بيان جديد";

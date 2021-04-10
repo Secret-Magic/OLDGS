@@ -5,7 +5,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 
 	$pageTitle = "محتوى الفاتورة";
 
-	for ($i = 0; $i < 10; $i++) {
+	for ($i = 0; $i < 11; $i++) {
 		$srtSymbl[$i] = "   &#9670;";
 	}
 	//--------------------------------------------
@@ -16,7 +16,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		$goOn = FALSE;
 
 		$tmpId = intval($_POST['iId']);
-		$tmpBll = intval($_POST['iBll']);
+		$tmpBll = intval($_SESSION['iBll']);
 		$tmpStr = intval($_POST['iStr']);
 		$tmpGds = intval($_POST['iGds']);
 		$tmpQntty = intval($_POST['iQntty']);
@@ -29,7 +29,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				if ($tmpId > 0) {
 					if (isSaved("bbId", "BillBody", $tmpId)) {
 						if (isSaved("bbBllHdr", "BillBody", $tmpBll, "AND bbStr =  " . $tmpStr . " AND bbGds = " . $tmpGds . " AND bbId != " . $tmpId)) {
-							$errs[] = "هذا الصنف مسجل من قبل فى هذا الخزن";
+							$errs[] = "هذا الصنف مسجل من قبل فى هذا المخزن";
 						} else {
 							$sql = "UPDATE BillBody SET bbGds=?, bbStr=?, bbQntty=?, bbPrc=?, bbDscnt=?, bbNts=?  WHERE `bbId`=? ;";
 							$vl = array($tmpGds, $tmpStr, $tmpQntty, $tmpPrc, $tmpDscnt, $tmpNts, $tmpId);
@@ -68,6 +68,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		}
 		if ($goOn) {
 			if (getRC($sql, $vl) > 0) {
+				
 			} else {
 				$report = "لم يحدث شئ";
 			}
@@ -132,6 +133,9 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			case 9:
 				$_SESSION['strSrt'] = "ORDER BY bbNts";
 				break;
+			case 10:
+				$_SESSION['strSrt'] = "ORDER BY bbNts";
+				break;
 			default:
 				$_SESSION['strSrt'] = "ORDER BY `bbId`";
 				break;
@@ -184,24 +188,27 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 					<th><a href="?srt=6"> <?php echo ($srtSymbl[6]); ?> الكمية </a> </th>
 					<th><a href="?srt=7"> <?php echo ($srtSymbl[7]); ?> السعر </a> </th>
 					<th><a href="?srt=8"> <?php echo ($srtSymbl[8]); ?> الخصم </a> </th>
-					<th><a href="?srt=9"> <?php echo ($srtSymbl[9]); ?> ملاحظات </a> </th>
+					<th><a href="?srt=9"> <?php echo ($srtSymbl[9]); ?> الاجمالى </a> </th>
+					<th><a href="?srt=10"> <?php echo ($srtSymbl[10]); ?> ملاحظات </a> </th>
 				</tr>
 			</thead>
 			<tbody>
 				<?php
-				$rc = 0;
+				$rc = 0; $sumPrc = 0; $sumAll = 0;
 				$sql = "SELECT * FROM BillBody INNER JOIN Accounts ON bbStr=AId INNER JOIN Goods ON bbGds=gId WHERE bbBllHdr = " . vldtVrbl($_SESSION['iBll']) . "  " . $_SESSION['strSrt'];
 				$result = getRows($sql);
 				foreach ($result as $row) {
+					$sumPrc = $row['bbPrc'] * $row['bbQntty'] - $row['bbDscnt'] ;
+					$sumAll = $sumAll + $sumPrc ;
 					echo ("<tr>
 								<td>" . ++$rc . "</td> <td class='hiddenCol'>" . $row['bbId'] . "</td> <td class='hiddenCol'>" . $row['bbBllHdr'] . " </td>
 								<td class='hiddenCol'>" . $row['bbStr'] . "</td> <td>" . $row['aNm'] . " </td> 
 								<td class='hiddenCol'>" . $row['bbGds'] . "</td> <td>" . $row['gNm'] . " </td>
 								<td>" . $row['bbQntty'] . "</td> <td>" . $row['bbPrc'] . "</td> 
-								<td>" . $row['bbDscnt'] . "</td> <td>" . $row['bbNts'] . "</td> 
+								<td>" . $row['bbDscnt'] . "</td> <td>" . $sumPrc . "</td> <td>" . $row['bbNts'] . "</td> 
 							</tr>");
 				}
-				echo ("<tr> <td>" . ++$rc . "</td> <td class='hiddenCol'>0</td> <td class='hiddenCol'></td> <td class='hiddenCol'></td><td></td> <td class='hiddenCol'></td><td></td> <td></td> <td></td> <td></td> <td></td>	</tr>");
+				echo ("<tr> <td>" . ++$rc . "</td> <td class='hiddenCol'>0</td> <td class='hiddenCol'></td> <td class='hiddenCol'></td><td></td> <td class='hiddenCol'></td><td></td> <td></td> <td></td><td></td> <td></td> <td></td>	</tr>");
 				?>
 			</tbody>
 			<tfoot>
@@ -211,7 +218,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 					<td class='hiddenCol'> </td>
 					<td class='hiddenCol'> </td>
 					<td> ملاحظات </td>
-					<td colspan="6"> </td>
+					<td colspan="7"> <?php echo ($sumAll); ?> </td>
 				</tr>
 			</tfoot>
 		</table>
@@ -302,7 +309,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				document.getElementById('iQntty').value = this.cells[7].innerHTML;
 				
 				document.getElementById('iDscnt').value = this.cells[9].innerHTML;
-				document.getElementById('iNts').value = this.cells[10].innerHTML;
+				document.getElementById('iNts').value = this.cells[11].innerHTML;
 				if (document.getElementById('iId').value ==0) {
 					document.getElementById('iStr').selectedIndex = 0;
 					document.getElementById('iGds').selectedIndex = 0;

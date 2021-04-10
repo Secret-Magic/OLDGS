@@ -252,8 +252,17 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	</div>
 	<!-------------------------------- Script ---------------------------------->
 	<script>
-		var x;
-		var tbl01 = document.getElementById("mTbl");
+		var frm1 = document.forms[1];
+		
+		frm1.onsubmit = function (e){
+			// e.preventDefault();
+			// alert ("soso") ;
+		}
+
+		// frm1.addEventListener("onsubmit" , function (e){
+		// 	e.preventDefault () ;
+		// }) ;
+		var x, tbl01 = document.getElementById("mTbl");
 		for (x = 1; x < tbl01.rows.length - 1; x = x + 1) {
 			tbl01.rows[x].ondblclick = function() {
 				document.getElementById('iId').value = this.cells[1].innerHTML;

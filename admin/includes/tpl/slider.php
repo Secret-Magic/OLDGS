@@ -109,8 +109,8 @@
             <li class="item" id="Coupons">
                <a href="#Coupons" class="btn"><i>&#9742;&#8195;</i> البونات </a>
                <div class="subMenu">
-                  <a href="Coupons.php?iGrpTyp=18" target=''><i>&#9775;&#8195;</i> البونات </a>
-                  <a href="" target=''><i>&#9775;&#8195;</i> 2البونات </a>
+                  <a href="Goods.php?iGdTyp=18" target=''><i>&#9775;&#8195;</i> البونات </a>
+                  <a href="CouponBill.php" target=''><i>&#9775;&#8195;</i> وارد بونات </a>
                </div>
             </li>
       </ul>

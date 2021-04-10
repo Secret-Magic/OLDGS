@@ -228,7 +228,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 						$result = getRows($sql);
 						foreach ($result as $row) {
 							$sl = "";
-							if ($row['aId'] ==  $tmpId) {
+							if ($row['aId'] ==  $tmpTnk) {
 								$sl =" selected ";
 							}
 							echo ("<option value='" . $row['aId'] . "'". $sl. ">" . $row['aNm'] . "</option> ");
@@ -243,7 +243,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 						$result = getRows($sql);
 						foreach ($result as $row) {
 							$sl = "";
-							if ($row['gId'] ==  $tmpId) {
+							if ($row['gId'] ==  $tmpGds) {
 								$sl =" selected ";
 							}
 							echo ("<option value='" . $row['gId'] . "'". $sl .">" . $row['gNm'] . "</option> ");

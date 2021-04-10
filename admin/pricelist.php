@@ -210,7 +210,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 					if ($_SESSION['iPlTyp'] == 1) {
 						$sql = "SELECT * FROM Goods WHERE gWrk=1 AND gGrp IN (SELECT gId FROM Groups WHERE gGrpTyp =12) ;";
 					} else {
-						$sql = "SELECT * FROM Goods WHERE gWrk=1 AND gGrp IN (SELECT gId FROM Groups WHERE gGrpTyp !=12) ;";
+						$sql = "SELECT * FROM Goods WHERE gWrk=1 AND gGrp IN (SELECT gId FROM Groups WHERE gGrpTyp BETWEEN 13 AND 14) ;";
 					}
 					$result = getRows($sql);
 					foreach ($result as $row) {

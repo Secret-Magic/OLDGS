@@ -4,34 +4,47 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	include_once "init.php";
 
 	$pageTitle = "المدفوعات";
-	$goOn = FALSE;
 
 	for ($i = 0; $i < 11; $i++) {
 		$srtSymbl[$i] = "   &#9670;";
 	}
 	//--------------------------------------------
 	if ($_SERVER['REQUEST_METHOD'] == "POST") {
+		$errs = array();
+		$report = "";
+		$iss = 0;
+		$goOn = FALSE;
+
+		$tmpId = intval($_POST['iId']);
+		$tmpDt = vldtVrbl($_POST['iDt']);
+		$tmpCstmr = intval($_POST['iCstmr']);
+		$tmpVl = intval($_POST['iVl']);
+		$tmpStr = intval($_POST['iStr']);
+		$tmpNts = vldtVrbl($_POST['iNts']);
+		
+		$tmpGrp = vldtVrbl($_POST['iGrp']);
+
 		if (isset($_POST['btnSave'])) {
-			if (isset($_POST['iId'])) {
-				if ($_POST['iId'] > 0) {
-					if (isSaved("pId", "Payments", intval($_POST['iId']))) {
-						if (empty(vldtVrbl($_POST['iCstmr']))) {
+			if (isset($tmpId)) {
+				if ($tmpId > 0) {
+					if (isSaved("pId", "Payments", $tmpId)) {
+						if (empty($tmpCstmr)) {
 							$errs[] = " الاسم فارغ";
 						} else {
 							$sql = "UPDATE Payments SET pDt=?, pCstmr=?,pVl=?, pStr=?, pNts=?  WHERE `pId`=? ;";
-							$vl = array(vldtVrbl($_POST['iDt']), vldtVrbl($_POST['iCstmr']), vldtVrbl($_POST['iVl']), vldtVrbl($_POST['iStr']), vldtVrbl($_POST['iNts']), vldtVrbl($_POST['iId']));
+							$vl = array($tmpDt, $tmpCstmr, $tmpVl, $tmpStr, $tmpNts, $tmpId);
 							$report = "تم حفظ التعديلات";
 							$goOn = TRUE;
 						}
 					} else {
 						$errs[] = "تم حذفه بواسطة مستخدم آخر";
 					}
-				} elseif ($_POST['iId'] == '0') {
+				} elseif ($tmpId == '0') {
 					if (FALSE) {
 						$err[] = "";
 					} else {
 						$sql = "INSERT INTO Payments (pDt, pCstmr, pVl, pStr, pNts) VALUES (?,?,?,?,?) ;";
-						$vl = array(vldtVrbl($_POST['iDt']), vldtVrbl($_POST['iCstmr']), vldtVrbl($_POST['iVl']), vldtVrbl($_POST['iStr']), vldtVrbl($_POST['iNts']));
+						$vl = array($tmpDt, $tmpCstmr, $tmpVl, $tmpStr, $tmpNts);
 						$report = "تم إضافة بيان جديد";
 						$goOn = TRUE;
 					}
@@ -40,13 +53,13 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				$errs[] = "خطأ غير متوقع";
 			}
 		} elseif (isset($_POST['btnDlt'])) {
-			if (isset($_POST['iId']) && intval($_POST['iId']) > 0) {
-				if (isSaved("pId", "Payments", intval($_POST['iId']))) {
+			if (isset($tmpId) && $tmpId > 0) {
+				if (isSaved("pId", "Payments", $tmpId)) {
 					if (FALSE) {
 						$errs[] = "";
 					} else {
 						$sql = "DELETE FROM Payments WHERE `pId`=? ;";
-						$vl = array(vldtVrbl($_POST['iId']));
+						$vl = array($tmpId);
 						$report = "تم حذفه";
 						$goOn = TRUE;
 					}
@@ -63,7 +76,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				$report = "لم يحدث شئ";
 			}
 		} else {
-			$report = "";
+			$iss = 1;
 			foreach ($errs as $err) {
 				$report .= " # " . $err;
 			}
@@ -153,9 +166,9 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				$result = getRows($sql);
 				foreach ($result as $row) {
 					echo ("<tr> <td>" . ++$rc . "</td> <td class='hiddenCol'>" . $row['pId'] . "</td>
-										<td>" . $row['pDt'] . "</td> <td class='hiddenCol'>" . $row['pCstmr'] . "</td>
-										<td>" . $row['aNm'] . "</td> <td>" . $row['pVl'] . "</td> <td class='hiddenCol'>" . $row['pStr'] . "</td> 
-										<td>" . getNameById('accounts', 'a',  $row['pStr']) . "</td> <td>" . $row['pNts'] . "</td> </tr>");
+									<td>" . $row['pDt'] . "</td> <td class='hiddenCol'>" . $row['pCstmr'] . "</td>
+									<td>" . $row['aNm'] . "</td> <td>" . $row['pVl'] . "</td> <td class='hiddenCol'>" . $row['pStr'] . "</td> 
+									<td>" . getNameById('accounts', 'a',  $row['pStr']) . "</td> <td>" . $row['pNts'] . "</td> </tr>");
 				}
 				echo ("<tr> <td>" . ++$rc . "</td> <td class='hiddenCol'>0</td> <td></td> <td class='hiddenCol'></td> <td></td> <td></td> <td class='hiddenCol'></td> <td></td> <td></td>	</tr>");
 				?>
@@ -174,9 +187,9 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	<div class="row" id="row">
 		<div class="btnClose" id="btnClose"> &#10006; </div>
 		<form action="<?php echo ($_SERVER['PHP_SELF']); ?>" method="post" name="iFrm" onsubmit="return isValidForm()">
-			<input class="" id="iId" name="iId" type="hidden" />
+			<input class="" id="iId" name="iId" type="hidden" value="<?php echo($tmpId) ?>" />
 			<span>
-				<input class="swing" id="iDt" name="iDt" type="date" style="padding-right: 100px;" required /><label for="iDt">التاريخ</label>
+				<input class="swing" id="iDt" name="iDt" type="date" style="padding-right: 100px;" value="<?php echo($tmpDt) ?>" required /><label for="iDt">التاريخ</label>
 			</span>
 			<span>
 				<select class="swing" name="iCstmr" id="iCstmr" placeholder="اسم العميل">
@@ -186,7 +199,11 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 							$sql = "SELECT * FROM accounts WHERE aWrk=1 AND (aSub=0 OR aSub = " . $_SESSION['Sub'] . ") AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp= " .$i . ") ;";
 							$result = getRows($sql);
 							foreach ($result as $row) {
-								echo ("<option value=" . $row['aId'] . ">" . $row['aNm'] . "</option> ");
+								$sl = "";
+								if ($row['aId'] == $tmpCstmr) {
+									$sl = " selected ";
+								}
+								echo ("<option value='" . $row['aId']. "'". $sl . ">" . $row['aNm'] . "</option> ");
 							}
 							echo "</optgroup>";
 						}
@@ -194,7 +211,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				</select><label for="iCstmr"> الاسم </label>
 			</span>
 			<span>
-				<input class="swing" id="iVl" name="iVl" type="number" required /><label for="iVl">المبلغ</label>
+				<input class="swing" id="iVl" name="iVl" type="number" value="<?php echo($tmpVl) ?>" required /><label for="iVl">المبلغ</label>
 			</span>
 			<span>
 				<select class="swing" name="iStr" id="iStr" placeholder="اسم الخزينة">
@@ -204,7 +221,11 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 							$sql = "SELECT * FROM accounts WHERE aWrk=1 AND (aSub=0 OR aSub = " . $_SESSION['Sub'] . ") AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp= " .$i . ") ;";
 							$result = getRows($sql);
 							foreach ($result as $row) {
-								echo ("<option value=" . $row['aId'] . ">" . $row['aNm'] . "</option> ");
+								$sl = "";
+								if ($row['aId'] == $tmpStr) {
+									$sl = " selected ";
+								}
+								echo ("<option value='" . $row['aId']. "'". $sl . ">" . $row['aNm'] . "</option> ");
 							}
 							echo "</optgroup>";
 						}
@@ -212,7 +233,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				</select><label for="iStr"> الخزينة </label>
 			</span>
 			<span>
-				<input class="swing" id="iNts" name="iNts" type="text" maxlength="99" autocomplete="off" placeholder="وصف للعملية" /><label for="iNts">ملاحظات</label>
+				<input class="swing" id="iNts" name="iNts" type="text" maxlength="99" autocomplete="off" placeholder="وصف للعملية" value="<?php echo($tmpNts) ?>" /><label for="iNts">ملاحظات</label>
 			</span>
 			<button class="btn" type="submit" name="btnSave"> حفظ </button>
 			<button class="btn" type="submit" name="btnDlt" id="btnDlt"> حذف </button>
