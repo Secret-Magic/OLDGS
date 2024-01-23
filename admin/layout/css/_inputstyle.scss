@@ -154,12 +154,17 @@ form {
             position: absolute;
             top: 0px;
             // left: 32px;
+            margin: 0px 10px;
          }
       }
       &[name="btnDlt"]::before {
          content: " \2704 ";
          // position: absolute;
          // top: 0px;
+         margin: 0px 10px;
+      }
+      &:hover {
+         color: red;
       }
    }
 }

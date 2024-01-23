@@ -1,7 +1,7 @@
 <?php
    
    ini_set ('display-errors', 'on');
-   error_reporting ('E_All') ;
+   // error_reporting (E_All) ;
 
    define ("TPL" , "includes/tpl/") ;
    define ("CSS" , "layout/css/" ) ;

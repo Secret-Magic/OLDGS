@@ -14,7 +14,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		$report = "";
 		$iss = 0;
 		$goOn = FALSE;
-
+      $pk = 0;
 		$tmpId = intval($_POST['iId']);
 		$tmpNm = vldtVrbl($_POST['iNm']);
 		$tmpNts = vldtVrbl($_POST['iNts']);
@@ -47,6 +47,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
                   $vl = array($tmpNm, $tmpNts, $tmpGrp);
                   $report = "تم إضافة بيان جديد";
                   $goOn = TRUE;
+                  $pk = 2;
                }
             }
          } else {
@@ -76,6 +77,15 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
       }
       if ($goOn) {
          if (getRC($sql, $vl) > 0) {
+            if ($pk == 2) {
+               $sql = "SELECT ssId FROM Subsidiary ORDER BY ssId DESC LIMIT 1" ;
+               $vl=array ();
+               $row = getRow($sql,$vl);
+               // إضافة مخزن بونات لهذا الفرع الجديد
+               $sql = "INSERT INTO Accounts (aNm, aGrp, aSub) VALUES (?,?,?) ;";
+					$vl = array("مخزن البونات" , 19, $row['ssId']);
+               getRC($sql , $vl) ;
+            }
          } else {
             $report = "لم يحدث شئ";
          }

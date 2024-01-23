@@ -80,6 +80,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		}
 		if ($goOn) {
 			if (getRC($sql, $vl) > 0) {
+
 			} else {
 				$report = "لم يحدث شئ";
 			}

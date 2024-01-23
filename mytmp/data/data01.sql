@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 17, 2021 at 09:46 PM
--- Server version: 10.4.11-MariaDB
+-- Generation Time: 15 يونيو 2021 الساعة 15:26
+-- إصدار الخادم: 10.4.11-MariaDB
 -- PHP Version: 7.4.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `accounts`
+-- بنية الجدول `accounts`
 --
 
 CREATE TABLE `accounts` (
@@ -42,7 +42,7 @@ CREATE TABLE `accounts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Accounts';
 
 --
--- Dumping data for table `accounts`
+-- إرجاع أو استيراد بيانات الجدول `accounts`
 --
 
 INSERT INTO `accounts` (`aId`, `aNm`, `aMax`, `aFrstBlnc`, `aFrstDt`, `aGrp`, `aWrk`, `aNts`, `aSub`, `aAdDt`, `aUsr`) VALUES
@@ -55,10 +55,11 @@ INSERT INTO `accounts` (`aId`, `aNm`, `aMax`, `aFrstBlnc`, `aFrstDt`, `aGrp`, `a
 (7, 'تنك 92 رقم 1', 35000, 0, '2020-01-01', 109, 1, '', 1, '2020-05-16 18:47:04', 1),
 (8, 'تنك 95 رقم 1', 15000, 0, '2020-01-01', 109, 1, '', 1, '2020-05-16 18:47:17', 1),
 (9, 'مخزن زيت رقم1', 0, 0, '2020-01-01', 110, 1, '', 1, '2020-05-16 19:21:51', 1),
+(10, 'الفاترينة', 0, 0, '2020-01-01', 110, 1, '', 1, '2020-12-17 22:27:44', 1),
 (11, 'مخزن أصناف رقم 1', 0, 0, '2020-01-01', 111, 1, '', 1, '2020-05-16 19:22:14', 1),
+(12, 'مخزن البونات', 0, 0, '0000-00-00', 19, 1, '', 1, '2021-03-27 18:33:19', 1),
+(13, 'مخزن الوردية', 0, 0, '2020-01-01', 110, 1, '', 1, '2020-12-17 22:28:34', 1),
 (22, 'ح رصيد أول المدة', 0, 0, '2020-01-01', 115, 1, '', 1, '2020-06-19 21:31:49', 1),
-(27, 'الفاترينة', 0, 0, '2020-01-01', 110, 1, '', 1, '2020-12-17 22:27:44', 1),
-(28, 'زيوت عهدة الوردية', 0, 0, '2020-01-01', 110, 1, '', 1, '2020-12-17 22:28:34', 1),
 (29, 'فوزى عيادة', 100000, 0, '2020-01-01', 107, 1, '', 1, '2020-12-17 22:30:38', 1),
 (30, 'محمد غزالة', 100000, 0, '2020-01-01', 107, 1, '', 1, '2020-12-17 22:30:58', 1),
 (31, 'محمود سوبية', 100000, 0, '2020-01-01', 107, 1, '', 1, '2020-12-17 22:31:12', 1),
@@ -77,12 +78,13 @@ INSERT INTO `accounts` (`aId`, `aNm`, `aMax`, `aFrstBlnc`, `aFrstDt`, `aGrp`, `a
 (47, 'عميل نقدى ك ب', 0, 0, '2020-01-01', 107, 1, '', 3, '2021-01-18 14:11:56', 1),
 (48, 'أرصده ك ب', 0, 0, '2020-01-01', 115, 1, '', 3, '2021-01-18 14:12:29', 1),
 (49, 'محمود عبد العظيم', 0, 0, '2020-01-01', 104, 1, '', 3, '2021-01-18 14:52:28', 1),
-(55, 'خزينة رقم 1 الكورنيش', 0, 0, '2020-01-01', 108, 1, '', 1, '2021-02-15 20:52:33', 1);
+(55, 'خزينة رقم 1 الكورنيش', 0, 0, '2020-01-01', 108, 1, '', 1, '2021-02-15 20:52:33', 1),
+(66, 'مخزن البونات', 0, 0, '0000-00-00', 19, 1, NULL, 10, '2021-04-10 22:46:15', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `billbody`
+-- بنية الجدول `billbody`
 --
 
 CREATE TABLE `billbody` (
@@ -97,16 +99,23 @@ CREATE TABLE `billbody` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Goods Buy Bill Body';
 
 --
--- Dumping data for table `billbody`
+-- إرجاع أو استيراد بيانات الجدول `billbody`
 --
 
 INSERT INTO `billbody` (`bbId`, `bbBllHdr`, `bbStr`, `bbGds`, `bbQntty`, `bbPrc`, `bbDscnt`, `bbNts`) VALUES
-(10, 16, 28, 7, 1, '120.0000', '0.0000', '');
+(10, 16, 13, 7, 1, '120.0000', '0.0000', ''),
+(11, 16, 13, 10, 2, '205.0000', '0.0000', ''),
+(12, 16, 13, 8, 3, '155.0000', '0.0000', ''),
+(35, 21, 13, 7, 4, '120.0000', '0.0000', ''),
+(36, 17, 9, 7, 4, '120.0000', '0.0000', ''),
+(37, 21, 9, 7, 0, '120.0000', '0.0000', ''),
+(38, 21, 12, 15, 2, '270.0000', '0.0000', ''),
+(39, 23, 66, 7, 22, '120.0000', '0.0000', '');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `billheader`
+-- بنية الجدول `billheader`
 --
 
 CREATE TABLE `billheader` (
@@ -122,54 +131,22 @@ CREATE TABLE `billheader` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Goods Bill Header';
 
 --
--- Dumping data for table `billheader`
+-- إرجاع أو استيراد بيانات الجدول `billheader`
 --
 
 INSERT INTO `billheader` (`bhId`, `bhNmbr`, `bhDt`, `bhNm`, `bhDscnt`, `bhKnd`, `bhNts`, `bhSub`, `bhUsr`) VALUES
 (16, 1, '2021-01-15', 38, '0.00', 8, '', 1, 0),
 (17, 1, '2021-01-15', 3, '0.00', 3, '', 1, 0),
 (18, 1, '2021-01-01', 22, '0.00', 9, '', 1, 0),
-(19, 1, '2021-01-15', 1, '0.00', 1, '', 1, 0);
+(19, 1, '2021-01-15', 1, '0.00', 1, '', 1, 0),
+(21, 2, '2021-03-20', 35, '0.00', 8, '', 1, 0),
+(22, 1, '2021-03-24', 3, '0.00', 10, '', 1, 0),
+(23, 1, '2021-04-10', 35, '0.00', 8, '', 10, 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `couponinout`
---
-
-CREATE TABLE `couponinout` (
-  `cioId` int(10) UNSIGNED NOT NULL,
-  `cioCpnId` int(10) UNSIGNED DEFAULT NULL,
-  `cioVl` int(10) UNSIGNED NOT NULL,
-  `cioSrcId` int(10) UNSIGNED DEFAULT NULL,
-  `cioUsr` int(10) UNSIGNED DEFAULT NULL,
-  `cioDt` date NOT NULL,
-  `cioInOut` tinyint(1) NOT NULL DEFAULT 1,
-  `cioNts` varchar(99) CHARACTER SET utf32 DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Coupon In Out';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `coupons`
---
-
-CREATE TABLE `coupons` (
-  `cId` int(10) UNSIGNED NOT NULL,
-  `cNm` varchar(99) CHARACTER SET utf32 NOT NULL,
-  `cVl` int(10) UNSIGNED NOT NULL,
-  `cPhoto` varchar(99) DEFAULT NULL,
-  `cGrp` int(10) UNSIGNED DEFAULT NULL,
-  `cWrk` tinyint(1) NOT NULL DEFAULT 1,
-  `cNts` varchar(99) CHARACTER SET utf32 DEFAULT NULL,
-  `cAdDt` datetime NOT NULL DEFAULT current_timestamp(),
-  `cUsr` int(10) UNSIGNED NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Coupons';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `goods`
+-- بنية الجدول `goods`
 --
 
 CREATE TABLE `goods` (
@@ -186,7 +163,7 @@ CREATE TABLE `goods` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Goods';
 
 --
--- Dumping data for table `goods`
+-- إرجاع أو استيراد بيانات الجدول `goods`
 --
 
 INSERT INTO `goods` (`gId`, `gNm`, `gByLmt`, `gByPrc`, `gSllPrc`, `gGrp`, `gWrk`, `gNts`, `gAdDt`, `gUsr`) VALUES
@@ -195,14 +172,15 @@ INSERT INTO `goods` (`gId`, `gNm`, `gByLmt`, `gByPrc`, `gSllPrc`, `gGrp`, `gWrk`
 (3, 'بنزين 92', 18000, '7.25', '7.50', 112, 1, '', '2020-05-05 20:55:51', 1),
 (4, 'بنزين 95', 5000, '8.25', '8.50', 112, 1, '', '2020-06-19 17:50:02', 1),
 (7, 'زيت 7500', 10, '100.00', '120.00', 113, 1, '', '2020-12-17 22:40:27', 1),
-(8, 'زيت 10000', 10, '135.00', '155.50', 113, 1, '', '2020-12-17 22:41:00', 1),
+(8, 'زيت 10000', 10, '135.00', '155.00', 113, 1, '', '2020-12-17 22:41:00', 1),
 (10, 'زيت مصر 1', 10, '190.00', '205.00', 113, 1, '', '2021-01-13 17:11:14', 1),
-(11, 'مناديل', 10, '11.00', '15.00', 114, 1, '', '2021-01-13 17:18:43', 1);
+(11, 'مناديل', 10, '11.00', '15.00', 114, 1, '', '2021-01-13 17:18:43', 1),
+(15, 'بون داخلية 40 لتر سولار', 0, '270.00', '270.00', 152, 1, '', '2021-03-27 18:16:07', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `groups`
+-- بنية الجدول `groups`
 --
 
 CREATE TABLE `groups` (
@@ -216,7 +194,7 @@ CREATE TABLE `groups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Groups';
 
 --
--- Dumping data for table `groups`
+-- إرجاع أو استيراد بيانات الجدول `groups`
 --
 
 INSERT INTO `groups` (`gId`, `gNm`, `gGrpTyp`, `gWrk`, `gNts`, `gAdDt`, `gUsr`) VALUES
@@ -238,6 +216,7 @@ INSERT INTO `groups` (`gId`, `gNm`, `gGrpTyp`, `gWrk`, `gNts`, `gAdDt`, `gUsr`) 
 (16, 'فئة العملات', 0, 1, '', '2020-05-31 00:42:38', 1),
 (17, 'فئة متفرقة', 0, 1, '', '2020-05-31 00:42:50', 1),
 (18, 'فئة البونات', 0, 1, NULL, '2021-01-19 14:28:36', 1),
+(19, 'فئة مخازن البونات', 0, 1, '', '2021-04-10 21:50:30', 1),
 (101, 'مجموعة فروع دمياط', 1, 1, '', '2020-12-18 17:08:59', 1),
 (102, 'مجموعة المبرمجين', 2, 1, '', '2020-04-08 22:47:22', 1),
 (103, 'مجموعة المديرين', 3, 1, '', '2020-04-08 22:47:22', 1),
@@ -269,7 +248,7 @@ INSERT INTO `groups` (`gId`, `gNm`, `gGrpTyp`, `gWrk`, `gNts`, `gAdDt`, `gUsr`) 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `payments`
+-- بنية الجدول `payments`
 --
 
 CREATE TABLE `payments` (
@@ -283,17 +262,18 @@ CREATE TABLE `payments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Payment';
 
 --
--- Dumping data for table `payments`
+-- إرجاع أو استيراد بيانات الجدول `payments`
 --
 
 INSERT INTO `payments` (`pId`, `pDt`, `pCstmr`, `pVl`, `pStr`, `pNts`, `pUsr`) VALUES
 (1, '2021-01-18', 29, '2222.000', 4, '', 0),
-(2, '2021-01-18', 29, '1111.000', 4, '', 0);
+(2, '2021-01-18', 29, '1111.000', 4, '', 0),
+(3, '2021-02-18', 30, '0.000', 55, '', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `permission`
+-- بنية الجدول `permission`
 --
 
 CREATE TABLE `permission` (
@@ -310,7 +290,7 @@ CREATE TABLE `permission` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pricelist`
+-- بنية الجدول `pricelist`
 --
 
 CREATE TABLE `pricelist` (
@@ -326,7 +306,7 @@ CREATE TABLE `pricelist` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Goods Price';
 
 --
--- Dumping data for table `pricelist`
+-- إرجاع أو استيراد بيانات الجدول `pricelist`
 --
 
 INSERT INTO `pricelist` (`plId`, `plDt`, `plGds`, `plByPrc`, `plSllPrc`, `plCmsn`, `plPkhr`, `plWrk`, `plUsr`) VALUES
@@ -342,7 +322,7 @@ INSERT INTO `pricelist` (`plId`, `plDt`, `plGds`, `plByPrc`, `plSllPrc`, `plCmsn
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pumpout`
+-- بنية الجدول `pumpout`
 --
 
 CREATE TABLE `pumpout` (
@@ -357,7 +337,7 @@ CREATE TABLE `pumpout` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Pump Out';
 
 --
--- Dumping data for table `pumpout`
+-- إرجاع أو استيراد بيانات الجدول `pumpout`
 --
 
 INSERT INTO `pumpout` (`poId`, `poDly`, `poPmp`, `poNmbr`, `poPrc`, `poQnttyBck`, `poTnk`, `poNts`) VALUES
@@ -368,12 +348,20 @@ INSERT INTO `pumpout` (`poId`, `poDly`, `poPmp`, `poNmbr`, `poPrc`, `poQnttyBck`
 (125, 16, 25, 5000000, '0.00', 0, 7, NULL),
 (126, 16, 26, 6000000, '0.00', 0, 6, NULL),
 (127, 16, 27, 7000000, '0.00', 0, 8, NULL),
-(128, 16, 28, 8000000, '0.00', 0, 7, NULL);
+(128, 16, 28, 8000000, '0.00', 0, 7, NULL),
+(137, 21, 21, 1000010, '0.00', 0, 5, ''),
+(138, 21, 22, 2000000, '0.00', 0, 5, NULL),
+(139, 21, 23, 3000000, '0.00', 0, 7, NULL),
+(140, 21, 24, 4000000, '0.00', 0, 6, NULL),
+(141, 21, 25, 5000000, '0.00', 0, 7, NULL),
+(142, 21, 26, 6000000, '0.00', 0, 6, NULL),
+(143, 21, 27, 7000000, '0.00', 0, 8, NULL),
+(144, 21, 28, 8000000, '0.00', 0, 7, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pumps`
+-- بنية الجدول `pumps`
 --
 
 CREATE TABLE `pumps` (
@@ -391,7 +379,7 @@ CREATE TABLE `pumps` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Pumps';
 
 --
--- Dumping data for table `pumps`
+-- إرجاع أو استيراد بيانات الجدول `pumps`
 --
 
 INSERT INTO `pumps` (`pId`, `pNm`, `pFrstNmbr`, `pFrstDt`, `pTnk`, `pGds`, `pWrk`, `pNts`, `pSub`, `pAdDt`, `pUsr`) VALUES
@@ -408,7 +396,7 @@ INSERT INTO `pumps` (`pId`, `pNm`, `pFrstNmbr`, `pFrstDt`, `pTnk`, `pGds`, `pWrk
 -- --------------------------------------------------------
 
 --
--- Table structure for table `subsidiary`
+-- بنية الجدول `subsidiary`
 --
 
 CREATE TABLE `subsidiary` (
@@ -421,17 +409,18 @@ CREATE TABLE `subsidiary` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `subsidiary`
+-- إرجاع أو استيراد بيانات الجدول `subsidiary`
 --
 
 INSERT INTO `subsidiary` (`ssId`, `ssNm`, `ssGrp`, `ssWrk`, `ssNts`, `ssAdDt`) VALUES
 (1, 'فرع الكورنيش', 101, 1, '', '2020-06-12 01:11:46'),
-(3, 'فرع كفر البطيخ', 101, 1, '', '2020-06-12 01:26:33');
+(3, 'فرع كفر البطيخ', 101, 1, '', '2020-06-12 01:26:33'),
+(10, 'فرع العزبة', 101, 1, '', '2021-04-10 22:46:14');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `types`
+-- بنية الجدول `types`
 --
 
 CREATE TABLE `types` (
@@ -444,7 +433,7 @@ CREATE TABLE `types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Types';
 
 --
--- Dumping data for table `types`
+-- إرجاع أو استيراد بيانات الجدول `types`
 --
 
 INSERT INTO `types` (`tId`, `tNm`, `tGrp`, `tWrk`, `tNts`, `tAdDt`) VALUES
@@ -470,7 +459,7 @@ INSERT INTO `types` (`tId`, `tNm`, `tGrp`, `tWrk`, `tNts`, `tAdDt`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `userlog`
+-- بنية الجدول `userlog`
 --
 
 CREATE TABLE `userlog` (
@@ -484,7 +473,7 @@ CREATE TABLE `userlog` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='UserLog';
 
 --
--- Dumping data for table `userlog`
+-- إرجاع أو استيراد بيانات الجدول `userlog`
 --
 
 INSERT INTO `userlog` (`ulId`, `ulUsrId`, `ulUsr`, `ulPsswrd`, `ulEml`, `ulMxLg`, `ulAdDt`) VALUES
@@ -514,18 +503,6 @@ ALTER TABLE `billbody`
 --
 ALTER TABLE `billheader`
   ADD PRIMARY KEY (`bhId`);
-
---
--- Indexes for table `couponinout`
---
-ALTER TABLE `couponinout`
-  ADD PRIMARY KEY (`cioId`);
-
---
--- Indexes for table `coupons`
---
-ALTER TABLE `coupons`
-  ADD PRIMARY KEY (`cId`);
 
 --
 -- Indexes for table `goods`
@@ -605,49 +582,37 @@ ALTER TABLE `userlog`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `aId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `aId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT for table `billbody`
 --
 ALTER TABLE `billbody`
-  MODIFY `bbId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `bbId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `billheader`
 --
 ALTER TABLE `billheader`
-  MODIFY `bhId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
-
---
--- AUTO_INCREMENT for table `couponinout`
---
-ALTER TABLE `couponinout`
-  MODIFY `cioId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `coupons`
---
-ALTER TABLE `coupons`
-  MODIFY `cId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `bhId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `goods`
 --
 ALTER TABLE `goods`
-  MODIFY `gId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `gId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `gId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
+  MODIFY `gId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=162;
 
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `pId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `pId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `permission`
@@ -659,13 +624,13 @@ ALTER TABLE `permission`
 -- AUTO_INCREMENT for table `pricelist`
 --
 ALTER TABLE `pricelist`
-  MODIFY `plId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `plId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `pumpout`
 --
 ALTER TABLE `pumpout`
-  MODIFY `poId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+  MODIFY `poId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
 
 --
 -- AUTO_INCREMENT for table `pumps`
@@ -677,7 +642,7 @@ ALTER TABLE `pumps`
 -- AUTO_INCREMENT for table `subsidiary`
 --
 ALTER TABLE `subsidiary`
-  MODIFY `ssId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `ssId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `types`
@@ -692,29 +657,29 @@ ALTER TABLE `userlog`
   MODIFY `ulId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
--- Constraints for dumped tables
+-- قيود الجداول المحفوظة
 --
 
 --
--- Constraints for table `billbody`
+-- القيود للجدول `billbody`
 --
 ALTER TABLE `billbody`
   ADD CONSTRAINT `c041` FOREIGN KEY (`bbBllHdr`) REFERENCES `billheader` (`bhId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `pricelist`
+-- القيود للجدول `pricelist`
 --
 ALTER TABLE `pricelist`
   ADD CONSTRAINT `c031` FOREIGN KEY (`plGds`) REFERENCES `goods` (`gId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `pumpout`
+-- القيود للجدول `pumpout`
 --
 ALTER TABLE `pumpout`
   ADD CONSTRAINT `C011` FOREIGN KEY (`poDly`) REFERENCES `billheader` (`bhId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `userlog`
+-- القيود للجدول `userlog`
 --
 ALTER TABLE `userlog`
   ADD CONSTRAINT `C021` FOREIGN KEY (`ulUsrId`) REFERENCES `accounts` (`aId`) ON DELETE CASCADE ON UPDATE CASCADE;

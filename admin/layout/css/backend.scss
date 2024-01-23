@@ -4,7 +4,7 @@ $bc : #0d86f0 ;
 $c  : #ffffff ;
 $hc : #ffff00 ;
 $hbc: #000000 ;
-$mh : 599px;
+$mh : calc(100vh - 68px);
 $s  : 1.3s ;
 
 * {
@@ -143,6 +143,7 @@ body {
 }
 section {
    // display: flex;
+   margin-top: 39px;
    @media (max-width:549px) {
       display: block;
    }
@@ -156,7 +157,7 @@ section {
    @import "wrapper" ;
    // /* ========== Container Page ===========    */
    .container {
-      margin-top: 39px;
+      // margin-top: 39px;
       // width: 77%;
       line-height: 2em;
       border-radius: 20px;

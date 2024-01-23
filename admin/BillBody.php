@@ -165,7 +165,22 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 					$sql = "SELECT * FROM BillHeader INNER JOIN Accounts ON bhNm=AId WHERE bhSub= " . $_SESSION['Sub'] . " AND bhId=? ";
 					$vl = array($_SESSION['iBll']);
 					$row = getRow($sql, $vl);
-					$tmpKnd = ($row['bhKnd'] == 1 || $row['bhKnd'] == 9);
+					switch ($row['bhKnd']) {
+						case 1:
+						case 9:
+							// فى حالة الشراء ورصيد أول المدة نضيف المواد البترولية
+							$tmpKnd = 1;
+							break;
+						case 8:
+							// فى حالة الوردية إما زيوت أبونات فقط 
+							$tmpKnd = 2;
+							break;
+						default :
+							
+							$tmpKnd = 3;
+							break;
+					}
+					
 					echo ("<tr> 
 								<td class='hiddenCol'>" . $row['bhId'] . "</td> <td>" . $row['bhNmbr'] . "</td><td>" . getNameById("Types", "t", $row['bhKnd']) . "</td>
 								<td class='hiddenCol'>" . $row['bhNm'] . "</td>  <td>" . $row['aNm'] . "</td> 
@@ -232,9 +247,11 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			<span>
 				<select class="swing" name="iStr" id="iStr" placeholder="اسم المخزن">
 					<?php
-					if ($tmpKnd) {
+					if ($tmpKnd == 1) {
 						$sql = "SELECT * FROM Accounts WHERE aSub=" . $_SESSION['Sub'] . " AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp BETWEEN 9 AND 11)";
-					} else {
+					} elseif ($tmpKnd == 2) {
+						$sql = "SELECT * FROM Accounts WHERE aSub=" . $_SESSION['Sub'] . " AND aGrp =19";
+					}elseif ($tmpKnd == 3) {
 						$sql = "SELECT * FROM Accounts WHERE aSub=" . $_SESSION['Sub'] . " AND aGrp IN (SELECT gId FROM Groups WHERE gGrpTyp BETWEEN 10 AND 11)";
 					}
 					$result = getRows($sql);
@@ -247,9 +264,11 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			<span>
 				<select class="swing" name="iGds" id="iGds" placeholder="اسم الصنف">
 					<?php
-					if ($tmpKnd) {
+					if ($tmpKnd == 1) {
 						$sql = "SELECT * FROM Goods ;";
-					} else {
+					} elseif ($tmpKnd == 2) {
+						$sql = "SELECT * FROM Goods WHERE gGrp IN (SELECT gId FROM Groups WHERE gGrpTyp!=12) ;";
+					}elseif ($tmpKnd == 3) {
 						$sql = "SELECT * FROM Goods WHERE gGrp IN (SELECT gId FROM Groups WHERE gGrpTyp!=12) ;";
 					}
 					$result = getRows($sql);

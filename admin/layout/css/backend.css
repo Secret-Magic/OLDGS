@@ -1,13 +1,13 @@
+@charset "UTF-8";
 * {
   margin: 0;
   padding: 0;
   font-weight: 600;
   font-size: 1em;
-  font-family: 'Tahoma' 'sans-serif', 'Haettenschweiler', 'Impact',  'Arial Narrow Bold';
+  font-family: "Tahoma" "sans-serif", "Haettenschweiler", "Impact", "Arial Narrow Bold";
   list-style: none;
   text-decoration: none;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   direction: rtl;
 }
 
@@ -23,18 +23,10 @@ body {
 .LoginForm {
   margin: 10px auto;
   padding: 7% 5%;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  justify-content: center;
+  flex-direction: row;
 }
-
 .LoginForm form {
   width: 50%;
   max-width: 500px;
@@ -42,33 +34,26 @@ body {
   border: 1px solid black;
   background-color: brown;
   border-radius: 25px;
-  -webkit-box-shadow: 15px 15px 15px #444;
-          box-shadow: 15px 15px 15px #444;
+  box-shadow: 15px 15px 15px #444;
   position: relative;
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
+  flex-grow: 1;
 }
-
-.LoginForm form img[alt="lock"] {
+.LoginForm form img[alt=lock] {
   width: 20%;
   position: absolute;
   top: -10%;
   left: 7%;
 }
-
 .LoginForm form h3 {
   text-align: center;
-  color: #f0f0f0;
+  color: rgb(240, 240, 240);
   font-size: 3em;
   text-shadow: 5px 5px 15px black;
 }
-
 .LoginForm form h3:hover {
   text-shadow: none;
   margin: 1px;
 }
-
 .LoginForm form .inpt {
   display: block;
   margin: 30px auto;
@@ -79,19 +64,16 @@ body {
   background-color: #e5e5e5;
   text-align: right;
 }
-
 .LoginForm form .btn {
   background-color: #3d0101;
   color: #ffffff;
   text-align: center;
   width: 50%;
 }
-
-.LoginForm img[alt="pump"] {
+.LoginForm img[alt=pump] {
   width: 25%;
   max-height: 400px;
 }
-
 .LoginForm div {
   width: 15%;
 }
@@ -103,14 +85,13 @@ body {
   .LoginForm form {
     width: 90%;
   }
-  .LoginForm img[alt="pump"] {
+  .LoginForm img[alt=pump] {
     display: none;
   }
   .LoginForm div {
     display: none;
   }
 }
-
 @media (max-width: 992px) {
   .LoginForm {
     padding: 7% 1%;
@@ -119,7 +100,6 @@ body {
     display: none;
   }
 }
-
 .navbar {
   color: #ffffff;
   background-color: #0d86f0;
@@ -129,19 +109,15 @@ body {
   width: 100%;
   line-height: 10px;
 }
-
 .navbar ul {
   overflow: hidden;
 }
-
 .navbar ul li {
   float: right;
 }
-
 .navbar ul li:last-child {
   float: left;
 }
-
 .navbar ul li a {
   display: block;
   color: #ffffff;
@@ -149,52 +125,45 @@ body {
   padding: 10px 16px;
   margin: 3px 1px;
 }
-
 .navbar ul li a:focus, .navbar ul li a:hover {
   background-color: #000000;
   color: #ffff00;
   border-radius: 10px;
 }
 
+section {
+  margin-top: 39px;
+}
 @media (max-width: 549px) {
   section {
     display: block;
   }
 }
-
 @media (min-width: 550px) {
   section {
     display: block;
   }
 }
-
 @media (min-width: 992px) {
   section {
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
   }
 }
-
 section aside.wrapper {
-  max-height: 599px;
+  max-height: calc(100vh - 68px);
   width: 23%;
   overflow-y: auto;
   line-height: 10px;
-  margin-top: 39px;
 }
-
 section aside.wrapper ul.mainMenu {
   display: block;
   overflow: hidden;
 }
-
 section aside.wrapper ul.mainMenu li.item {
-  border-top: 1px solid #4eaeee;
-  border-bottom: 1px solid #747f86;
+  border-top: 1px solid rgb(78, 174, 238);
+  border-bottom: 1px solid rgb(116, 127, 134);
   overflow: hidden;
 }
-
 section aside.wrapper ul.mainMenu li.item a.btn {
   display: block;
   padding: 15px 20px;
@@ -202,14 +171,12 @@ section aside.wrapper ul.mainMenu li.item a.btn {
   color: #ffffff;
   position: relative;
 }
-
 section aside.wrapper ul.mainMenu li.item a.btn:hover {
   color: #ffff00;
   background-color: #000000;
 }
-
 section aside.wrapper ul.mainMenu li.item a.btn:before {
-  content: '';
+  content: "";
   position: absolute;
   width: 0;
   height: 0;
@@ -220,19 +187,15 @@ section aside.wrapper ul.mainMenu li.item a.btn:before {
   bottom: -10px;
   z-index: 9;
 }
-
 section aside.wrapper ul.mainMenu li.item a.btn i {
   margin-right: 10px;
 }
-
 section aside.wrapper ul.mainMenu li.item div.subMenu {
   background-color: #063146;
   overflow: hidden;
-  -webkit-transition: max-height 0.7s;
   transition: max-height 0.7s;
   max-height: 0;
 }
-
 section aside.wrapper ul.mainMenu li.item div.subMenu a {
   display: block;
   padding: 15px 60px 15px 15px;
@@ -242,16 +205,13 @@ section aside.wrapper ul.mainMenu li.item div.subMenu a {
   border-bottom: 1px solid #042331;
   position: relative;
 }
-
 section aside.wrapper ul.mainMenu li.item div.subMenu a:before {
-  content: '';
+  content: "";
   opacity: 0;
-  -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
 }
-
 section aside.wrapper ul.mainMenu li.item div.subMenu a:hover:before {
-  content: '';
+  content: "";
   position: absolute;
   height: 0;
   width: 6px;
@@ -262,16 +222,13 @@ section aside.wrapper ul.mainMenu li.item div.subMenu a:hover:before {
   border-right: 11px solid #0d86f0;
   border-bottom: 24px solid transparent;
 }
-
 section aside.wrapper ul.mainMenu li.item div.subMenu a:after {
-  content: '';
+  content: "";
   opacity: 0;
-  -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
 }
-
 section aside.wrapper ul.mainMenu li.item div.subMenu a:hover:after {
-  content: '';
+  content: "";
   position: absolute;
   height: 0;
   width: 6px;
@@ -282,60 +239,49 @@ section aside.wrapper ul.mainMenu li.item div.subMenu a:hover:after {
   border-left: 11px solid #0d86f0;
   border-bottom: 24px solid transparent;
 }
-
 section aside.wrapper ul.mainMenu li.item div.subMenu a:hover {
   color: #f00;
   background: #273057;
-  background: -webkit-gradient(linear, left top, left bottom, from(#273057), color-stop(50%, #273057), color-stop(51%, #394c7f), to(#394c7f));
+  background: -moz-linear-gradient(top, #273057 0%, #273057 50%, #394c7f 51%, #394c7f 100%);
+  background: -webkit-linear-gradient(top, #273057 0%, #273057 50%, #394c7f 51%, #394c7f 100%);
   background: linear-gradient(to bottom, #273057 0%, #273057 50%, #394c7f 51%, #394c7f 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#273057', endColorstr='#394c7f',GradientType=0 );
-  -webkit-transition: all 0.5s;
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#273057", endColorstr="#394c7f",GradientType=0 );
   transition: all 0.5s;
   border-bottom: 1px solid #394c7f;
 }
-
 section aside.wrapper ul.mainMenu li.item div.subMenu a:last-child {
   border: none;
 }
-
 section aside.wrapper ul.mainMenu li.item div.subMenu a i::after {
-  content: '';
+  content: "";
 }
-
 section aside.wrapper ul.mainMenu li.item:target .subMenu {
   max-height: 70em;
 }
-
 section .container {
-  margin-top: 39px;
   line-height: 2em;
   border-radius: 20px;
 }
-
 @media (max-width: 549px) {
   section .container {
     width: 100%;
   }
 }
-
 @media (min-width: 550px) {
   section .container {
     width: 100%;
   }
 }
-
 @media (min-width: 992px) {
   section .container {
     width: 77%;
   }
 }
-
 section .container #dvTbl {
-  max-height: 599px;
+  max-height: calc(100vh - 68px);
   overflow: auto;
   /* ========== Search Form ===========    */
 }
-
 section .container #dvTbl form .srch {
   width: 60%;
   padding: 1px 25px;
@@ -346,7 +292,6 @@ section .container #dvTbl form .srch {
   margin: 0 auto;
   line-height: 2em;
 }
-
 section .container #dvTbl .mTbl {
   margin: 2px auto;
   width: 100%;
@@ -354,7 +299,6 @@ section .container #dvTbl .mTbl {
   border: 5px solid #0d86f0;
   background-color: #042331;
 }
-
 section .container #dvTbl .mTbl caption {
   background-color: black;
   color: #ffffff;
@@ -363,19 +307,15 @@ section .container #dvTbl .mTbl caption {
   border-radius: 10px;
   margin: 0 auto;
 }
-
 section .container #dvTbl .mTbl caption:hover {
   color: #ffff00;
   text-shadow: 5px 5px 10px red;
 }
-
 section .container #dvTbl .mTbl thead tr th {
-  position: -webkit-sticky;
   position: sticky;
   top: -10px;
   background-color: #0d86f0;
 }
-
 section .container #dvTbl .mTbl thead tr th a {
   display: block;
   margin: 0 auto;
@@ -383,50 +323,40 @@ section .container #dvTbl .mTbl thead tr th a {
   color: #ffffff;
   text-shadow: 3px 3px 5px black;
 }
-
 section .container #dvTbl .mTbl thead tr th a:hover {
   color: #ffff00;
   text-shadow: none;
 }
-
 section .container #dvTbl .mTbl tbody tr td {
   padding: 5px 10px;
 }
-
 section .container #dvTbl .mTbl tbody tr td div.btns {
   visibility: hidden;
 }
-
 section .container #dvTbl .mTbl tbody tr td div.btns button {
   padding: 5px;
   border-radius: 10px;
   margin: 0 2px;
 }
-
 section .container #dvTbl .mTbl tbody tr:nth-child(even) {
   background-color: #042331;
 }
-
 section .container #dvTbl .mTbl tbody tr:nth-child(odd) {
   background-color: #063146;
 }
-
 section .container #dvTbl .mTbl tbody tr:hover {
   background-color: #000000;
   color: #ffff00;
 }
-
 section .container #dvTbl .mTbl tbody tr:hover div.btns {
   visibility: visible;
 }
-
 section .container #dvTbl .mTbl thead th, section .container #dvTbl .mTbl tbody td {
   border-bottom: 1px solid black;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   border-left: 1px solid black;
   border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
-
 section .container #dvTbl .mTbl tfoot {
   font-weight: bold;
   font-size: 1em;
@@ -434,43 +364,36 @@ section .container #dvTbl .mTbl tfoot {
   background-color: #0d86f0;
   color: #ffffff;
 }
-
 section .container .row {
   display: none;
   position: absolute;
   top: 10%;
   border: 1px solid #0d86f0;
   border-radius: 20px;
-  -webkit-box-shadow: 2px 2px 5px white;
-          box-shadow: 2px 2px 5px white;
+  box-shadow: 2px 2px 5px white;
   padding: 30px 20px 10px;
   background-color: #032429;
   text-align: center;
   z-index: 1;
 }
-
 section .container .row .btnClose {
   color: #0d86f0;
   background-color: #042331;
   width: 7%;
   border-radius: 40% 10%;
   border: 7px double #0d86f0;
-  -webkit-box-shadow: 5px 5px 15px #063146;
-          box-shadow: 5px 5px 15px #063146;
+  box-shadow: 5px 5px 15px #063146;
   position: absolute;
   text-align: center;
   left: -10px;
   top: -10px;
 }
-
 section .container .row .btnClose:hover {
   color: #042331;
   background-color: #0d86f0;
   border: 7px double #042331;
-  -webkit-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
 }
-
 @media (max-width: 549px) {
   section .container .row {
     width: 94%;
@@ -480,21 +403,18 @@ section .container .row .btnClose:hover {
     width: 33px;
   }
 }
-
 @media (min-width: 550px) {
   section .container .row {
     width: 500px;
     left: calc(50% - 250px);
   }
 }
-
 section .container form span {
   position: relative;
   display: inline-block;
   margin: 15px 10px;
   width: 90%;
 }
-
 section .container form span .swing {
   display: inline-block;
   width: 100%;
@@ -506,10 +426,8 @@ section .container form span .swing {
   outline: 0;
   text-indent: 80px;
   text-align: right;
-  -webkit-transition: all 1.3s ease-in-out;
   transition: all 1.3s ease-in-out;
 }
-
 section .container form span .swing + label {
   display: inline-block;
   position: absolute;
@@ -522,90 +440,38 @@ section .container form span .swing + label {
   text-shadow: 0 1px 0 rgba(19, 74, 70, 0.4);
   background-color: #0d86f0;
   color: #ffffff;
-  -webkit-transform-origin: 95% 5%;
-          transform-origin: 95% 5%;
-  -webkit-transform: rotate(0);
-          transform: rotate(0);
-  -webkit-animation: swing-back 1.3s 1 ease-in-out;
-          animation: swing-back 1.3s 1 ease-in-out;
+  transform-origin: 95% 5%;
+  transform: rotate(0);
+  animation: swing-back 1.3s 1 ease-in-out;
 }
-
-@-webkit-keyframes swing {
-  0% {
-    -webkit-transform: rotate(0);
-            transform: rotate(0);
-  }
-  20% {
-    -webkit-transform: rotate(-116deg);
-            transform: rotate(-116deg);
-  }
-  40% {
-    -webkit-transform: rotate(-60deg);
-            transform: rotate(-60deg);
-  }
-  60% {
-    -webkit-transform: rotate(-98deg);
-            transform: rotate(-98deg);
-  }
-  80% {
-    -webkit-transform: rotate(-76deg);
-            transform: rotate(-76deg);
-  }
-  100% {
-    -webkit-transform: rotate(-82deg);
-            transform: rotate(-82deg);
-  }
-}
-
 @keyframes swing {
   0% {
-    -webkit-transform: rotate(0);
-            transform: rotate(0);
+    transform: rotate(0);
   }
   20% {
-    -webkit-transform: rotate(-116deg);
-            transform: rotate(-116deg);
+    transform: rotate(-116deg);
   }
   40% {
-    -webkit-transform: rotate(-60deg);
-            transform: rotate(-60deg);
+    transform: rotate(-60deg);
   }
   60% {
-    -webkit-transform: rotate(-98deg);
-            transform: rotate(-98deg);
+    transform: rotate(-98deg);
   }
   80% {
-    -webkit-transform: rotate(-76deg);
-            transform: rotate(-76deg);
+    transform: rotate(-76deg);
   }
   100% {
-    -webkit-transform: rotate(-82deg);
-            transform: rotate(-82deg);
+    transform: rotate(-82deg);
   }
 }
-
-@-webkit-keyframes swing-back {
-  0% {
-    -webkit-transform: rotate(-82deg);
-            transform: rotate(-82deg);
-  }
-  100% {
-    -webkit-transform: rotate(0);
-            transform: rotate(0);
-  }
-}
-
 @keyframes swing-back {
   0% {
-    -webkit-transform: rotate(-82deg);
-            transform: rotate(-82deg);
+    transform: rotate(-82deg);
   }
   100% {
-    -webkit-transform: rotate(0);
-            transform: rotate(0);
+    transform: rotate(0);
   }
 }
-
 section .container form span .swing:focus, section .container form span .swing:active {
   color: red;
   text-indent: 0;
@@ -613,19 +479,14 @@ section .container form span .swing:focus, section .container form span .swing:a
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
-
 section .container form span .swing:focus::-webkit-input-placeholder, section .container form span .swing:active::-webkit-input-placeholder {
   color: #aaa;
 }
-
 section .container form span .swing:focus + label, section .container form span .swing:active + label {
-  -webkit-animation: swing 1.3s 1 ease-in-out;
-          animation: swing 1.3s 1 ease-in-out;
-  -webkit-transform: rotate(-82deg);
-          transform: rotate(-82deg);
+  animation: swing 1.3s 1 ease-in-out;
+  transform: rotate(-82deg);
   z-index: 9;
 }
-
 section .container form button.btn {
   width: 40%;
   display: inline-block;
@@ -639,15 +500,18 @@ section .container form button.btn {
   background-color: #0d86f0;
   position: relative;
 }
-
-section .container form button.btn[name="btnSave"]::after {
-  content: "\270D";
+section .container form button.btn[name=btnSave]::after {
+  content: "✍";
   position: absolute;
   top: 0px;
+  margin: 0px 10px;
 }
-
-section .container form button.btn[name="btnDlt"]::before {
-  content: " \2704 ";
+section .container form button.btn[name=btnDlt]::before {
+  content: " ✄";
+  margin: 0px 10px;
+}
+section .container form button.btn:hover {
+  color: red;
 }
 
 footer.myfooter {
@@ -660,12 +524,10 @@ footer.myfooter {
   padding: 3px 10px;
   border: 2px solid #111;
 }
-
 footer.myfooter:hover {
   color: #ffff00;
   background-color: #000000;
 }
-
 footer.myfooter label {
   margin: 0 5px;
 }
@@ -699,5 +561,4 @@ option {
   section .container #dvTbl {
     overflow: visible;
   }
-}
-/*# sourceMappingURL=backend.css.map */
+}/*# sourceMappingURL=backend.css.map */
